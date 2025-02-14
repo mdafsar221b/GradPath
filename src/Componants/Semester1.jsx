@@ -16,7 +16,7 @@ const Semester1 = () => {
       
             {SubjectNames.map((SubjectName, index) => (
       
-                <li key={index}>{SubjectName.name} </li>
+                <a key={index} className='font-mono'>{SubjectName.name} </a>
 
 
             ))}

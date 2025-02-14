@@ -14,7 +14,7 @@ const Semester5 = () => {
       <h1  className="button"> Semester 5 </h1>
             {SubjectNames.map((SubjectName, index) => (
       
-                <li key={index}>{SubjectName.name} </li>
+                <a key={index}>{SubjectName.name} </a>
 
 
             ))}

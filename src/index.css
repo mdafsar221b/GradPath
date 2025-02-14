@@ -1,19 +1,27 @@
 @import 'tailwindcss';
 
 :root {
-  background-color: black;
+  background-color:white;
 }
 
 body {
-  background: black;
+  background:white;
   min-width: 320px;
   min-height: 100vh;
 }
 
 .card {
-  @apply flex items-start justify-center flex-wrap gap-6 flex-col transition border-1 p-6 rounded-2xl mt-6;
+  @apply flex items-start justify-center flex-wrap gap-6 flex-col transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-2xl p-6 shadow-lg rounded-2xl;
 }
 
 .button {
-  @apply px-6 py-3 border-1 rounded-2xl m-4 hover:bg-white hover:text-black;
+  @apply px-6 py-3 font-mono text-2xl;
+}
+
+.animate-link {
+  @apply transition-all duration-1000 ease-in-out opacity-0 translate-x-66;
+}
+
+.animate-link.animate {
+  @apply opacity-100 translate-x-0;
 }
