@@ -20,14 +20,14 @@ code {
 }
 
 .semester-nav {
-  @apply flex justify-center gap-5 mb-8 p-3 bg-gray-100 rounded-lg;
+  @apply  relative flex p-3 items-center justify-between gap-3 rounded-2xl bg-white/90 px-3 shadow-lg ;
 }
 
 .heading{
   @apply font-bold text-2xl
 }
 .nav-link {
-  @apply no-underline text-gray-700 py-2 px-4 rounded transition-all duration-300;
+  @apply no-underline text-gray-700 py-2 px-4 rounded transition-all duration-300 ;
 }
 
 .nav-link:hover {
@@ -35,16 +35,16 @@ code {
 }
 
 main {
-  @apply max-w-[1200px] mx-auto p-5 border-1 w-full;
+  @apply max-w-[1200px] mx-auto p-5  w-full;
 }
 
 .card {
-  @apply bg-white p-5 rounded-lg shadow-sm flex justify-around items-start gap-6 border-1 ;
+  @apply bg-white p-5 rounded-lg shadow-sm flex justify-around items-start gap-6 flex-col  ;
 }
 
 @media (max-width: 768px) {
   .semester-nav {
-    @apply flex-wrap gap-3;
+    @apply flex-wrap gap-3 mb-4;
   }
   
   .nav-link {

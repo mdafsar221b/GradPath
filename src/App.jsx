@@ -5,7 +5,7 @@ import About from './Componants/About';
 
 function App() {
   return (
-    <div className="border-1 flex items-center justify-center flex-col ">
+    <div className="h-screen flex items-center justify-center flex-col mb-6">
       <Header />
       <About/>
 
@@ -17,7 +17,7 @@ function App() {
         <NavLink to="/semester5" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Semester 5</NavLink>
         <NavLink to="/semester6" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Semester 6</NavLink>
       </nav>
-      <main className='main'>
+      <main className=''>
         <Outlet />
       </main>
     </div>
