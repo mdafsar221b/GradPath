@@ -2,19 +2,14 @@ import React from 'react';
 
 const Semester6 = () => {
   const SubjectNames = [
-    { name: " Functional English",
-      key: "BCA 101"
+    { name: " Advance Networks and Network Security ",
+      key: "BCA-601",
+      path: ""
      },
-    { name: " Indroduction to Computer Programming in C",
-      key: "BCA 102"
+    { name: " Web Development Tools and Techniques ",
+      key: "BCA-602",
+      path:"/src/assets/Resources/Semester1/C_programming_notes_.pdf"
      },
-    { name: " IT Tools and Applications",
-      key: "BCA 103"
-     },
-    { name: " Mathametics",
-      key: "BCA 104"
-     }
-   
   ];
   return (
     
@@ -22,7 +17,7 @@ const Semester6 = () => {
       <h1  className="button"> Semester 6 </h1>
             {SubjectNames.map((SubjectName) => (
       
-                <a key={SubjectName.key}> {SubjectName.name} </a>
+                <a href={SubjectName.path} key={SubjectName.key} download> {SubjectName.name} </a>
 
 
             ))}

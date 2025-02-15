@@ -2,10 +2,22 @@ import React from 'react';
 
 const Semester4 = () => {
   const SubjectNames = [
-    { name: " Functional English" },
-    { name: " Indroduction to Computer Programming in C" },
-    { name: " IT Tools and Applications" },
-    { name: " Mathametics" }
+    { name: "DBMS",
+      key: "BCA-401",
+      path: ""
+     },
+    { name: "  Operation Research",
+      key: "BCA-402",
+      path:"/src/assets/Resources/Semester1/C_programming_notes_.pdf"
+     },
+    { name: " COMPUTER GRAPHICS",
+      key: "BCA-403",
+     path:"\src\assets\Resources\Semester1\C Language 100 Questions Answers.pdf"
+     },
+    { name: "Software Engineering ",
+      key: "BCA-404",
+      path:"/src/assets/Resources/Semester1/IT.pdf"
+     }
    
   ];
   return (
