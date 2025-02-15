@@ -17,13 +17,15 @@ code {
 
 .App {
   text-align: center;
-  padding: 20px;
 }
 
 .semester-nav {
   @apply flex justify-center gap-5 mb-8 p-3 bg-gray-100 rounded-lg;
 }
 
+.heading{
+  @apply font-bold text-2xl
+}
 .nav-link {
   @apply no-underline text-gray-700 py-2 px-4 rounded transition-all duration-300;
 }
@@ -33,11 +35,11 @@ code {
 }
 
 main {
-  @apply max-w-[1200px] mx-auto p-5;
+  @apply max-w-[1200px] mx-auto p-5 border-1 w-full;
 }
 
 .card {
-  @apply bg-white p-5 rounded-lg shadow-sm flex justify-center items-center flex-col gap-6 ;
+  @apply bg-white p-5 rounded-lg shadow-sm flex justify-around items-start gap-6 border-1 ;
 }
 
 @media (max-width: 768px) {
@@ -47,5 +49,8 @@ main {
   
   .nav-link {
     @apply flex-1 basis-[40%] text-center;
+  }
+  .card{
+    @apply flex-col gap-4;
   }
 }
