@@ -1,4 +1,4 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, NavLink } from 'react-router-dom';
 import './App.css';
 import Header from './Componants/Header';
 
@@ -7,12 +7,12 @@ function App() {
     <div className="App">
       <Header />
       <nav className="semester-nav">
-        <Link to="/semester1" className="nav-link">Semester 1</Link>
-        <Link to="/semester2" className="nav-link">Semester 2</Link>
-        <Link to="/semester3" className="nav-link">Semester 3</Link>
-        <Link to="/semester4" className="nav-link">Semester 4</Link>
-        <Link to="/semester5" className="nav-link">Semester 5</Link>
-        <Link to="/semester6" className="nav-link">Semester 6</Link>
+        <NavLink to="/semester1" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Semester 1</NavLink>
+        <NavLink to="/semester2" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Semester 2</NavLink>
+        <NavLink to="/semester3" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Semester 3</NavLink>
+        <NavLink to="/semester4" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Semester 4</NavLink>
+        <NavLink to="/semester5" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Semester 5</NavLink>
+        <NavLink to="/semester6" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Semester 6</NavLink>
       </nav>
       <main>
         <Outlet />

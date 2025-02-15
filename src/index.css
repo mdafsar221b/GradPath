@@ -37,7 +37,7 @@ main {
 }
 
 .card {
-  @apply bg-white p-5 rounded-lg shadow-sm;
+  @apply bg-white p-5 rounded-lg shadow-sm flex justify-center items-center flex-col gap-6 ;
 }
 
 @media (max-width: 768px) {
