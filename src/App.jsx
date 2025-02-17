@@ -5,8 +5,10 @@ import About from './Componants/About';
 
 function App() {
   return (
-    <div className="h-screen flex items-center justify-center flex-col mb-6">
+    <div className="h-screen flex flex-col mb-6">
       <Header />
+      <div className='max-w-4xl mt-4 mx-auto p-4 sm:p-8'>
+
       <About/>
 
       <nav className="semester-nav">
@@ -20,6 +22,7 @@ function App() {
       <main className=''>
         <Outlet />
       </main>
+      </div>
     </div>
   );
 }

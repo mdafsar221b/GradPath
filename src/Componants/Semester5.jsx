@@ -1,15 +1,15 @@
 import React from "react";
 import { semFiveSub } from "../utils/constants";
 
-const Semester5 = (SubjectNames) => {
+const Semester5 = () => {
  return (
      <div className=" max-w-4xl mt-4 mx-auto p-4 sm:p-8 bg-white rounded-xl shadow-lg">
          {/* <h1 className="heading text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-gray-800">Semester One Syllabus</h1> */}
        <div className="space-y-4 w-full">
          {semFiveSub.map((SubjectName) => (
-           <div className=" bg-gray-50 hover:bg-gray-100 transition-colors duration-200 p-3 sm:p-4 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+           <div  key={SubjectName.code} className=" bg-gray-50 hover:bg-gray-100 transition-colors duration-200 p-3 sm:p-4 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
  
-             <div className="flex-1">
+             <div className="flex-1 items-start w-full">
                <span className="text-base sm:text-lg font-medium text-gray-700">{SubjectName.code}</span>
                <p className="text-sm sm:text-base text-gray-600">{SubjectName.name}</p>
              </div>

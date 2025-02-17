@@ -20,7 +20,7 @@ code {
 }
 
 .semester-nav {
-  @apply  relative flex p-3 items-center justify-between gap-3 rounded-2xl bg-white/90 px-3 shadow-lg ;
+  @apply  relative flex p-3 items-center justify-between gap-3 rounded-2xl bg-white/90 px-3 shadow-lg my-10;
 }
 
 .heading{
