@@ -2,8 +2,8 @@ import React from 'react'
 
 const Header = () => {
   return (
-    <header className=" sticky w-full text-center mt-6">
-        <h1 className="p-3 text-3xl font-bold flex "> GRAD-PATH </h1>
+    <header className=" sticky w-full text-center mt-6 ">
+        <img src="src/assets/logo-gradpath.png" alt="LOGO"  className='w-xs'/>
       </header>
   )
 }

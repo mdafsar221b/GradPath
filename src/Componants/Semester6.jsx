@@ -14,8 +14,8 @@ const Semester6 = (SubjectNames) => {
                <p className="text-sm sm:text-base text-gray-600">{SubjectName.name}</p>
              </div>
              <div className="flex gap-2 w-full sm:w-auto">
-               <a href="" className="flex-1 sm:flex-none px-4 sm:px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 text-sm sm:text-base text-center">PYQ</a>
-               <a href="" className="flex-1 sm:flex-none px-4 sm:px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 text-sm sm:text-base text-center">Notes</a>
+               <a href="" className="pyq-btn">PYQ</a>
+               <a href="" className="notes-btn">Notes</a>
              </div>
  
            </div>

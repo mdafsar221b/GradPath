@@ -42,6 +42,14 @@ main {
   @apply bg-white p-5 rounded-lg shadow-sm flex justify-around items-start gap-6 flex-col  ;
 }
 
+.pyq-btn{
+  @apply flex-1 sm:flex-none px-4 sm:px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 text-sm sm:text-base text-center
+}
+.notes-btn{
+  @apply flex-1 sm:flex-none px-4 sm:px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 text-sm sm:text-base text-center
+}
+
+
 @media (max-width: 768px) {
   .semester-nav {
     @apply flex-wrap gap-3 mb-4;
