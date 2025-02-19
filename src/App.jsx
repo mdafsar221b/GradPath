@@ -2,6 +2,7 @@ import { Outlet, NavLink } from 'react-router-dom';
 import './App.css';
 import Header from './Componants/Header';
 import About from './Componants/About';
+import YoutubeResources from './Componants/YoutubeResources';
 
 function App() {
   return (
@@ -21,9 +22,14 @@ function App() {
 
       </nav>
      
-      <main className=''>
+      <main>
         <Outlet />
       </main>
+      <div className='flex items-center justify-center flex-wrap gap-2 flex-col'>
+        
+        <p className=' text-3xl font-bold'> YouTube Resources </p>
+         <YoutubeResources/>
+      </div>
       </div>
     </div>
   );
