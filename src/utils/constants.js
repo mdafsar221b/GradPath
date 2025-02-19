@@ -130,3 +130,92 @@ export const semOneSub =  [
       notes: ""
      },
   ];
+
+
+  export  const ResourceDetails = [
+
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ },
+ {
+  title:"C Programming",
+  channel: " Raghav Garg",
+  thumbnail: "src/assets/CW.png"
+
+ }
+]

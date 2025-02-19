@@ -3,6 +3,7 @@ import './App.css';
 import Header from './Componants/Header';
 import About from './Componants/About';
 import YoutubeResources from './Componants/YoutubeResources';
+import HeaderYT from './Componants/HeaderYT';
 
 function App() {
   return (
@@ -25,10 +26,9 @@ function App() {
       <main>
         <Outlet />
       </main>
-      <div className='flex items-center justify-center flex-wrap gap-2 flex-col'>
-        
-        <p className=' text-3xl font-bold'> YouTube Resources </p>
-         <YoutubeResources/>
+      <div className='flex items-center justify-center flex-wrap gap-2 mt-1 sm:mt-2 flex-col'>
+          <HeaderYT/>
+         <YoutubeResources/> 
       </div>
       </div>
     </div>
