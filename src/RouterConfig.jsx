@@ -1,26 +1,36 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
-import Semester1 from './Componants/Semester1';
-import Semester2 from './Componants/Semester2';
-import Semester3 from './Componants/Semester3';
-import Semester4 from './Componants/Semester4';
-import Semester5 from './Componants/Semester5';
-import Semester6 from './Componants/Semester6';
-import { semOneSub,semTwoSub,semThreeSub,semFourSub,semFiveSub,semSixSub } from './utils/constants';
+import SemesterComponent from './Componants/SemesterComponent';
+import { semOneSub, semTwoSub, semThreeSub, semFourSub, semFiveSub, semSixSub } from './utils/constants';
+
+const semesterData = {
+  '1': semOneSub,
+  '2': semTwoSub,
+  '3': semThreeSub,
+  '4': semFourSub,
+  '5': semFiveSub,
+  '6': semSixSub
+};
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      { path: 'semester1', element: <Semester1 /> },
-      { path: 'semester2', element: <Semester2 /> },
-      { path: 'semester3', element: <Semester3 /> },
-      { path: 'semester4', element: <Semester4 /> },
-      { path: 'semester5', element: <Semester5 /> },
-      { path: 'semester6', element: <Semester6 /> }
+      {
+        path: 'semester/:semesterNumber',
+        element: <SemesterComponent />,
+        loader: ({ params }) => {
+          const data = semesterData[params.semesterNumber];
+          if (!data) {
+            throw new Response('Not Found', { status: 404 });
+          }
+          return data;
+        }
+      }
     ]
   }
 ]);
+
 
 export default router;

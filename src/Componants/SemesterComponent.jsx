@@ -1,6 +1,9 @@
 import React from "react";
+import { useLoaderData } from "react-router-dom";
 
-const SemesterComponent = ({ semesterData }) => {
+const SemesterComponent = () => {
+  const semesterData = useLoaderData();
+
   return (
     <div className="max-w-4xl mt-4 mx-auto p-4 sm:p-8 bg-white rounded-xl shadow-lg">
       <div className="space-y-4 w-full">
