@@ -137,85 +137,58 @@ export const semOneSub =  [
  {
   title:"C Programming",
   channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
+  thumbnail: "src/assets/thumbnails/CW.png",
+  link: " https://www.youtube.com/watch?v=rQoqCP7LX60&list=PLxgZQoSe9cg1drBnejUaDD9GEJBGQ5hMt"
 
  },
  {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
+  title:"Accounting ",
+  channel: "Accounting MasterClass",
+  thumbnail: "src/assets/thumbnails/accounting-thumb.png",
+  link:"https://www.youtube.com/watch?v=fcjsgiTHl2k&list=PLaAhQ2ofZZRCJIUbTjeUXx4JoZ7CyGHr3"
 
  },
  {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
+  title:"DCLD",
+  channel: "Neso Academy",
+  thumbnail: "src/assets/thumbnails/DCLD-thumb.png",
+  link:"https://www.youtube.com/watch?v=M0mx8S05v60&list=PLBlnK6fEyqRjMH3mWf6kwqiTbT798eAOm"
 
  },
  {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
+  title:"C++ & OOPs",
+  channel: "Saurabh Shukla",
+  thumbnail: "src/assets/thumbnails/CPP-thumb.png",
+  link:"https://www.youtube.com/watch?v=Iuo9PpGE04Y&list=PLLYz8uHU480j37APNXBdPz7YzAi4XlQUF"
 
  },
  {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
+  title:"Operating System",
+  channel: "Gate Smasher",
+  thumbnail: "src/assets/thumbnails/OS-thumb.png",
+  link:"https://www.youtube.com/watch?v=bkSWJJZNgf8&list=PLxCzCOWd7aiGz9donHRrE9I3Mwn6XdP8p"
 
  },
  {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
+  title:"Mathematics ",
+  channel: "Dr. Gajendra Purohit",
+  thumbnail: "src/assets/thumbnails/COM-thumb.png",
+  link:"https://www.youtube.com/watch?v=rWyTk9eubKM&list=PLU6SqdYcYsfLrTna7UuaVfGZYkNo0cpVC"
 
  },
  {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
+  title:"DSA",
+  channel: "University Academy",
+  thumbnail: "src/assets/thumbnails/DSA-thumb.png",
+  link:"https://www.youtube.com/watch?v=ouWefOMkMJA&list=PL-JvKqQx2AtcnX8uPrdjvCplAmwTSFhMO"
 
  },
  {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
+  title:"COA",
+  channel: "Gate Smasher",
+  thumbnail: "src/assets/thumbnails/COA-thumb.png",
+  link:"https://www.youtube.com/watch?v=L9X7XXfHYdU&list=PLxCzCOWd7aiHMonh3G6QNKq53C6oNXGrX"
 
  },
- {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
 
- },
- {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
-
- },
- {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
-
- },
- {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
-
- },
- {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
-
- },
- {
-  title:"C Programming",
-  channel: " Raghav Garg",
-  thumbnail: "src/assets/CW.png"
-
- }
 ]

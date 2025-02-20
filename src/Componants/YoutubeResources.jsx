@@ -10,7 +10,7 @@ const YoutubeResources = () => {
           <div key={index} className="bg-gray-50 hover:bg-gray-100 transition-colors duration-200 p-3 sm:p-4 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 shadow-lg mb-2 sm:mb-3">
 
             <a
-              href=" https://www.youtube.com/watch?v=rQoqCP7LX60&list=PLxgZQoSe9cg1drBnejUaDD9GEJBGQ5hMt"
+              href= {ResourceDetail.link}
               target="_blank"
             >
             <div className="flex-1 items-start w-full">
