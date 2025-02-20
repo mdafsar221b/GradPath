@@ -10,6 +10,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Dark mode styles */
+.dark {
+  background-color: #000;
+  color: #fff;
+}
+
+.dark .nav-link {
+  color: #fff;
+}
+
+.dark .nav-link.active {
+  background-color: #fff;
+  color: #000;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
