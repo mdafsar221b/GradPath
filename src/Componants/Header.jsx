@@ -1,9 +1,10 @@
 import React from 'react'
+import logo from '../assets/logo-gradpath.png'
 
 const Header = () => {
   return (
     <header className=" sticky w-full text-center mt-6 ">
-        <img src="src/assets/logo-gradpath.png" alt="LOGO"  className='w-xs'/>
+        <img src={logo} alt="LOGO"  className='w-xs'/>
       </header>
   )
 }
