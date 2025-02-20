@@ -14,8 +14,8 @@ const SemesterComponent = () => {
               <p className="text-sm sm:text-base text-gray-600">{subject.name}</p>
             </div>
             <div className="flex gap-2 w-full sm:w-auto">
-              <a href={subject.PYQ} className="pyq-btn">PYQ</a>
-              <a href={subject.notes} className="notes-btn">Notes</a>
+              <a href={subject.PYQ} className="pyq-btn" download>PYQ</a>
+              <a href={subject.notes} className="notes-btn" download>Notes</a>
             </div>
           </div>
         ))}

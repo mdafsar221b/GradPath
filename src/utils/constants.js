@@ -6,17 +6,17 @@ export const semOneSub =  [
      },
     { name: " Principles of Mathematics ",
       code: "BCA-102",
-      PYQ:"/src/assets/Resources/Semester1/C_programming_notes_.pdf",
+      PYQ:"",
       notes: ""
      },
     { name: "Functional English",
       code: "BCA-103",
-     PYQ:"\src\assets\Resources\Semester1\C Language 100 Questions Answers.pdf",
+     PYQ:"",
      notes: ""
      },
     { name: "Introduction to Computer Programming in ‘C’",
       code: "BCA-104",
-      PYQ:"/src/assets/Resources/Semester1/IT.pdf",
+      PYQ:"",
       notes: ""
      }
    
@@ -30,17 +30,17 @@ export const semOneSub =  [
      },
     { name: " Accounting and Financial Management ",
       code: "BCA-202",
-      PYQ:"/src/assets/Resources/Semester1/C_programming_notes_.pdf",
+      PYQ:"",
       notes: ""
      },
     { name: " Digital Circuit and Logic Design",
       code: "BCA-203",
-     PYQ:"\src\assets\Resources\Semester1\C Language 100 Questions Answers.pdf",
+     PYQ:"",
      notes: ""
      },
     { name: " Introductions to Object Oriented Programming & C++ ",
       code: "BCA-204",
-      PYQ:"/src/assets/Resources/Semester1/IT.pdf",
+      PYQ:"",
       notes: ""
      }
    
@@ -50,21 +50,21 @@ export const semOneSub =  [
     { name: "Operating System",
       code: "BCA-301",
       PYQ: "",
-      notes: ""
+      notes: "/src/assets/Resources/Semester3/Handwritten-OS-notes.pdf"
      },
     { name: " Computer Oriented Mathematics",
       code: "BCA-302",
-      PYQ:"/src/assets/Resources/Semester1/C_programming_notes_.pdf",
+      PYQ:"",
       notes: ""
      },
     { name: "Data Structure",
       code: "BCA-303",
-     PYQ:"\src\assets\Resources\Semester1\C Language 100 Questions Answers.pdf",
-     notes: ""
+      PYQ:"",
+     notes: "/src/assets/Resources/Semester3/DSA_Notes.pdf"
      },
     { name: " Computer Organization and Architecture ",
       code: "BCA-304",
-      PYQ:"/src/assets/Resources/Semester1/IT.pdf",
+      PYQ: "",
       notes: ""
      }
    
@@ -78,17 +78,17 @@ export const semOneSub =  [
      },
     { name: "  Operation Research",
       code: "BCA-402",
-      PYQ:"/src/assets/Resources/Semester1/C_programming_notes_.pdf",
+      PYQ:"",
       notes: ""
      },
     { name: " COMPUTER GRAPHICS",
       code: "BCA-403",
-     PYQ:"\src\assets\Resources\Semester1\C Language 100 Questions Answers.pdf",
+     PYQ:"",
      notes: ""
      },
     { name: "Software Engineering ",
       code: "BCA-404",
-      PYQ:"/src/assets/Resources/Semester1/IT.pdf",
+      PYQ:"",
       notes: ""
      }
    
@@ -102,17 +102,17 @@ export const semOneSub =  [
      },
     { name: " ORACLE and PL/SQL",
       code: "BCA-502",
-      PYQ:"/src/assets/Resources/Semester1/C_programming_notes_.pdf",
+      PYQ:"",
       notes: ""
      },
     { name: "COMPUTER NETWORKS",
       code: "BCA-503",
-     PYQ:"\src\assets\Resources\Semester1\C Language 100 Questions Answers.pdf",
+     PYQ:"",
      notes: ""
      },
     { name: "Software Project Management",
       code: "BCA-504",
-      PYQ:"/src/assets/Resources/Semester1/IT.pdf",
+      PYQ:"",
       notes: ""
      }
    
@@ -126,7 +126,7 @@ export const semOneSub =  [
      },
     { name: " Web Development Tools and Techniques ",
       code: "BCA-602",
-      PYQ:"/src/assets/Resources/Semester1/C_programming_notes_.pdf",
+      PYQ:"",
       notes: ""
      },
   ];
