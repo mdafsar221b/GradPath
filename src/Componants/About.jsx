@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import ThemeContext from "../context/ThemeContext";
+
 
 const About = () => {
+  const { isDark } = useContext(ThemeContext);
+
   return (
     <div className="mt-10 w-full  mb-6  flex items-center justify-center flex-col">
-      <p className="text-black mt-2 text-4xl sm:text-6xl font-bold text-center">
+      <p className={`mt-2 text-4xl sm:text-6xl font-bold text-center ${isDark ? 'text-gray-100' : 'text-black'}`}>
         Your One-Stop Hub for <br /> Notes & PYQs
       </p>
+
       <div>
        <p className="mt-6 text-lg text-gray-700 leading-relaxed text-center mb-3">
         <span className="font-semibold text-xl text-blue-600">
