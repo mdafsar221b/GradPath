@@ -3,7 +3,7 @@ import React from "react";
 const About = () => {
   return (
     <div className="mt-10 w-full  mb-6  flex items-center justify-center flex-col">
-      <p className="text-black mt-2 text-4xl sm:text-6xl font-bold text-center">
+      <p className="text-black mt-2 text-5xl sm:text-6xl font-bold text-center">
         Your One-Stop Hub for <br /> Notes & PYQs
       </p>
       <div>
@@ -18,7 +18,7 @@ const About = () => {
       </div>
       <div className='flex sm:flex-none px-4 sm:px-6 sm:mt-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 text-sm sm:text-base text-center gap-2 items-center justify-center '>
         <a href="src\assets\Resources\Syllabus.pdf" download> Download Syllabus</a>
-        <img src="src/assets/download-icon.svg" alt=""  className='w-5'/>
+        <img src="/src/assets/download-icon.svg" alt=""  className='w-5'/>
       </div>
 
 

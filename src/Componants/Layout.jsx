@@ -3,6 +3,7 @@ import Header from './Header';
 import About from './About';
 import HeaderYT from './HeaderYT';
 import YoutubeResources from './YoutubeResources';
+import Footer from './Footer/Footer';
 
 
 const Layout = () => {
@@ -28,6 +29,7 @@ const Layout = () => {
           <YoutubeResources />
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };
