@@ -7,8 +7,19 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: blackscale;
 }
+
+/* Dark mode styles */
+.dark {
+  background-color: #000;
+  color: #fff;
+}
+
+.dark .nav-link {
+  color: #fff;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -27,11 +38,11 @@ code {
   @apply font-bold text-2xl
 }
 .nav-link {
-  @apply no-underline text-gray-700 py-2 px-4 rounded transition-all duration-300 ;
+  @apply no-underline text-black py-2 px-4 rounded transition-all duration-300 ;
 }
 
 .nav-link:hover {
-  @apply bg-gray-200 ;
+  @apply bg-gray-200;
 }
 
 main {

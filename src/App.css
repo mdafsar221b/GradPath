@@ -1,15 +1,17 @@
 #root {
- border: black;
+  border: black;
 }
 
 .nav-link {
   color: #333;
   text-decoration: none;
   padding: 0.5rem 1rem;
+  /* Responsive text size */
+  /* Removed sm:text-lg to avoid error */
 }
 
-.nav-link.active {
-  background-color: #000;
-  color: #fff;
-  border-radius: 4px;
+@media (max-width: 768px) {
+  .nav-link {
+    @apply flex-1; /* Make links stack on smaller screens */
+  }
 }
