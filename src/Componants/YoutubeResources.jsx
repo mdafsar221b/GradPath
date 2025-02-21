@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { ResourceDetails } from "../utils/constants";
-import ThemeContext from "../context/ThemeContext";
+
 
 const YoutubeResources = () => {
-  const { isDark } = useContext(ThemeContext);
+
 
   return (
     <div className="w-full max-w-4xl mt-4 mx-auto p-4 sm:p-6 bg-white rounded-xl shadow-lg flex flex-wrap gap-1 sm:gap-2 justify-center items-center ">
@@ -18,16 +18,13 @@ const YoutubeResources = () => {
             >
             <div className="flex-1 items-start w-full">
               <span
-                className={`text-base sm:text-lg font-medium ${
-                  isDark ? "text-gray-100" : "text-gray-800"
-                }`}
+                className="text-base sm:text-lg font-medium text-gray-800"
+              
               >
                 {ResourceDetail.title}
               </span>
               <p
-                className={`text-sm sm:text-base ${
-                  isDark ? "text-gray-300" : "text-gray-600"
-                } mb-2`}
+                className= " text-sm sm:text-base text-gray-30 text-gray-600 mb-2"
               >
                 {ResourceDetail.channel}
               </p>
