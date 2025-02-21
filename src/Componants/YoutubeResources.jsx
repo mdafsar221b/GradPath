@@ -7,7 +7,7 @@ const YoutubeResources = () => {
   const { isDark } = useContext(ThemeContext);
 
   return (
-    <div className={`w-full max-w-4xl mt-4 mx-auto p-4 sm:p-6 ${isDark ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg flex flex-wrap gap-1 sm:gap-2 justify-center items-center`}>
+    <div className={`w-full max-w-4xl mt-4 mx-auto p-4 sm:p-6 ${isDark ? 'bg-black' : 'bg-white'} rounded-xl shadow-lg flex flex-wrap gap-1 sm:gap-2 justify-center items-center`}>
 
 
 
