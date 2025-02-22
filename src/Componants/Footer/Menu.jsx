@@ -1,7 +1,7 @@
 export const PRODUCTS = [
-    { name: "A to Z math", link: "#" },
-    { name: "W3school", link: "#" },
-    { name: "GFG", link: "#" },
+    { name: "A to Z math", link: "https://atozmath.com/default.aspx" },
+    { name: "W3school", link: "https://www.w3schools.com/" },
+    { name: "GFG", link: "https://www.geeksforgeeks.org/" },
   ];
   export const RESOURCES = [
     { name: "GD Link DDU PYQs", link: "#" },

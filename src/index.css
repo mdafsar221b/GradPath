@@ -1,4 +1,20 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Poiret+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Grechen+Fuemen&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+
+
+
 @import "tailwindcss";
+
+@theme{
+  --font-Flux : "Afacad Flux", serif;
+  --font-Grechen :"Grechen Fuemen", serif;
+  --font-Arsenal : "Arsenal SC", serif;
+  
+
+}
 
 
 body {
@@ -8,7 +24,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: blackscale;
+  background-color: #f2e9e4; /* Updated background color */
 }
+
 
 /* Dark mode styles */
 .dark {
@@ -31,16 +49,18 @@ code {
 }
 
 .semester-nav {
-  @apply  relative flex p-3 items-center justify-between gap-3 rounded-2xl bg-white/90 px-3 shadow-lg my-10;
+  @apply  relative flex p-3 items-center justify-between gap-1 sm:gap-3 flex-wrap rounded-2xl bg-white/90 px-3 shadow-lg my-6 sm:my-10;
 }
 
 .heading{
   @apply font-bold text-2xl
 }
 .nav-link {
-  @apply no-underline text-black py-2 px-4 rounded transition-all duration-300 ;
+  @apply no-underline text-black py-2 px-2 sm:px-4 rounded transition-all duration-300;
 }
-
+.active {
+  @apply bg-black text-white
+}
 .nav-link:hover {
   @apply bg-gray-200;
 }
@@ -54,10 +74,10 @@ main {
 }
 
 .pyq-btn{
-  @apply flex-1 sm:flex-none px-4 sm:px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 text-sm sm:text-base text-center
+  @apply flex-1 sm:flex-none px-4 sm:px-6 py-2 bg-[#22223b] text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 text-sm sm:text-base text-center
 }
 .notes-btn{
-  @apply flex-1 sm:flex-none px-4 sm:px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 text-sm sm:text-base text-center
+  @apply flex-1 sm:flex-none px-4 sm:px-6 py-2 bg-[#588157] text-white rounded-lg hover:bg-green-600 transition-colors duration-200 text-sm sm:text-base text-center
 }
 
 

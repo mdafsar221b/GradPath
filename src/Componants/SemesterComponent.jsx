@@ -5,7 +5,8 @@ const SemesterComponent = () => {
   const semesterData = useLoaderData();
 
   return (
-    <div className="max-w-4xl mt-4 mx-auto p-4 sm:p-8 rounded-xl shadow-lg bg-white text-black">
+<div className="max-w-4xl mt-4 mx-auto p-4 sm:p-8 rounded-xl border-1 border-dashed text-black font-Flux sm:text-3xl text-2xl">
+
       <div className="space-y-4 w-full">
         {semesterData.map((subject) => (
           <div
