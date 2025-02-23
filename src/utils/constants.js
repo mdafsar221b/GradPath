@@ -136,7 +136,7 @@ export const semOneSub =  [
 
  {
   title:"C Programming",
-  channel: " Raghav Garg",
+  channel: " College Wallah ",
   thumbnail: "/src/assets/thumbnails/CW.png",
 
   link: " https://www.youtube.com/watch?v=rQoqCP7LX60&list=PLxgZQoSe9cg1drBnejUaDD9GEJBGQ5hMt"

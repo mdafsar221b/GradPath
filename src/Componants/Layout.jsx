@@ -24,11 +24,14 @@ const Layout = () => {
         <main>
           <Outlet />
         </main>
-        <div className='flex items-center justify-center flex-wrap gap-2 mt-1 sm:mt-2 flex-col'>
           <HeaderYT />
-          <YoutubeResources />
-        </div>
       </div>
+        <div className='flex items-center justify-center gap-2 mt-1 sm:mt-2 flex-col'>
+          <div className='flex justify-center items-center'>
+          <YoutubeResources />
+
+          </div>
+        </div>
       <Footer/>
     </div>
   );
