@@ -28,22 +28,6 @@ body {
 }
 
 
-/* Dark mode styles */
-.dark {
-  background-color: #000;
-  color: #fff;
-}
-
-.dark .nav-link {
-  color: #fff;
-}
-
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 .App {
   text-align: center;
 }
