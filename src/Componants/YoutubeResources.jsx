@@ -6,43 +6,31 @@ const YoutubeResources = () => {
 
 
   return (
-<div className="w-full max-w-4xl mt-4 mx-auto p-4 sm:p-6 bg-[#f2e9e4] rounded-xl flex flex-wrap gap-1 sm:gap-2 justify-center items-center animate-fade-in">
+<div className=" p-10 flex justify-center items-center flex-wrap gap-10 ">
 
 
 
      
         {ResourceDetails.map((ResourceDetail, index) => (
-            <div key={index} className="bg-gray-50 hover:bg-gray-100  duration-200 transition-transform transform hover:scale-102 p-3 sm:p-4 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 shadow-lg mb-2 sm:mb-3 animate-fade-in-bounce-left ">
-
-
-            <a
-              href= {ResourceDetail.link}
-              target="_blank"
-            >
-            <div className="flex-1 items-start w-full">
-              <span
-                className="text-base sm:text-lg font-medium text-gray-800"
-              
-              >
-                {ResourceDetail.title}
-              </span>
-              <p
-                className= " text-sm sm:text-base text-gray-30 text-gray-600 mb-2"
-              >
-                {ResourceDetail.channel}
-              </p>
-            </div>
-            <div className="flex gap-2 w-full sm:w-auto">
-              <div>
-                <img
-                  src={ResourceDetail.thumbnail}
-                  alt="Thumbnails"
-                  className="w-50"
-                />
-              </div>
-            </div>
-          </a>
-        </div>
+  
+<div key={index} className="relative flex w-60 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md transition-transform transform hover:scale-102 mb-3">
+  <div className="relative mx-4 -mt-6  overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
+  <img src={ResourceDetail.thumbnail} alt="Thumbnails" />
+  </div>
+  <div className="p-4 flex items-center justify-center flex-col">
+    <h5 className=" block font-sans text-lg font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+     {ResourceDetail.channel}
+    </h5>
+    <p className="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
+    {ResourceDetail.title}
+    </p>
+  </div>
+  <div className="p-4 pt-0 flex items-center justify-center flex-col">
+    <a href={ResourceDetail.link} data-ripple-light="true" type="button" className="watch-btn">
+      Watch
+    </a>
+  </div>
+</div>
       ))}
     </div>
   );
