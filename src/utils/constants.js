@@ -198,5 +198,13 @@ export const semOneSub =  [
   link:"https://www.youtube.com/watch?v=L9X7XXfHYdU&list=PLxCzCOWd7aiHMonh3G6QNKq53C6oNXGrX"
 
  },
+ {
+  title:"COA",
+  channel: "Gate Smasher",
+  thumbnail: "/src/assets/thumbnails/COA-thumb.png",
+
+  link:"https://www.youtube.com/watch?v=L9X7XXfHYdU&list=PLxCzCOWd7aiHMonh3G6QNKq53C6oNXGrX"
+
+ },
 
 ]
