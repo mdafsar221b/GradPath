@@ -29,7 +29,7 @@ const Layout = () => {
       <div className='flex items-center justify-center gap-2 mt-1 sm:mt-2 flex-col'>
         <div className='flex justify-center items-center'>
           <YoutubeResources />
-          {/* Removed recursive Layout call */}
+          
         </div>
         <GeminiCard />
       </div>
