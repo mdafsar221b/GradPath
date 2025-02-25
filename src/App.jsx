@@ -1,6 +1,7 @@
 
 import Layout from './Componants/Layout';
 
+
 function App() {
   return (
     <div className="h-screen flex flex-col mb-6">

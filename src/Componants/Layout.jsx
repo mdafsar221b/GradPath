@@ -6,8 +6,6 @@ import YoutubeResources from './YoutubeResources';
 import Footer from './Footer/Footer';
 import GeminiCard from './GeminiCard';
 
-
-
 const Layout = () => {
   return (
     <div className="h-screen flex flex-col mb-6">
@@ -26,18 +24,16 @@ const Layout = () => {
         <main>
           <Outlet />
         </main>
-          <HeaderYT />
+        <HeaderYT />
       </div>
-        <div className='flex items-center justify-center gap-2 mt-1 sm:mt-2 flex-col'>
-          <div className='flex justify-center items-center'>
+      <div className='flex items-center justify-center gap-2 mt-1 sm:mt-2 flex-col'>
+        <div className='flex justify-center items-center'>
           <YoutubeResources />
-          <div>
-          </div>
-
-          </div>
-            <GeminiCard />
+          {/* Removed recursive Layout call */}
         </div>
-      <Footer/>
+        <GeminiCard />
+      </div>
+      <Footer />
     </div>
   );
 };
