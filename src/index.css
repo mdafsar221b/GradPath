@@ -33,7 +33,7 @@ body {
 }
 
 .semester-nav {
-  @apply  relative flex p-3 items-center justify-between gap-1 sm:gap-3 flex-wrap rounded-2xl bg-white/90 px-3 shadow-lg my-6 sm:my-10;
+  @apply  relative flex p-3 items-center justify-between gap-1 sm:gap-3 flex-wrap rounded-2xl bg-white/90 px-3 shadow-lg my-4 sm:my-10;
 }
 
 .heading{

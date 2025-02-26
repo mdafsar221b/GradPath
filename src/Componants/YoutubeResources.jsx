@@ -6,7 +6,7 @@ const YoutubeResources = () => {
 
 
   return (
-<div className=" p-10 flex justify-center items-center flex-wrap gap-10 ">
+<div className=" p-10 flex justify-center items-center flex-wrap gap-10 w-screen">
 
 
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { fetchGeminiResponse } from '../api/gemini';
 import ReactMarkdown from "react-markdown";
 import { useState } from 'react';
-const GeminiCard = () => {const [input, setInput] = useState("");
+const ChatBotCard = () => {const [input, setInput] = useState("");
     const [chat, setChat] = useState([]);
 
     const handleSubmit = async (e) => {
@@ -20,11 +20,12 @@ const GeminiCard = () => {const [input, setInput] = useState("");
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4">
-            <div className="w-full max-w-lg bg-white shadow-xl rounded-lg flex flex-col h-[80vh]">
+        <div className="flex flex-col items-center justify-center w-full p-4">
+            <div className="w-full max-w-lg  shadow-xl rounded-lg flex flex-col h-[80vh]">
                 
-                <div className="bg-blue-600 text-white p-4 rounded-t-lg text-center font-semibold">
-                Chatbot
+                <div className="bg-black text-white p-4 rounded-t-lg text-center font-semibold flex gap-3 justify-center items-center">
+                <p>Chat Bot </p>
+                <img src="/src/assets/AI-logo.svg" alt="logo" className='w-8' />
                 </div>
 
             
@@ -39,7 +40,7 @@ const GeminiCard = () => {const [input, setInput] = useState("");
                             <div
                                 className={`p-3 max-w-xs text-black rounded-lg ${
                                     msg.sender === "user"
-                                        ? "bg-blue-500"
+                                        ? "bg-black text-white"
                                         : "bg-gray-300 text-gray-900"
                                 }`}
                             >
@@ -52,18 +53,18 @@ const GeminiCard = () => {const [input, setInput] = useState("");
               
                 <form
                     onSubmit={handleSubmit}
-                    className="flex p-3 border-t bg-gray-100"
+                    className="flex p-3 "
                 >
                     <input
                         type="text"
-                        placeholder="Type a message..."
-                        className="flex-1 p-2 border rounded-lg focus:outline-none"
+                        placeholder="Ask me Anything..."
+                        className="flex-1 p-3 border rounded-lg focus:outline-none"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                     />
                     <button
                         type="submit"
-                        className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                        className="ml-2 px-4 py-2 bg-black text-white rounded-lg"
                     >
                         Send
                     </button>
@@ -73,4 +74,4 @@ const GeminiCard = () => {const [input, setInput] = useState("");
     );
 };
 
-export default GeminiCard
+export default ChatBotCard
