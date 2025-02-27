@@ -9,7 +9,7 @@ const ChatbotButton = () => {
      setShowChatBotCard((prev) => !prev);
    };
   return (
-    <div className=' mt-4 mx-auto p-4 flex items-center justify-center flex-col'>
+    <div className='mx-auto flex items-center justify-center flex-col'>
           
           <button
             className=" bg-white shadow-2xl px-10 py-3 rounded-2xl hover:bg-gray-100 cursor-pointer flex gap-3 justify-between"
