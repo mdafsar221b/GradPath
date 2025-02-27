@@ -7,7 +7,7 @@ const CountdownTimer = () => {
   const calculateTimeLeft = () => {
     const now = new Date();
     const difference = targetDate - now;
-    
+
     if (difference <= 0) {
       return { months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
     }
@@ -53,7 +53,7 @@ const CountdownTimer = () => {
   }, []);
 
   return (
-    <div className="text-center p-4 flex items-center justify-center flex-col border border-gray-300 rounded-lg shadow-lg">
+    <div className="text-center p-4 flex items-center justify-center flex-col  rounded-lg ">
       <h2 className="text-2xl font-bold text-blue-600">EVERY SECOND COUNTS</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 text-center mt-4">
         <div className="p-4 border rounded-lg bg-gray-100">

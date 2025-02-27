@@ -11,9 +11,12 @@ function App() {
   return (
        <div>
       <Header />
+      <div className="sm:h-screen w-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
       <CountdownTimer/>
     <div className="max-w-4xl mt-4 mx-auto p-4 sm:p-8 flex items-center just">
         <About />
+      </div>
+
       </div>
 
 
