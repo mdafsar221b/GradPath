@@ -1,4 +1,4 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, Navigate } from "react-router-dom";
 
 
 
@@ -19,6 +19,7 @@ const Layout = () => {
                 ))}
             </nav> 
         <main>
+        <Navigate to="/semester/1" replace />
         <Outlet />
         </main>
 

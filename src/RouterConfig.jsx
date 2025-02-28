@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter,Navigate } from 'react-router-dom';
 import App from './App';
 import SemesterComponent from './Componants/SemesterComponent';
 import { semOneSub, semTwoSub, semThreeSub, semFourSub, semFiveSub, semSixSub } from './utils/constants';
@@ -17,6 +17,10 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
+      {
+        index: true, //  default loads
+        element: <Navigate to="/semester/1" replace />
+      },
       {
         path: 'semester/:semesterNumber',
         element: <SemesterComponent />,
