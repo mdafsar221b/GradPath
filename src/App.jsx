@@ -9,7 +9,7 @@ import CountdownTimer from "./Componants/CountdownTimer";
 function App() {
  
   return (
-       <div>
+       <div className="relative">
       <Header />
       <div className="sm:h-screen w-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
       <CountdownTimer/>
@@ -20,8 +20,8 @@ function App() {
       </div>
 
 
-      <div className="max-w-4xl mt-4 mx-auto p-4 sm:p-8 flex items-center justify-center flex-col">
-        <ChatbotButton/>
+      <div className="max-w-4xl mt-4 mx-auto p-4 sm:p-8 flex items-center justify-center flex-col ">
+        
         <Layout />
       </div>
 
@@ -31,6 +31,7 @@ function App() {
             <YoutubeResources />
           </div>
         </div>
+        <ChatbotButton/>
 
          <Footer />
        </div> 
