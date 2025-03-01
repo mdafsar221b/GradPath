@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ChatBotCard from "./ChatBotCard";
-import { motion, AnimatePresence } from "framer-motion"; // ✅ Import Framer Motion
-
+import { motion, AnimatePresence } from "framer-motion"; 
 const ChatbotButton = () => {
   const [showChatBotCard, setShowChatBotCard] = useState(false);
 
@@ -16,7 +15,7 @@ const ChatbotButton = () => {
         className="bg-black shadow-2xl px-3 py-3 rounded-2xl hover:bg-gray-100 cursor-pointer flex gap-3 justify-between"
         onClick={toggleChatBotCard}
       >
-        {showChatBotCard ? <img src="/src/assets/cross-circle-svg.svg" alt="AI Logo" className="max-w-6" /> : <img src="/src/assets/AI-logo.svg" alt="AI Logo" className="max-w-6 animate-spin" />}
+        {showChatBotCard ? <img src="/src/assets/cross-circle-svg.svg" alt="AI Logo" className="max-w-6" /> : <img src="/src/assets/AI-logo.svg" alt="AI Logo" className="max-w-6 animate-pulse" />}
       </button>
 
       {/* Animated ChatBotCard */}
