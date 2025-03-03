@@ -25,9 +25,9 @@ export const PRODUCTS = [
   ];
   
   export const Icons = [
-    { name: "logo-facebook", link: "#" },
-    { name: "logo-twitter", link: "#" },
-    { name: "logo-github", link: "#" },
-    { name: "logo-linkedin", link: "#" },
-    { name: "logo-instagram", link: "#" },
+   
+    { name: "/src/assets/icons/icons8-twitter-30.png", link: "https://x.com/Psychopath_1_" },
+    { name: "/src/assets/icons/icons8-github-30.png", link: "https://github.com/mdafsar221b" },
+    { name: "/src/assets/icons/icons8-linkedin-50.png", link: "https://www.linkedin.com/in/md-afsar-b13782270" },
+    { name: "/src/assets/icons/icons8-instagram-logo-50.png", link: "https://www.instagram.com/o__osayyed" },
   ];
