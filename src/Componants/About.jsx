@@ -5,7 +5,7 @@ import Typewriter from "./Typewriter"; // Import the Typewriter component
 const About = () => {
   return (
     <div className="flex items-center justify-center flex-col">
-      <h1 className="text-white mt-2 text-5xl sm:text-6xl font-bold text-center font-Grechen mb-6">
+      <h1 className="text-white mt-2 text-5xl sm:text-6xl font-bold text-center font-Flux mb-6">
         <Typewriter text="Your One-Stop Hub for Notes & PYQ's" speed={100} />
       </h1>
 

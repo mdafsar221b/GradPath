@@ -198,12 +198,29 @@ export const semOneSub =  [
   link:"https://www.youtube.com/watch?v=L9X7XXfHYdU&list=PLxCzCOWd7aiHMonh3G6QNKq53C6oNXGrX"
 
  },
- {
-  title:"COA",
-  channel: "Gate Smasher",
-  thumbnail: "/src/assets/thumbnails/COA-thumb.png",
 
-  link:"https://www.youtube.com/watch?v=L9X7XXfHYdU&list=PLxCzCOWd7aiHMonh3G6QNKq53C6oNXGrX"
+ {
+  title:"DBMS",
+  channel: "Love Babbar",
+  thumbnail: "/src/assets/thumbnails/DBMS-thumb.png",
+
+  link:"https://www.youtube.com/watch?v=dl00fOOYLOM&t=4803s&pp=ygUNZGJtcyBvbmUgc2hvdA%3D%3D"
+
+ },
+ {
+  title:"Computer Graphic",
+  channel: "Education 4u",
+  thumbnail: "/src/assets/thumbnails/CG-thumb.png",
+
+  link:"https://www.youtube.com/watch?v=NmMky9Pg8Yc&list=PLrjkTql3jnm9cY0ijEyr2fPdwnH-0t8EY"
+
+ },
+ {
+  title:"Software Engineering ",
+  channel: "Gate Smasher",
+  thumbnail: "/src/assets/thumbnails/SE-thumb.png",
+
+  link:"https://www.youtube.com/watch?v=NmMky9Pg8Yc&list=PLrjkTql3jnm9cY0ijEyr2fPdwnH-0t8EY"
 
  },
 

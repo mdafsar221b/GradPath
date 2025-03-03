@@ -4,9 +4,9 @@ export const PRODUCTS = [
     { name: "GFG", link: "https://www.geeksforgeeks.org/" },
   ];
   export const RESOURCES = [
-    { name: "GD Link DDU PYQs", link: "#" },
-    { name: "Byter App", link: "#" },
-    { name: "Hackathons", link: "#" },
+    { name: "GD Link DDU PYQs", link: "https://drive.google.com/drive/u/0/mobile/folders/16vCx1fV0fNOTj_320aSE6xP3yUQ3WWFt" },
+    { name: "Byter App", link: "https://drive.google.com/drive/u/0/mobile/folders/16vCx1fV0fNOTj_320aSE6xP3yUQ3WWFt" },
+    { name: " Free Courses", link: "https://drive.google.com/drive/u/0/mobile/folders/1xc8-LV8-t7-Hg_4Lx2LfI8E68bAu1d9b/1cDG-bFn53TxHLT7eeJI99Q-IP9rhYASc?sort=13&direction=a" },
     { name: "Online evenet", link: "#" },
     { name: "Nostrud exercitation", link: "#" },
   ];
