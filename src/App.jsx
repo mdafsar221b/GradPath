@@ -9,7 +9,7 @@ import CountdownTimer from "./Componants/CountdownTimer";
 function App() {
  
   return (
-       <div className="relative">
+       <div className="relative bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
       <Header />
       <div className="sm:h-screen w-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
       <CountdownTimer/>
@@ -20,7 +20,7 @@ function App() {
       </div>
 
 
-      <div className="max-w-4xl mt-4 mx-auto p-4 sm:p-8 flex items-center justify-center flex-col ">
+      <div className="max-w-4xl mt-4 mx-auto p-4 sm:p-8 flex items-center justify-center flex-col shadow-xl">
         
         <Layout />
       </div>

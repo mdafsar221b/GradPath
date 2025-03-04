@@ -7,7 +7,7 @@ const YoutubeResources = () => {
       {ResourceDetails.map((ResourceDetail, index) => (
         <div
           key={index}
-          className="relative flex w-60 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md transition-transform transform hover:scale-102 mb-3"
+          className="relative flex w-60 flex-col rounded-xl bg-gray-800 bg-clip-border text-gray-200 shadow-md transition-transform transform hover:scale-102 mb-3"
         >
           <div className="relative mx-4 -mt-6  overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
             <img src={ResourceDetail.thumbnail} alt="Thumbnails" />
