@@ -25,22 +25,22 @@ export const semOneSub =  [
   export const semTwoSub = [
     { name: "Discrete Mathematics ",
       code: "BCA-201",
-      PYQ: "",
+      PYQ: "/src/assets/Resources/Semester2/BCA_201_2022_merged.pdf",
       notes: ""
      },
     { name: " Accounting and Financial Management ",
       code: "BCA-202",
-      PYQ:"",
+      PYQ:"/src/assets/Resources/Semester2/BCA 202 2022_merged.pdf",
       notes: ""
      },
     { name: " Digital Circuit and Logic Design",
       code: "BCA-203",
-     PYQ:"",
+     PYQ:"/src/assets/Resources/Semester2/BCA_203_2022_merged.pdf",
      notes: ""
      },
     { name: " Introductions to Object Oriented Programming & C++ ",
       code: "BCA-204",
-      PYQ:"",
+      PYQ:"/src/assets/Resources/Semester2/BCA_204_2022_merged.pdf",
       notes: ""
      }
    
