@@ -73,22 +73,22 @@ export const semOneSub =  [
   export const semFourSub = [
     { name: "DBMS",
       code: "BCA-401",
-      PYQ: "",
+      PYQ: "/src/assets/Resources/Semester4/BCA_401_2022-23_merged.pdf",
       notes: ""
      },
     { name: "  Operation Research",
       code: "BCA-402",
-      PYQ:"",
+      PYQ:"/src/assets/Resources/Semester4/BCA_402_2022-23_merged.pdf",
       notes: ""
      },
     { name: " COMPUTER GRAPHICS",
       code: "BCA-403",
-     PYQ:"",
+     PYQ:"/src/assets/Resources/Semester4/BCA_403_2022-23_merged.pdf",
      notes: ""
      },
     { name: "Software Engineering ",
       code: "BCA-404",
-      PYQ:"",
+      PYQ:"/src/assets/Resources/Semester4/BCA_404_2022-23_merged.pdf",
       notes: ""
      }
    
