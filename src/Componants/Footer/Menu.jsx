@@ -7,8 +7,8 @@ export const PRODUCTS = [
     { name: "GD Link DDU PYQs", link: "https://drive.google.com/drive/u/0/mobile/folders/16vCx1fV0fNOTj_320aSE6xP3yUQ3WWFt" },
     { name: "Byter App", link: "https://drive.google.com/drive/u/0/mobile/folders/16vCx1fV0fNOTj_320aSE6xP3yUQ3WWFt" },
     { name: " Free Courses", link: "https://drive.google.com/drive/u/0/mobile/folders/1xc8-LV8-t7-Hg_4Lx2LfI8E68bAu1d9b/1cDG-bFn53TxHLT7eeJI99Q-IP9rhYASc?sort=13&direction=a" },
-    { name: "Online evenet", link: "#" },
-    { name: "Nostrud exercitation", link: "#" },
+    // { name: "Online evenet", link: "#" },
+    // { name: "Nostrud exercitation", link: "#" },
   ];
 //   export const COMPANY = [
 //     { name: "Diversity & inclusion", link: "#" },
@@ -20,7 +20,7 @@ export const PRODUCTS = [
   export const SUPPORT = [
     { name: "Documentation", link: "#" },
     { name: "Tutorials & guides", link: "#" },
-    { name: "Webinars", link: "#" },
+    // { name: "Webinars", link: "#" },
     { name: "Open-source", link: "#" },
   ];
   
@@ -30,4 +30,5 @@ export const PRODUCTS = [
     { name: "/src/assets/icons/icons8-github-30.png", link: "https://github.com/mdafsar221b" },
     { name: "/src/assets/icons/icons8-linkedin-50.png", link: "https://www.linkedin.com/in/md-afsar-b13782270" },
     { name: "/src/assets/icons/icons8-instagram-logo-50.png", link: "https://www.instagram.com/o__osayyed" },
+    { name: "/src/assets/icons/icons8-telegram-50.png", link: "https://t.me/o_o221b" },
   ];
