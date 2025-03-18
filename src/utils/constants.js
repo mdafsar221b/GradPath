@@ -2,7 +2,7 @@ export const semOneSub =  [
     { name: " IT Tools and Applications  ",
       code: "BCA-101",
       PYQ: "",
-      notes: ""
+      notes: "/assets/Resources/Semester1/IT Tools Notes.pdf"
      },
     { name: " Principles of Mathematics ",
       code: "BCA-102",
@@ -11,13 +11,13 @@ export const semOneSub =  [
      },
     { name: "Functional English",
       code: "BCA-103",
-     PYQ:"",
+     PYQ:"/assets/Resources/Semester1/English PYQ.pdf",
      notes: ""
      },
     { name: "Introduction to Computer Programming in ‘C’",
       code: "BCA-104",
       PYQ:"",
-      notes: ""
+      notes: "/assets/Resources/Semester1/C_programming_notes_.pdf"
      }
    
   ];
@@ -49,22 +49,22 @@ export const semOneSub =  [
   export const semThreeSub =  [
     { name: "Operating System",
       code: "BCA-301",
-      PYQ: "",
+      PYQ: "/assets/Resources/Semester3/Operating System PYQ.pdf",
       notes: "/assets/Resources/Semester3/Handwritten-OS-notes.pdf"
      },
     { name: " Computer Oriented Mathematics",
       code: "BCA-302",
-      PYQ:"",
+      PYQ:"/assets/Resources/Semester3/COM PYQ.pdf",
       notes: ""
      },
     { name: "Data Structure",
       code: "BCA-303",
-      PYQ:"",
+      PYQ:"/assets/Resources/Semester3/DS PYQ.pdf",
      notes: "/assets/Resources/Semester3/DSA_Notes.pdf"
      },
     { name: " Computer Organization and Architecture ",
       code: "BCA-304",
-      PYQ: "",
+      PYQ: "/assets/Resources/Semester3/COA PYQ.pdf",
       notes: ""
      }
    
@@ -74,7 +74,7 @@ export const semOneSub =  [
     { name: "DBMS",
       code: "BCA-401",
       PYQ: "/assets/Resources/Semester4/BCA_401_2022-23_merged.pdf",
-      notes: ""
+      notes: "/assets/Resources/Semester4/DBMS Notes.pdf"
      },
     { name: "  Operation Research",
       code: "BCA-402",
@@ -108,7 +108,7 @@ export const semOneSub =  [
     { name: "COMPUTER NETWORKS",
       code: "BCA-503",
      PYQ:"",
-     notes: ""
+     notes: "public/assets/Resources/Semester5/Computer Network Notes.pdf"
      },
     { name: "Software Project Management",
       code: "BCA-504",

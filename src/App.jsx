@@ -9,6 +9,7 @@ import ChatbotButton from "./Componants/ChatbotButton";
 import CountdownTimer from "./Componants/CountdownTimer";
 import ImportantLinks from "./Componants/ImportantLinks";
 import Notice from "./Componants/Notice";
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
       </div>
 
       <ChatbotButton />
+      <Analytics/>
       <Footer />
     </div>
   );
