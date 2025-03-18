@@ -6,7 +6,7 @@ const HeaderYT = () => {
     <div className="flex gap-3 mx-4  sm:mx-6 lg:mx-8 text-gray-100">
       <p className=" text-2xl sm:text-4xl font-bold"> YouTube </p>
       <img
-        src="/src/assets/youtube-svgrepo-com.svg"
+        src="/assets/youtube-svgrepo-com.svg"
         alt=""
         className="w-10 mt[-20px]"
       />

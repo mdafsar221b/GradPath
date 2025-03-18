@@ -15,7 +15,7 @@ const ChatbotButton = () => {
         className="bg-black shadow-2xl px-3 py-3 rounded-2xl hover:bg-gray-100 cursor-pointer flex gap-3 justify-between"
         onClick={toggleChatBotCard}
       >
-        {showChatBotCard ? <img src="/src/assets/cross-circle-svg.svg" alt="AI Logo" className="max-w-6" /> : <img src="/src/assets/AI-logo.svg" alt="AI Logo" className="max-w-6 animate-pulse" />}
+        {showChatBotCard ? <img src="/assets/cross-circle-svg.svg" alt="AI Logo" className="max-w-6" /> : <img src="/assets/AI-logo.svg" alt="AI Logo" className="max-w-6 animate-pulse" />}
       </button>
 
       {/* Animated ChatBotCard */}

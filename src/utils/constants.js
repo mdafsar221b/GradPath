@@ -25,22 +25,22 @@ export const semOneSub =  [
   export const semTwoSub = [
     { name: "Discrete Mathematics ",
       code: "BCA-201",
-      PYQ: "/src/assets/Resources/Semester2/BCA_201_2022_merged.pdf",
+      PYQ: "/assets/Resources/Semester2/BCA_201_2022_merged.pdf",
       notes: ""
      },
     { name: " Accounting and Financial Management ",
       code: "BCA-202",
-      PYQ:"/src/assets/Resources/Semester2/BCA 202 2022_merged.pdf",
+      PYQ:"/assets/Resources/Semester2/BCA 202 2022_merged.pdf",
       notes: ""
      },
     { name: " Digital Circuit and Logic Design",
       code: "BCA-203",
-     PYQ:"/src/assets/Resources/Semester2/BCA_203_2022_merged.pdf",
+     PYQ:"/assets/Resources/Semester2/BCA_203_2022_merged.pdf",
      notes: ""
      },
     { name: " Introductions to Object Oriented Programming & C++ ",
       code: "BCA-204",
-      PYQ:"/src/assets/Resources/Semester2/BCA_204_2022_merged.pdf",
+      PYQ:"/assets/Resources/Semester2/BCA_204_2022_merged.pdf",
       notes: ""
      }
    
@@ -50,7 +50,7 @@ export const semOneSub =  [
     { name: "Operating System",
       code: "BCA-301",
       PYQ: "",
-      notes: "/src/assets/Resources/Semester3/Handwritten-OS-notes.pdf"
+      notes: "/assets/Resources/Semester3/Handwritten-OS-notes.pdf"
      },
     { name: " Computer Oriented Mathematics",
       code: "BCA-302",
@@ -60,7 +60,7 @@ export const semOneSub =  [
     { name: "Data Structure",
       code: "BCA-303",
       PYQ:"",
-     notes: "/src/assets/Resources/Semester3/DSA_Notes.pdf"
+     notes: "/assets/Resources/Semester3/DSA_Notes.pdf"
      },
     { name: " Computer Organization and Architecture ",
       code: "BCA-304",
@@ -73,22 +73,22 @@ export const semOneSub =  [
   export const semFourSub = [
     { name: "DBMS",
       code: "BCA-401",
-      PYQ: "/src/assets/Resources/Semester4/BCA_401_2022-23_merged.pdf",
+      PYQ: "/assets/Resources/Semester4/BCA_401_2022-23_merged.pdf",
       notes: ""
      },
     { name: "  Operation Research",
       code: "BCA-402",
-      PYQ:"/src/assets/Resources/Semester4/BCA_402_2022-23_merged.pdf",
+      PYQ:"/assets/Resources/Semester4/BCA_402_2022-23_merged.pdf",
       notes: ""
      },
     { name: " COMPUTER GRAPHICS",
       code: "BCA-403",
-     PYQ:"/src/assets/Resources/Semester4/BCA_403_2022-23_merged.pdf",
+     PYQ:"/assets/Resources/Semester4/BCA_403_2022-23_merged.pdf",
      notes: ""
      },
     { name: "Software Engineering ",
       code: "BCA-404",
-      PYQ:"/src/assets/Resources/Semester4/BCA_404_2022-23_merged.pdf",
+      PYQ:"/assets/Resources/Semester4/BCA_404_2022-23_merged.pdf",
       notes: ""
      }
    
@@ -137,7 +137,7 @@ export const semOneSub =  [
  {
   title:"C Programming",
   channel: " College Wallah ",
-  thumbnail: "/src/assets/thumbnails/CW.png",
+  thumbnail: "/assets/thumbnails/CW.png",
 
   link: " https://www.youtube.com/watch?v=rQoqCP7LX60&list=PLxgZQoSe9cg1drBnejUaDD9GEJBGQ5hMt"
 
@@ -145,7 +145,7 @@ export const semOneSub =  [
  {
   title:"Accounting ",
   channel: "Accounting MasterClass",
-  thumbnail: "/src/assets/thumbnails/accounting-thumb.png",
+  thumbnail: "/assets/thumbnails/accounting-thumb.png",
 
   link:"https://www.youtube.com/watch?v=fcjsgiTHl2k&list=PLaAhQ2ofZZRCJIUbTjeUXx4JoZ7CyGHr3"
 
@@ -153,7 +153,7 @@ export const semOneSub =  [
  {
   title:"DCLD",
   channel: "Neso Academy",
-  thumbnail: "/src/assets/thumbnails/DCLD-thumb.png",
+  thumbnail: "/assets/thumbnails/DCLD-thumb.png",
 
   link:"https://www.youtube.com/watch?v=M0mx8S05v60&list=PLBlnK6fEyqRjMH3mWf6kwqiTbT798eAOm"
 
@@ -161,7 +161,7 @@ export const semOneSub =  [
  {
   title:"C++ & OOPs",
   channel: "Saurabh Shukla",
-  thumbnail: "/src/assets/thumbnails/CPP-thumb.png",
+  thumbnail: "/assets/thumbnails/CPP-thumb.png",
 
   link:"https://www.youtube.com/watch?v=Iuo9PpGE04Y&list=PLLYz8uHU480j37APNXBdPz7YzAi4XlQUF"
 
@@ -169,7 +169,7 @@ export const semOneSub =  [
  {
   title:"Operating System",
   channel: "Gate Smasher",
-  thumbnail: "/src/assets/thumbnails/OS-thumb.png",
+  thumbnail: "/assets/thumbnails/OS-thumb.png",
 
   link:"https://www.youtube.com/watch?v=bkSWJJZNgf8&list=PLxCzCOWd7aiGz9donHRrE9I3Mwn6XdP8p"
 
@@ -177,7 +177,7 @@ export const semOneSub =  [
  {
   title:"Mathematics ",
   channel: "Dr. Gajendra Purohit",
-  thumbnail: "/src/assets/thumbnails/COM-thumb.png",
+  thumbnail: "/assets/thumbnails/COM-thumb.png",
 
   link:"https://www.youtube.com/watch?v=rWyTk9eubKM&list=PLU6SqdYcYsfLrTna7UuaVfGZYkNo0cpVC"
 
@@ -185,7 +185,7 @@ export const semOneSub =  [
  {
   title:"DSA",
   channel: "University Academy",
-  thumbnail: "/src/assets/thumbnails/DSA-thumb.png",
+  thumbnail: "/assets/thumbnails/DSA-thumb.png",
 
   link:"https://www.youtube.com/watch?v=ouWefOMkMJA&list=PL-JvKqQx2AtcnX8uPrdjvCplAmwTSFhMO"
 
@@ -193,7 +193,7 @@ export const semOneSub =  [
  {
   title:"COA",
   channel: "Gate Smasher",
-  thumbnail: "/src/assets/thumbnails/COA-thumb.png",
+  thumbnail: "/assets/thumbnails/COA-thumb.png",
 
   link:"https://www.youtube.com/watch?v=L9X7XXfHYdU&list=PLxCzCOWd7aiHMonh3G6QNKq53C6oNXGrX"
 
@@ -202,7 +202,7 @@ export const semOneSub =  [
  {
   title:"DBMS",
   channel: "Love Babbar",
-  thumbnail: "/src/assets/thumbnails/DBMS-thumb.png",
+  thumbnail: "/assets/thumbnails/DBMS-thumb.png",
 
   link:"https://www.youtube.com/watch?v=dl00fOOYLOM&t=4803s&pp=ygUNZGJtcyBvbmUgc2hvdA%3D%3D"
 
@@ -210,7 +210,7 @@ export const semOneSub =  [
  {
   title:"Computer Graphic",
   channel: "Education 4u",
-  thumbnail: "/src/assets/thumbnails/CG-thumb.png",
+  thumbnail: "/assets/thumbnails/CG-thumb.png",
 
   link:"https://www.youtube.com/watch?v=NmMky9Pg8Yc&list=PLrjkTql3jnm9cY0ijEyr2fPdwnH-0t8EY"
 
@@ -218,7 +218,7 @@ export const semOneSub =  [
  {
   title:"Software Engineering ",
   channel: "Gate Smasher",
-  thumbnail: "/src/assets/thumbnails/SE-thumb.png",
+  thumbnail: "/assets/thumbnails/SE-thumb.png",
 
   link:"https://www.youtube.com/watch?v=NmMky9Pg8Yc&list=PLrjkTql3jnm9cY0ijEyr2fPdwnH-0t8EY"
 

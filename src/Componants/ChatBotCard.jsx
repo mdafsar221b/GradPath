@@ -30,7 +30,7 @@ const ChatBotCard = () => {
                 <div className="bg-black text-white p-4 rounded-t-lg text-center font-semibold flex justify-between items-center">
                     <div className="flex gap-3 items-center">
                         <p>Chat Bot</p>
-                        <img src="/src/assets/AI-logo.svg" alt="logo" className="w-8" />
+                        <img src="/assets/AI-logo.svg" alt="logo" className="w-8" />
                     </div>
                     <button 
                         onClick={() => setIsPopupOpen(true)} 
