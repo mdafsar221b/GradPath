@@ -54,12 +54,12 @@ const CountdownTimer = () => {
 
   return (
     <div className="text-center p-4 flex items-center justify-center flex-col  rounded-lg ">
-      <h2 className="text-2xl font-bold text-blue-600">EVERY SECOND COUNTS</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 text-center mt-4">
-        <div className="p-4 border rounded-lg bg-gray-100">
+      <h2 className="text-2xl text-center font-bold text-blue-600">EVERY SECOND COUNTS</h2>
+      <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 gap-4 text-center text-red-600 mt-4">
+        {/* <div className="p-4 border rounded-lg bg-gray-100">
           <p className="text-xl font-bold">{timeLeft.months}</p>
           <p className="text-sm">Months</p>
-        </div>
+        </div> */}
         <div className="p-4 border rounded-lg bg-gray-100">
           <p className="text-xl font-bold">{timeLeft.days}</p>
           <p className="text-sm">Days</p>

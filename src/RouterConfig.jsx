@@ -17,10 +17,10 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
-      {
-        index: true, //  default loads
-        element: <Navigate to="/semester/1" replace />
-      },
+      // {
+      //   index: true, //  default loads
+      //   element: <Navigate to="/semester/1" replace />
+      // },
       {
         path: 'semester/:semesterNumber',
         element: <SemesterComponent />,
