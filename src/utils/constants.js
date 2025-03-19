@@ -2,7 +2,7 @@ export const semOneSub =  [
     { name: " IT Tools and Applications  ",
       code: "BCA-101",
       PYQ: "",
-      notes: "/assets/Resources/Semester1/IT Tools Notes.pdf"
+      notes: "https://drive.google.com/uc?export=download&id=1g-C61jiKTa73DxTZ7ZJnRMVtJULLeHKj"
      },
     { name: " Principles of Mathematics ",
       code: "BCA-102",
@@ -17,7 +17,7 @@ export const semOneSub =  [
     { name: "Introduction to Computer Programming in ‘C’",
       code: "BCA-104",
       PYQ:"",
-      notes: "/assets/Resources/Semester1/C_programming_notes_.pdf"
+      notes: "https://drive.google.com/uc?export=download&id=1GBR5b6qbMwNZHdcEr2KaqPi-P1WFSHvC"
      }
    
   ];
@@ -31,17 +31,17 @@ export const semOneSub =  [
     { name: " Accounting and Financial Management ",
       code: "BCA-202",
       PYQ:"/assets/Resources/Semester2/BCA 202 2022_merged.pdf",
-      notes: ""
+      notes: "/assets/Resources/Semester2/financial management.pdf"
      },
     { name: " Digital Circuit and Logic Design",
       code: "BCA-203",
      PYQ:"/assets/Resources/Semester2/BCA_203_2022_merged.pdf",
-     notes: ""
+     notes: "/assets/Resources/Semester2/DCLD notes.pdf.pdf"
      },
     { name: " Introductions to Object Oriented Programming & C++ ",
       code: "BCA-204",
       PYQ:"/assets/Resources/Semester2/BCA_204_2022_merged.pdf",
-      notes: ""
+      notes: "https://drive.google.com/file/d/1NXtNY5zQXIUMLcBan-_MpuGN_gnZKTMh/view"
      }
    
   ];
@@ -74,7 +74,7 @@ export const semOneSub =  [
     { name: "DBMS",
       code: "BCA-401",
       PYQ: "/assets/Resources/Semester4/BCA_401_2022-23_merged.pdf",
-      notes: "/assets/Resources/Semester4/DBMS Notes.pdf"
+      notes: "https://drive.google.com/uc?export=download&id=1GBR5b6qbMwNZHdcEr2KaqPi-P1WFSHvC"
      },
     { name: "  Operation Research",
       code: "BCA-402",
@@ -84,12 +84,12 @@ export const semOneSub =  [
     { name: " COMPUTER GRAPHICS",
       code: "BCA-403",
      PYQ:"/assets/Resources/Semester4/BCA_403_2022-23_merged.pdf",
-     notes: ""
+     notes: "https://drive.google.com/uc?export=download&id=1GBR5b6qbMwNZHdcEr2KaqPi-P1WFSHvC"
      },
     { name: "Software Engineering ",
       code: "BCA-404",
       PYQ:"/assets/Resources/Semester4/BCA_404_2022-23_merged.pdf",
-      notes: ""
+      notes: "https://drive.google.com/uc?export=download&id=1jdCtWM0GWKmeP7dEC872WVjOhw6Ro8V7"
      }
    
   ];
@@ -108,7 +108,7 @@ export const semOneSub =  [
     { name: "COMPUTER NETWORKS",
       code: "BCA-503",
      PYQ:"",
-     notes: "public/assets/Resources/Semester5/Computer Network Notes.pdf"
+     notes: "https://shorturl.at/1EIUf"
      },
     { name: "Software Project Management",
       code: "BCA-504",

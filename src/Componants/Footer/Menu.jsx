@@ -2,6 +2,8 @@ export const PRODUCTS = [
     { name: "A to Z math", link: "https://atozmath.com/default.aspx" },
     { name: "W3school", link: "https://www.w3schools.com/" },
     { name: "GFG", link: "https://www.geeksforgeeks.org/" },
+    { name: "NotebookLM", link: "https://notebooklm.google/" },
+    
   ];
   export const RESOURCES = [
     {
@@ -32,10 +34,10 @@ export const PRODUCTS = [
 //     { name: "Online communities", link: "#" },
 //   ];
   export const SUPPORT = [
-    { name: "Documentation", link: "#" },
-    { name: "Tutorials & guides", link: "#" },
+    { name: "Documentation", link: "https://developer.mozilla.org/en-US/" },
+    { name: "Tutorials & guides", link: "https://github.com/dipakkr/A-to-Z-Resources-for-Students" },
     // { name: "Webinars", link: "#" },
-    { name: "Open-source", link: "#" },
+    { name: "Open-source", link: "https://github.com/practical-tutorials/project-based-learning" },
   ];
   
   export const Icons = [
