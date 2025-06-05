@@ -16,7 +16,7 @@ function App() {
     <div className="relative bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
       <Header />
       <div className="sm:h-screen w-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">
-        <CountdownTimer />
+        {/* <CountdownTimer /> */}
         <div className="max-w-4xl mt-4 mx-auto p-4 sm:p-8 flex flex-col items-center justify-center">
           <About />
         <Notice/>
@@ -36,7 +36,7 @@ function App() {
         </div>
       </div>
 
-      <ChatbotButton />
+      {/* <ChatbotButton /> */}
       <Analytics/>
       <Footer />
     </div>
