@@ -7,7 +7,7 @@ export interface ImportantLink {
 export const ImportantLinksData: ImportantLink[] = [
   {
     name: "DDU University Portal",
-    link: "https://www.ddugorakhpuruniversity.in/",
+    link: "https://ddugu.ac.in/newweb/#gsc.tab=0",
     icon: "University",
   },
   {
@@ -17,7 +17,7 @@ export const ImportantLinksData: ImportantLink[] = [
   },
   {
     name: "Academic Calendar",
-    link: "https://www.ddugorakhpuruniversity.in/academics/calendar/",
+    link: "https://ddugu.ac.in/newweb/pdf/holiday-list-2025.pdf",
     icon: "CalendarCheck",
   },
   {

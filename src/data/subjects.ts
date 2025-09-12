@@ -1,10 +1,4 @@
-// This file contains all the subjects, notes, PYQs, and YouTube resources
-// for the DDU BCA program, structured by semester.
 
-// import { ResourceDetails } from "./resources";
-// import { ImportantLinks } from "./links";
-
-// Type definition for a subject object for better type safety
 export interface Subject {
   name: string;
   code: string;
@@ -106,7 +100,7 @@ export const semFourSub: Subject[] = [
     name: "DBMS",
     code: "BCA-401",
     PYQ: "/assets/Resources/Semester4/BCA_401_2022-23_merged.pdf",
-    notes: "https://drive.com/uc?export=download&id=1GBR5b6qbMwNZHdcEr2KaqPi-P1WFSHvC",
+    notes: "https://drive.google.com/uc?export=download&id=1GBR5b6qbMwNZHdcEr2KaqPi-P1WFSHvC",
   },
   {
     name: " Operation Research",
@@ -125,7 +119,7 @@ export const semFourSub: Subject[] = [
     code: "BCA-404",
     PYQ: "/assets/Resources/Semester4/BCA_404_2022-23_merged.pdf",
     notes:
-      "https://drive.com/uc?export=download&id=1jdCtWM0GWKmeP7dEC872WVjOhw6Ro8V7",
+      "https://drive.google.com/uc?export=download&id=1jdCtWM0GWKmeP7dEC872WVjOhw6Ro8V7",
   },
 ];
 
