@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import { 
-  Search, 
-  BookOpen, 
-  Video, 
-  ExternalLink, 
-  FileText, 
+import { useState, useEffect, useMemo, useCallback } from "react";
+import {
+  Search,
+  BookOpen,
+  Video,
+  ExternalLink,
+  FileText,
   Download,
   ArrowRight,
   X,
@@ -33,10 +33,8 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // Sample search data - you'll need to replace this with your actual data
   const searchData = useMemo(() => {
     const results: SearchResult[] = [
-      // Sample subjects - replace with your actual subjects data
       {
         type: 'subject',
         title: 'Data Structures and Algorithms',
@@ -64,8 +62,6 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
         hasNotes: false,
         hasPYQ: true,
       },
-      
-      // Sample videos - replace with your actual video resources
       {
         type: 'video',
         title: 'Complete DSA Course',
@@ -80,8 +76,6 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
         href: 'https://youtube.com/watch?v=example2',
         external: true,
       },
-      
-      // Sample links - replace with your actual important links
       {
         type: 'link',
         title: 'University Portal',
@@ -101,27 +95,33 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
     return results;
   }, []);
 
-  // Filter results based on query
   const filteredResults = useMemo(() => {
     if (!query.trim()) {
-      return searchData.slice(0, 8); // Show first 8 results when no query
+      return searchData.slice(0, 8);
     }
 
     const lowercaseQuery = query.toLowerCase();
     return searchData
-      .filter(item => 
+      .filter(item =>
         item.title.toLowerCase().includes(lowercaseQuery) ||
         item.subtitle?.toLowerCase().includes(lowercaseQuery)
       )
-      .slice(0, 10); // Limit to 10 results
+      .slice(0, 10);
   }, [query, searchData]);
 
-  // Reset selection when results change
   useEffect(() => {
     setSelectedIndex(0);
   }, [filteredResults]);
 
-  // Handle keyboard navigation
+  const handleResultClick = useCallback((result: SearchResult) => {
+    if (result.external) {
+      window.open(result.href, '_blank');
+    } else {
+      window.location.href = result.href;
+    }
+    setIsOpen(false);
+  }, [setIsOpen]);
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -150,24 +150,14 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, filteredResults, selectedIndex, setIsOpen]);
+  }, [isOpen, filteredResults, selectedIndex, setIsOpen, handleResultClick]);
 
-  // Reset search when modal closes
   useEffect(() => {
     if (!isOpen) {
       setQuery("");
       setSelectedIndex(0);
     }
   }, [isOpen]);
-
-  const handleResultClick = (result: SearchResult) => {
-    if (result.external) {
-      window.open(result.href, '_blank');
-    } else {
-      window.location.href = result.href;
-    }
-    setIsOpen(false);
-  };
 
   const getResultIcon = (type: string) => {
     switch (type) {
@@ -199,15 +189,12 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center p-2 sm:p-4 pt-4 sm:pt-16">
-      {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm"
         onClick={() => setIsOpen(false)}
       />
-      
-      {/* Modal */}
+
       <div className="relative w-full max-w-2xl bg-white dark:bg-black border border-black/10 dark:border-white/10 rounded-lg overflow-hidden shadow-2xl mx-auto">
-        {/* Search Header */}
         <div className="flex items-center px-3 sm:px-4 py-3 border-b border-black/10 dark:border-white/10">
           <Search className="w-4 h-4 text-black/40 dark:text-white/40 mr-2 sm:mr-3 flex-shrink-0" />
           <input
@@ -225,28 +212,26 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
           </button>
         </div>
 
-        {/* Search Results */}
         <div className="max-h-[60vh] sm:max-h-96 overflow-y-auto">
           {filteredResults.length > 0 ? (
             <div className="p-1 sm:p-2">
               {filteredResults.map((result, index) => {
                 const Icon = getResultIcon(result.type);
                 const isSelected = index === selectedIndex;
-                
+
                 return (
                   <button
                     key={`${result.type}-${result.title}-${index}`}
                     onClick={() => handleResultClick(result)}
-                    className={`w-full flex items-start sm:items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg text-left transition-all duration-150 ${
-                      isSelected 
-                        ? 'bg-black/10 dark:bg-white/10' 
+                    className={`w-full flex items-start sm:items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg text-left transition-all duration-150 ${isSelected
+                        ? 'bg-black/10 dark:bg-white/10'
                         : 'hover:bg-black/5 dark:hover:bg-white/5'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 bg-black/5 dark:bg-white/5 rounded-lg flex-shrink-0 mt-0.5 sm:mt-0">
                       <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black/60 dark:text-white/60" />
                     </div>
-                    
+
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2 space-y-1 sm:space-y-0">
                         <h3 className="font-medium text-sm sm:text-base text-black dark:text-white truncate">
@@ -256,14 +241,13 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
                           {getResultBadge(result)}
                         </span>
                       </div>
-                      
+
                       {result.subtitle && (
                         <p className="text-xs sm:text-sm text-black/50 dark:text-white/50 truncate mt-0.5">
                           {result.subtitle}
                         </p>
                       )}
-                      
-                      {/* Subject resources indicators */}
+
                       {result.type === 'subject' && (result.hasNotes || result.hasPYQ) && (
                         <div className="flex items-center space-x-3 mt-1.5">
                           {result.hasNotes && (
@@ -283,7 +267,7 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
                         </div>
                       )}
                     </div>
-                    
+
                     <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
                       {result.external && (
                         <ExternalLink className="w-3 h-3 text-black/30 dark:text-white/30" />
@@ -310,7 +294,7 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
                   Quick Access
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <button 
+                  <button
                     onClick={() => {
                       window.location.href = '/resources';
                       setIsOpen(false);
@@ -320,7 +304,7 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
                     <Video className="w-4 h-4 text-black/60 dark:text-white/60 flex-shrink-0" />
                     <span className="text-sm text-black/80 dark:text-white/80">All Videos</span>
                   </button>
-                  <button 
+                  <button
                     onClick={() => {
                       window.location.href = '/links';
                       setIsOpen(false);
@@ -336,7 +320,6 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
           )}
         </div>
 
-        {/* Search Footer - Hidden on very small screens */}
         <div className="hidden sm:block px-4 py-3 border-t border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
           <div className="flex items-center justify-between text-xs text-black/50 dark:text-white/50">
             <div className="flex items-center space-x-4">
@@ -362,7 +345,6 @@ export function SearchModal({ isOpen, setIsOpen }: SearchModalProps) {
           </div>
         </div>
 
-        {/* Mobile Footer - Simplified */}
         <div className="sm:hidden px-3 py-2 border-t border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
           <div className="flex items-center justify-center text-xs text-black/50 dark:text-white/50">
             <span>Tap to select • Swipe to dismiss</span>

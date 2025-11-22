@@ -1,9 +1,19 @@
 
+export interface ResourceItem {
+  _id?: string;
+  title: string;
+  link: string;
+  type: 'notes' | 'pyq' | 'youtube' | 'other' | 'link';
+  year?: number;
+  description?: string;
+}
+
 export interface Subject {
   name: string;
   code: string;
   PYQ: string;
   notes: string;
+  resources?: ResourceItem[];
 }
 
 export interface YouTubeResource {
@@ -166,10 +176,10 @@ export const semSixSub: Subject[] = [
 ];
 
 export const allSemesters = [
-    semOneSub,
-    semTwoSub,
-    semThreeSub,
-    semFourSub,
-    semFiveSub,
-    semSixSub
+  semOneSub,
+  semTwoSub,
+  semThreeSub,
+  semFourSub,
+  semFiveSub,
+  semSixSub
 ];

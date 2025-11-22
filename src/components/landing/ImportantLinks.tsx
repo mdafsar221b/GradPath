@@ -10,10 +10,11 @@ import {
   Link as LinkIcon,
   ExternalLink,
   ArrowRight,
+  LucideIcon,
 } from "lucide-react";
 import { ImportantLinksData, ImportantLink } from "@/data/links";
 
-const iconComponents: { [key: string]: any } = {
+const iconComponents: { [key: string]: LucideIcon } = {
   University,
   ClipboardCheck,
   CalendarCheck,
@@ -33,11 +34,11 @@ export function ImportantLinks() {
             <LinkIcon className="w-3.5 h-3.5 mr-2" />
             External Resources
           </div>
-          
+
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-black dark:text-white">
             Important Links
           </h2>
-          
+
           <p className="text-lg text-black/60 dark:text-white/60">
             Quick access to essential university portals and academic tools
           </p>
@@ -47,7 +48,7 @@ export function ImportantLinks() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
           {ImportantLinksData.map((linkData: ImportantLink) => {
             const Icon = linkData.icon ? iconComponents[linkData.icon] : LinkIcon;
-            
+
             return (
               <Link
                 key={linkData.name}
@@ -64,14 +65,14 @@ export function ImportantLinks() {
                         <div className="flex items-center justify-center w-10 h-10 bg-black/10 dark:bg-white/10 rounded-lg transition-all duration-200 group-hover:bg-black/20 dark:group-hover:bg-white/20">
                           <Icon className="h-5 w-5 text-black/70 dark:text-white/70" />
                         </div>
-                        
+
                         <div className="flex-1 min-w-0">
                           <CardTitle className="text-base font-semibold text-black dark:text-white group-hover:text-black/80 dark:group-hover:text-white/80 transition-colors leading-tight">
                             {linkData.name}
                           </CardTitle>
                         </div>
                       </div>
-                      
+
                       {/* External link indicator */}
                       <div className="opacity-60 group-hover:opacity-100 transition-all duration-200 transform translate-x-1 group-hover:translate-x-0">
                         <ExternalLink className="w-4 h-4 text-black/40 dark:text-white/40 group-hover:text-black/70 dark:group-hover:text-white/70" />
