@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth.routes');
+const academicRoutes = require('./routes/academic.routes');
+const resourceRoutes = require('./routes/resource.routes');
 
 connectDB();
 
@@ -12,6 +14,11 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/academic', academicRoutes);
+app.use('/api/resources', resourceRoutes);
+app.use('/api/assignments', require('./routes/assignment.routes'));
+app.use('/api/progress', require('./routes/progress.routes'));
+app.use('/api/dashboard', require('./routes/dashboard.routes'));
 
 app.get('/', (req, res) => {
   res.send('API is running...');
