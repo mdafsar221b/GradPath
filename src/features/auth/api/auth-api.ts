@@ -1,11 +1,21 @@
 import axiosInstance from '@/shared/lib/axios';
 
+export interface LoginDTO {
+  email: string;
+  password: string;
+}
+
+export interface RegisterDTO extends LoginDTO {
+  name: string;
+  semester: number;
+}
+
 export const authApi = {
-  login: async (data: any) => {
+  login: async (data: LoginDTO) => {
     const response = await axiosInstance.post('/auth/login', data);
     return response.data;
   },
-  register: async (data: any) => {
+  register: async (data: RegisterDTO) => {
     const response = await axiosInstance.post('/auth/register', data);
     return response.data;
   },

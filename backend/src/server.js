@@ -19,10 +19,20 @@ app.use('/api/resources', resourceRoutes);
 app.use('/api/assignments', require('./routes/assignment.routes'));
 app.use('/api/progress', require('./routes/progress.routes'));
 app.use('/api/dashboard', require('./routes/dashboard.routes'));
+app.use('/api/study', require('./routes/study.routes'));
+app.use('/api/ai', require('./routes/ai.routes'));
+app.use('/api/quizzes', require('./routes/quiz.routes'));
+app.use('/api/flashcards', require('./routes/flashcard.routes'));
+app.use('/api/topics', require('./routes/topic.routes'));
+app.use('/api/coding', require('./routes/coding.routes'));
 
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
+const { notFound, errorHandler } = require('./middleware/error.middleware');
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 

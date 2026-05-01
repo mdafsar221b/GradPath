@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GradPath
 
-## Getting Started
+GradPath is a BCA-focused academic command center built with Next.js, Express, and MongoDB. It helps students track semester progress, assignments, study resources, PYQs, and daily priorities from one workspace.
 
-First, run the development server:
+## Current Capabilities
+
+- Student/admin authentication.
+- Semester-wise BCA subjects and units.
+- Unit completion tracking.
+- Assignment tracker with deadlines.
+- Resource library for notes, PYQs, PDFs, videos, and links.
+- Admin resource upload and management.
+- Smart study plan API that prioritizes deadlines, weak subjects, resource gaps, and revision candidates.
+- Admin analytics for resource coverage, content type, difficulty, and recent uploads.
+- Gemini-powered BCA AI tutor.
+- AI-generated quizzes with scoring and topic breakdowns.
+- Flashcards with spaced revision scheduling.
+- Topic-level confidence tracking.
+- Coding lab with AI review for BCA programming tracks.
+
+## Advanced BCA Direction
+
+The implementation roadmap is tracked in [docs/ADVANCED_BCA_TASKS.md](docs/ADVANCED_BCA_TASKS.md).
+
+Next high-value milestones:
+
+- PYQ trend tagging by unit/topic/year/marks.
+- Full mock-test scheduling and exam reports.
+- Real sandbox execution through a judge service for compiled languages.
+- Final-year project workspace.
+- AI tutor retrieval expansion over PDF contents, not only metadata.
+
+## Tech Stack
+
+- Frontend: Next.js 16, React 19, TypeScript, Tailwind CSS.
+- Backend: Express 5, MongoDB, Mongoose.
+- Storage: Cloudinary for PDF resources.
+- State: Zustand.
+
+## Setup
+
+Install frontend dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install backend dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd backend
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create environment files:
 
-## Learn More
+```bash
+# .env.local
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# backend/.env
+PORT=5000
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=gemini-2.5-flash
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Seed academic data:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run seed
+```
 
-## Deploy on Vercel
+Run frontend and backend together:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run dev-all
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Verification
+
+```bash
+npm run lint
+npm run build
+```

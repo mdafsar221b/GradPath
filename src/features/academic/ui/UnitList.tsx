@@ -6,6 +6,7 @@ import { ResourceList } from '@/features/resource/ui/ResourceList';
 import { useProgressStore } from '@/features/progress/model/progress.store';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { CheckCircle2, Circle } from 'lucide-react';
+import { TopicConfidencePanel } from '@/features/topic/ui/TopicConfidencePanel';
 
 interface Unit {
   _id: string;
@@ -96,6 +97,7 @@ export const UnitList = ({ subjectId }: { subjectId: string }) => {
                     ))}
                   </ul>
                 )}
+                <TopicConfidencePanel subjectId={subjectId} unitId={unit._id} topics={unit.topics || []} />
                 <ResourceList subjectId={subjectId} unitId={unit._id} />
               </div>
             )}

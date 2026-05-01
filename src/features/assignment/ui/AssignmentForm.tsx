@@ -6,12 +6,24 @@ import { academicApi } from '@/features/academic/api/academic-api';
 import { useAssignmentStore } from '../model/assignment.store';
 import { Loader2, Plus } from 'lucide-react';
 
+interface SubjectOption {
+  _id: string;
+  name: string;
+  code?: string;
+}
+
+interface UnitOption {
+  _id: string;
+  unitNumber: number;
+  title: string;
+}
+
 export const AssignmentForm = () => {
   const { user, token } = useAuthStore();
   const addAssignment = useAssignmentStore((state) => state.addAssignment);
 
-  const [subjects, setSubjects] = useState<any[]>([]);
-  const [units, setUnits] = useState<any[]>([]);
+  const [subjects, setSubjects] = useState<SubjectOption[]>([]);
+  const [units, setUnits] = useState<UnitOption[]>([]);
   
   const [formData, setFormData] = useState({
     subjectId: '',
@@ -29,7 +41,7 @@ export const AssignmentForm = () => {
       const fetchSubjects = async () => {
         setFetchingSubjects(true);
         try {
-          const data = await academicApi.getSubjects(user.semester);
+          const data = await academicApi.getSubjects(user.semester as number);
           setSubjects(data);
         } catch (error) {
           console.error('Failed to fetch subjects', error);

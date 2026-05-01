@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { useAssignmentStore } from '../model/assignment.store';
-import { CheckCircle2, Circle, Clock, Trash2, Calendar } from 'lucide-react';
+import { CheckCircle2, Circle, Trash2, Calendar } from 'lucide-react';
 import { format, isPast, isToday } from 'date-fns';
 
 export const AssignmentList = () => {

@@ -12,7 +12,7 @@ interface AssignmentState {
   removeAssignment: (id: string, token: string) => Promise<void>;
 }
 
-export const useAssignmentStore = create<AssignmentState>((set, get) => ({
+export const useAssignmentStore = create<AssignmentState>((set) => ({
   assignments: [],
   loading: false,
   error: null,
@@ -22,8 +22,8 @@ export const useAssignmentStore = create<AssignmentState>((set, get) => ({
     try {
       const data = await assignmentApi.getAssignments(token);
       set({ assignments: data, error: null });
-    } catch (error: any) {
-      set({ error: error.message });
+    } catch (error) {
+      set({ error: error instanceof Error ? error.message : 'Failed to fetch assignments' });
     } finally {
       set({ loading: false });
     }
@@ -33,8 +33,8 @@ export const useAssignmentStore = create<AssignmentState>((set, get) => ({
     try {
       const newAssignment = await assignmentApi.createAssignment(dto, token);
       set((state) => ({ assignments: [newAssignment, ...state.assignments] }));
-    } catch (error: any) {
-      set({ error: error.message });
+    } catch (error) {
+      set({ error: error instanceof Error ? error.message : 'Failed to add assignment' });
       throw error;
     }
   },
@@ -46,8 +46,8 @@ export const useAssignmentStore = create<AssignmentState>((set, get) => ({
       set((state) => ({
         assignments: state.assignments.map((a) => (a._id === id ? updated : a)),
       }));
-    } catch (error: any) {
-      set({ error: error.message });
+    } catch (error) {
+      set({ error: error instanceof Error ? error.message : 'Failed to update assignment' });
     }
   },
 
@@ -57,8 +57,8 @@ export const useAssignmentStore = create<AssignmentState>((set, get) => ({
       set((state) => ({
         assignments: state.assignments.filter((a) => a._id !== id),
       }));
-    } catch (error: any) {
-      set({ error: error.message });
+    } catch (error) {
+      set({ error: error instanceof Error ? error.message : 'Failed to delete assignment' });
     }
   },
 }));

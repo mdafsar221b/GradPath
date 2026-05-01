@@ -12,11 +12,34 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'gradpath_resources',
-    resource_type: 'auto', // Important for PDFs
-    allowed_formats: ['pdf', 'jpg', 'png'],
+    resource_type: async (req, file) => {
+      if (file.mimetype === 'application/pdf' || file.originalname.endsWith('.pdf')) {
+        return 'raw';
+      }
+      return 'auto';
+    },
+    public_id: (req, file) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      if (file.mimetype === 'application/pdf' || file.originalname.endsWith('.pdf')) {
+        return `doc_${uniqueSuffix}.pdf`;
+      }
+      return `img_${uniqueSuffix}`;
+    },
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024,
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === 'application/pdf' || file.originalname.toLowerCase().endsWith('.pdf')) {
+      cb(null, true);
+      return;
+    }
+    cb(new Error('Only PDF uploads are allowed for document resources'));
+  },
+});
 
 module.exports = { upload, cloudinary };

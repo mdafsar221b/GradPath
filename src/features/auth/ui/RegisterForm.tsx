@@ -38,8 +38,11 @@ export const RegisterForm = () => {
       });
       setAuth(data, data.token);
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed. Try again.');
+    } catch (err: unknown) {
+      const message = err && typeof err === 'object' && 'response' in err
+        ? (err as { response?: { data?: { message?: string } } }).response?.data?.message
+        : undefined;
+      setError(message || 'Registration failed. Try again.');
     } finally {
       setLoading(false);
     }

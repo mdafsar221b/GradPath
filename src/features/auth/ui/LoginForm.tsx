@@ -27,8 +27,11 @@ export const LoginForm = () => {
       const data = await authApi.login({ email, password });
       setAuth(data, data.token);
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Invalid email or password');
+    } catch (err: unknown) {
+      const message = err && typeof err === 'object' && 'response' in err
+        ? (err as { response?: { data?: { message?: string } } }).response?.data?.message
+        : undefined;
+      setError(message || 'Invalid email or password');
     } finally {
       setLoading(false);
     }
@@ -85,7 +88,7 @@ export const LoginForm = () => {
       </form>
 
       <p className="text-center text-sm text-gray-500 font-medium">
-        Don't have an account?{' '}
+        Don&apos;t have an account?{' '}
         <Link href="/register" className="text-blue-600 font-bold hover:underline">
           Join GradPath
         </Link>

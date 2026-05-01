@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { academicApi } from '../api/academic-api';
 import { useProgressStore } from '@/features/progress/model/progress.store';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BookOpen, ChevronRight } from 'lucide-react';
 
@@ -15,6 +16,7 @@ interface Subject {
 }
 
 export const SubjectList = ({ semester }: { semester: number }) => {
+  const router = useRouter();
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -64,24 +66,48 @@ export const SubjectList = ({ semester }: { semester: number }) => {
               <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" />
             </div>
 
-            <div className="space-y-2">
-              <div className="flex justify-between items-center text-xs">
-                <span className="text-gray-500 font-medium">Syllabus Covered</span>
-                <span className={`font-bold ${progressPercentage === 100 ? 'text-green-500' : 'text-blue-600'}`}>
-                  {progressPercentage}%
-                </span>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex justify-between items-center text-xs">
+                  <span className="text-gray-500 font-medium">Syllabus Covered</span>
+                  <span className={`font-bold ${progressPercentage === 100 ? 'text-green-500' : 'text-blue-600'}`}>
+                    {progressPercentage}%
+                  </span>
+                </div>
+                <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div 
+                    className={`h-full transition-all duration-500 rounded-full ${
+                      progressPercentage === 100 ? 'bg-green-500' : 'bg-blue-600'
+                    }`}
+                    style={{ width: `${progressPercentage}%` }}
+                  ></div>
+                </div>
+                <div className="flex justify-between text-[10px] text-gray-400 font-bold uppercase tracking-tight">
+                  <span>{completedCount} Units Done</span>
+                  <span>{5 - completedCount} Pending</span>
+                </div>
               </div>
-              <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div 
-                  className={`h-full transition-all duration-500 rounded-full ${
-                    progressPercentage === 100 ? 'bg-green-500' : 'bg-blue-600'
-                  }`}
-                  style={{ width: `${progressPercentage}%` }}
-                ></div>
-              </div>
-              <div className="flex justify-between text-[10px] text-gray-400 font-bold uppercase tracking-tight">
-                <span>{completedCount} Units Done</span>
-                <span>{5 - completedCount} Pending</span>
+
+              {/* Quick Resources */}
+              <div className="flex gap-2 pt-2 border-t border-gray-50">
+                <button 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(`/resources?category=notes&subjectId=${subject._id}`);
+                  }}
+                  className="flex-1 py-2 bg-gray-50 text-[10px] font-black uppercase text-gray-500 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all"
+                >
+                  Notes
+                </button>
+                <button 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(`/resources?category=pyq&subjectId=${subject._id}`);
+                  }}
+                  className="flex-1 py-2 bg-gray-50 text-[10px] font-black uppercase text-gray-500 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all"
+                >
+                  PYQs
+                </button>
               </div>
             </div>
           </Link>

@@ -15,7 +15,7 @@ export const ResourceList = ({ subjectId, unitId }: { subjectId: string; unitId:
     const fetchResources = async () => {
       if (!token) return;
       try {
-        const data = await resourceApi.getResources(subjectId, unitId, token);
+        const data = await resourceApi.getResources({ subjectId, unitId }, token);
         setResources(data);
       } catch (error) {
         console.error('Failed to fetch resources', error);
