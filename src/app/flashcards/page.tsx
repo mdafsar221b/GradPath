@@ -1,21 +1,20 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { AppTopNav } from '@/shared/ui/AppTopNav';
 import { FlashcardWorkspace } from '@/features/flashcard/ui/FlashcardWorkspace';
+import { Loader } from '@/shared/ui/Loader';
+import { useRequireAuth } from '@/shared/lib/useRequireAuth';
+import { StudentAppShell } from '@/shared/ui/StudentAppShell';
 
 export default function FlashcardsPage() {
-  const router = useRouter();
+  const { isAuthenticated } = useRequireAuth();
 
-  useEffect(() => {
-    if (!localStorage.getItem('token')) router.push('/login');
-  }, [router]);
+  if (!isAuthenticated) {
+    return <Loader fullPage text="Loading your revision workspace..." />;
+  }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
-      <AppTopNav />
+    <StudentAppShell>
       <FlashcardWorkspace />
-    </div>
+    </StudentAppShell>
   );
 }

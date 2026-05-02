@@ -46,11 +46,6 @@ const resourceSchema = new mongoose.Schema(
       default: 'intermediate',
     },
     year: {
-      type: Number,
-      min: 2000,
-      max: 2100,
-    },
-    examSession: {
       type: String,
       default: '',
     },

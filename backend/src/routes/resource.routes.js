@@ -2,8 +2,20 @@ const express = require('express');
 const router = express.Router();
 const Resource = require('../models/resource.model');
 const Subject = require('../models/subject.model');
+const Unit = require('../models/unit.model');
 const { protect, admin } = require('../middleware/auth.middleware');
 const { upload } = require('../config/cloudinary');
+
+const buildResourceTitle = ({ subject, unit, category, year }) => {
+  const subjectLabel = [subject?.code, subject?.name].filter(Boolean).join(' - ');
+
+  if (category === 'pyq') {
+    return [subjectLabel, year, 'PYQ'].filter(Boolean).join(' | ');
+  }
+
+  const unitLabel = unit ? `Unit ${unit.unitNumber}` : 'Notes';
+  return [subjectLabel, unitLabel, 'Notes'].filter(Boolean).join(' | ');
+};
 
 // @desc    Get resource statistics
 // @route   GET /api/resources/stats
@@ -63,10 +75,14 @@ router.post('/', protect, admin, upload.single('file'), async (req, res) => {
       description,
       difficulty,
       year,
-      examSession,
       source,
       estimatedMinutes
     } = req.body;
+
+    const [subject, unit] = await Promise.all([
+      Subject.findById(subjectId),
+      unitId ? Unit.findById(unitId) : null,
+    ]);
     
     let finalUrl = url;
     if (type === 'pdf' && req.file) {
@@ -77,17 +93,25 @@ router.post('/', protect, admin, upload.single('file'), async (req, res) => {
       return res.status(400).json({ message: 'URL or File is required' });
     }
 
+    const normalizedCategory = category || 'notes';
+    const normalizedYear = normalizedCategory === 'pyq' ? (year || '').trim() : '';
+    const computedTitle = buildResourceTitle({
+      subject,
+      unit,
+      category: normalizedCategory,
+      year: normalizedYear,
+    });
+
     const resource = await Resource.create({
       subjectId,
-      unitId: category === 'pyq' ? null : unitId,
-      category: category || 'notes',
+      unitId: normalizedCategory === 'pyq' ? null : unitId,
+      category: normalizedCategory,
       type,
-      title,
+      title: title || computedTitle,
       url: finalUrl,
       description,
       difficulty,
-      year: year ? Number(year) : undefined,
-      examSession,
+      year: normalizedYear || undefined,
       source,
       estimatedMinutes: estimatedMinutes ? Number(estimatedMinutes) : undefined,
       tags: req.body.tags
@@ -115,7 +139,7 @@ router.get('/', protect, async (req, res) => {
     if (category) query.category = category;
     if (type) query.type = type;
     if (difficulty) query.difficulty = difficulty;
-    if (year) query.year = Number(year);
+    if (year) query.year = year.toString();
     if (tag) query.tags = tag.toString().toLowerCase();
     if (search) {
       query.$or = [
@@ -155,7 +179,6 @@ router.put('/:id', protect, admin, async (req, res) => {
       description,
       difficulty,
       year,
-      examSession,
       source,
       estimatedMinutes,
       tags,
@@ -173,8 +196,7 @@ router.put('/:id', protect, admin, async (req, res) => {
     if (category) resource.category = category;
     if (description !== undefined) resource.description = description;
     if (difficulty) resource.difficulty = difficulty;
-    if (year !== undefined) resource.year = year ? Number(year) : undefined;
-    if (examSession !== undefined) resource.examSession = examSession;
+    if (year !== undefined) resource.year = year ? year.toString().trim() : undefined;
     if (source !== undefined) resource.source = source;
     if (estimatedMinutes !== undefined) resource.estimatedMinutes = Number(estimatedMinutes);
     if (qualityStatus) resource.qualityStatus = qualityStatus;
@@ -182,6 +204,20 @@ router.put('/:id', protect, admin, async (req, res) => {
       resource.tags = Array.isArray(tags)
         ? tags.map(tag => tag.trim().toLowerCase()).filter(Boolean)
         : tags.split(',').map(tag => tag.trim().toLowerCase()).filter(Boolean);
+    }
+
+    if (year !== undefined) {
+      const [subject, unit] = await Promise.all([
+        Subject.findById(resource.subjectId),
+        resource.unitId ? Unit.findById(resource.unitId) : null,
+      ]);
+
+      resource.title = buildResourceTitle({
+        subject,
+        unit,
+        category: resource.category,
+        year: resource.year || '',
+      });
     }
 
     const updatedResource = await resource.save();

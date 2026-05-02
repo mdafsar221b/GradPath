@@ -12,7 +12,7 @@ export const resourceApi = {
       semester?: number;
       type?: ResourceType | '';
       difficulty?: ResourceDifficulty | '';
-      year?: number | '';
+      year?: string;
       search?: string;
       tag?: string;
     },

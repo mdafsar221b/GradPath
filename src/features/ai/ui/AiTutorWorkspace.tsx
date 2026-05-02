@@ -29,6 +29,7 @@ export const AiTutorWorkspace = () => {
   const [conversationId, setConversationId] = useState<string | undefined>();
   const [messages, setMessages] = useState<AiMessage[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!user?.semester) return;
@@ -54,6 +55,7 @@ export const AiTutorWorkspace = () => {
     if (!token || !question.trim()) return;
     const currentQuestion = question.trim();
     setQuestion('');
+    setError('');
     setMessages(prev => [...prev, { role: 'user', content: currentQuestion }]);
     setLoading(true);
     try {
@@ -62,6 +64,7 @@ export const AiTutorWorkspace = () => {
       setMessages(response.messages);
     } catch (error) {
       console.error(error);
+      setError('I could not reach the AI tutor. Check the Gemini API key and try again.');
       setMessages(prev => [...prev, { role: 'assistant', content: 'I could not reach the AI tutor. Check the Gemini API key and try again.' }]);
     } finally {
       setLoading(false);
@@ -99,7 +102,7 @@ export const AiTutorWorkspace = () => {
                 <Bot className="w-8 h-8" />
               </div>
               <h2 className="text-xl font-black text-gray-900">Start with a hard topic</h2>
-              <p className="text-sm text-gray-500 font-medium mt-2 max-w-md">Try: “Explain normalization with examples” or “Give me a 10-mark answer for process synchronization.”</p>
+              <p className="text-sm text-gray-500 font-medium mt-2 max-w-md">Try: &quot;Explain normalization with examples&quot; or &quot;Give me a 10-mark answer for process synchronization.&quot;</p>
             </div>
           ) : (
             messages.map((message, index) => (
@@ -121,6 +124,7 @@ export const AiTutorWorkspace = () => {
             Ask
           </button>
         </form>
+        {error && <div className="border-t border-red-100 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">{error}</div>}
       </section>
     </main>
   );

@@ -5,6 +5,7 @@ import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { resourceApi } from '../api/resource.api';
 import { academicApi } from '@/features/academic/api/academic-api';
 import { Resource, ResourceCategory, ResourceDifficulty, ResourceSubject, ResourceType, ResourceUnit } from '../model/resource.types';
+import { getResourceOpenUrl } from '../lib/resource-utils';
 import {
   Search,
   Filter,
@@ -33,10 +34,12 @@ const isUnitObject = (unit: Resource['unitId']): unit is ResourceUnit => typeof 
 export const ResourceLibrary = () => {
   const { token, user } = useAuthStore();
   const searchParams = useSearchParams();
+  const requestedCategory = searchParams.get('category') as ResourceCategory | null;
 
   const [loading, setLoading] = useState(true);
   const [resources, setResources] = useState<Resource[]>([]);
   const [subjects, setSubjects] = useState<SubjectOption[]>([]);
+  const [autoCategoryHint, setAutoCategoryHint] = useState('');
 
   const [filters, setFilters] = useState({
     category: (searchParams.get('category') as ResourceCategory) || 'notes',
@@ -45,8 +48,20 @@ export const ResourceLibrary = () => {
     search: '',
     type: '' as ResourceType | '',
     difficulty: '' as ResourceDifficulty | '',
-    year: '' as number | '',
+    year: '',
   });
+
+  useEffect(() => {
+    const nextCategory = (searchParams.get('category') as ResourceCategory) || 'notes';
+    const nextSubjectId = searchParams.get('subjectId') || '';
+
+    setFilters((prev) => ({
+      ...prev,
+      category: nextCategory,
+      subjectId: nextSubjectId,
+      semester: user?.semester || prev.semester,
+    }));
+  }, [searchParams, user?.semester]);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -62,10 +77,13 @@ export const ResourceLibrary = () => {
 
   useEffect(() => {
     const fetchResources = async () => {
-      if (!token) return;
+      if (!token) {
+        setLoading(false);
+        return;
+      }
       setLoading(true);
       try {
-        const data = await resourceApi.getResources({
+        const queryParams = {
           category: filters.category,
           semester: filters.semester,
           subjectId: filters.subjectId || undefined,
@@ -73,16 +91,48 @@ export const ResourceLibrary = () => {
           type: filters.type,
           difficulty: filters.difficulty,
           year: filters.year,
-        }, token);
+        };
+
+        const data = await resourceApi.getResources(queryParams, token);
+
+        const hasManualFilters =
+          Boolean(filters.subjectId) ||
+          Boolean(filters.search) ||
+          Boolean(filters.type) ||
+          Boolean(filters.difficulty) ||
+          Boolean(filters.year);
+
+        if (
+          filters.category === 'notes' &&
+          data.length === 0 &&
+          !requestedCategory &&
+          !hasManualFilters
+        ) {
+          const pyqData = await resourceApi.getResources(
+            { ...queryParams, category: 'pyq' },
+            token
+          );
+
+          if (pyqData.length > 0) {
+            setFilters((prev) => ({ ...prev, category: 'pyq' }));
+            setResources(pyqData);
+            setAutoCategoryHint(`Showing PYQ papers because Semester ${filters.semester} has no notes yet.`);
+            return;
+          }
+        }
+
+        setAutoCategoryHint('');
         setResources(data);
       } catch (error) {
         console.error('Failed to fetch resources', error);
+        setResources([]);
+        setAutoCategoryHint('');
       } finally {
         setLoading(false);
       }
     };
     fetchResources();
-  }, [token, filters.category, filters.semester, filters.subjectId, filters.search, filters.type, filters.difficulty, filters.year]);
+  }, [token, filters.category, filters.semester, filters.subjectId, filters.search, filters.type, filters.difficulty, filters.year, requestedCategory]);
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-12">
@@ -168,6 +218,12 @@ export const ResourceLibrary = () => {
           </select>
         </div>
 
+        {autoCategoryHint ? (
+          <div className="mb-6 rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700">
+            {autoCategoryHint}
+          </div>
+        ) : null}
+
         {filters.category === 'pyq' && (
           <div className="mb-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between bg-amber-50 border border-amber-100 p-4 rounded-2xl">
             <div className="flex items-center gap-3">
@@ -178,12 +234,10 @@ export const ResourceLibrary = () => {
               </div>
             </div>
             <input
-              type="number"
-              min={2000}
-              max={2100}
-              placeholder="Year"
+              type="text"
+              placeholder="2020-21"
               value={filters.year}
-              onChange={(e) => setFilters({ ...filters, year: e.target.value ? Number(e.target.value) : '' })}
+              onChange={(e) => setFilters({ ...filters, year: e.target.value })}
               className="h-11 w-full sm:w-32 bg-white border border-amber-100 rounded-xl px-4 font-bold text-sm outline-none"
             />
           </div>
@@ -244,9 +298,9 @@ export const ResourceLibrary = () => {
                         Unit {unit.unitNumber}: {unit.title}
                       </div>
                     )}
-                    {resource.category === 'pyq' && (resource.year || resource.examSession) && (
+                    {resource.category === 'pyq' && resource.year && (
                       <div className="flex items-center gap-2 text-xs text-emerald-600 font-black uppercase tracking-tighter">
-                        {resource.year || 'PYQ'} {resource.examSession ? `- ${resource.examSession}` : ''}
+                        {resource.year}
                       </div>
                     )}
                   </div>
@@ -262,7 +316,7 @@ export const ResourceLibrary = () => {
                   )}
 
                   <a
-                    href={resource.url}
+                    href={getResourceOpenUrl(resource)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full h-12 bg-gray-50 text-gray-900 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-blue-600 hover:text-white transition-all"
@@ -270,7 +324,7 @@ export const ResourceLibrary = () => {
                     {isExternal ? (
                       <>View Content <ExternalLink className="w-4 h-4" /></>
                     ) : (
-                      <>Download PDF <Download className="w-4 h-4" /></>
+                      <>Open PDF <Download className="w-4 h-4" /></>
                     )}
                   </a>
                 </div>

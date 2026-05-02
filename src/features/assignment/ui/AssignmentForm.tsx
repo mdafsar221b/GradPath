@@ -35,6 +35,7 @@ export const AssignmentForm = () => {
   const [loading, setLoading] = useState(false);
   const [fetchingSubjects, setFetchingSubjects] = useState(false);
   const [fetchingUnits, setFetchingUnits] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
     if (user?.semester) {
@@ -77,12 +78,15 @@ export const AssignmentForm = () => {
     if (!token) return;
 
     setLoading(true);
+    setMessage(null);
     try {
       await addAssignment(formData, token);
       setFormData({ subjectId: '', unitId: '', title: '', dueDate: '' });
-      alert('Assignment added!');
+      setUnits([]);
+      setMessage({ type: 'success', text: 'Assignment added to your tracker.' });
     } catch (error) {
       console.error('Failed to add assignment', error);
+      setMessage({ type: 'error', text: 'Could not add the assignment. Please try again.' });
     } finally {
       setLoading(false);
     }
@@ -94,19 +98,29 @@ export const AssignmentForm = () => {
         <Plus className="w-5 h-5 text-blue-500" />
         New Assignment
       </h3>
+
+      {message && (
+        <div className={`mb-4 rounded-2xl border px-4 py-3 text-sm font-bold ${
+          message.type === 'success'
+            ? 'border-green-100 bg-green-50 text-green-700'
+            : 'border-red-100 bg-red-50 text-red-700'
+        }`}>
+          {message.text}
+        </div>
+      )}
       
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
         <div>
           <label className="block text-xs font-bold text-gray-400 uppercase mb-1">Subject</label>
           <select 
             value={formData.subjectId}
-            onChange={(e) => setFormData({ ...formData, subjectId: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, subjectId: e.target.value, unitId: '' })}
             required
             disabled={fetchingSubjects}
             className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
           >
             <option value="">Select Subject</option>
-            {subjects.map(s => <option key={s._id} value={s._id}>{s.name}</option>)}
+            {subjects.map(s => <option key={s._id} value={s._id}>{s.code ? `${s.code} - ` : ''}{s.name}</option>)}
           </select>
         </div>
 
@@ -144,6 +158,7 @@ export const AssignmentForm = () => {
               value={formData.dueDate}
               onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
               required
+              min={new Date().toISOString().split('T')[0]}
               className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500"
             />
           </div>

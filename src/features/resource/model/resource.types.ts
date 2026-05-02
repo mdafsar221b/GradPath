@@ -26,8 +26,7 @@ export interface Resource {
   description?: string;
   tags?: string[];
   difficulty?: ResourceDifficulty;
-  year?: number;
-  examSession?: string;
+  year?: string;
   source?: string;
   estimatedMinutes?: number;
   qualityStatus?: 'draft' | 'review' | 'published' | 'archived';
@@ -45,8 +44,7 @@ export interface CreateResourceDTO {
   description?: string;
   tags?: string[];
   difficulty?: ResourceDifficulty;
-  year?: number;
-  examSession?: string;
+  year?: string;
   source?: string;
   estimatedMinutes?: number;
 }

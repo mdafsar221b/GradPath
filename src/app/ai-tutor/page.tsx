@@ -1,21 +1,20 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { AppTopNav } from '@/shared/ui/AppTopNav';
 import { AiTutorWorkspace } from '@/features/ai/ui/AiTutorWorkspace';
+import { Loader } from '@/shared/ui/Loader';
+import { useRequireAuth } from '@/shared/lib/useRequireAuth';
+import { StudentAppShell } from '@/shared/ui/StudentAppShell';
 
 export default function AiTutorPage() {
-  const router = useRouter();
+  const { isAuthenticated } = useRequireAuth();
 
-  useEffect(() => {
-    if (!localStorage.getItem('token')) router.push('/login');
-  }, [router]);
+  if (!isAuthenticated) {
+    return <Loader fullPage text="Opening your AI tutor..." />;
+  }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
-      <AppTopNav />
+    <StudentAppShell>
       <AiTutorWorkspace />
-    </div>
+    </StudentAppShell>
   );
 }

@@ -13,15 +13,29 @@ export const CodingLab = () => {
   const [code, setCode] = useState('');
   const [review, setReview] = useState<CodingReview | null>(null);
   const [loading, setLoading] = useState(false);
+  const [loadingChallenges, setLoadingChallenges] = useState(false);
+  const [error, setError] = useState('');
 
   const load = useCallback(async () => {
     if (!token) return;
-    const data = await codingApi.challenges({ track: track || undefined }, token);
-    setChallenges(data);
-    const first = data[0] || null;
-    setSelected(first);
-    setCode(first?.starterCode || '');
-    setReview(null);
+    setLoadingChallenges(true);
+    setError('');
+    try {
+      const data = await codingApi.challenges({ track: track || undefined }, token);
+      setChallenges(data);
+      const first = data[0] || null;
+      setSelected(first);
+      setCode(first?.starterCode || '');
+      setReview(null);
+    } catch (error) {
+      console.error('Failed to load coding challenges', error);
+      setChallenges([]);
+      setSelected(null);
+      setCode('');
+      setError('Coding challenges could not be loaded right now.');
+    } finally {
+      setLoadingChallenges(false);
+    }
   }, [token, track]);
 
   useEffect(() => {
@@ -31,9 +45,13 @@ export const CodingLab = () => {
   const submit = async () => {
     if (!token || !selected) return;
     setLoading(true);
+    setError('');
     try {
       const data = await codingApi.review({ challengeId: selected._id || selected.title, code, language: selected.language }, token);
       setReview(data.review);
+    } catch (error) {
+      console.error('Failed to review solution', error);
+      setError('Code review failed. Please try again once the AI service is available.');
     } finally {
       setLoading(false);
     }
@@ -61,9 +79,15 @@ export const CodingLab = () => {
         </select>
       </section>
 
+      {error && <div className="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">{error}</div>}
+
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <aside className="space-y-3">
-          {challenges.map(challenge => (
+          {loadingChallenges ? (
+            <div className="rounded-2xl border border-dashed border-gray-200 bg-white px-4 py-10 text-center text-sm font-bold text-gray-400">
+              Loading coding challenges...
+            </div>
+          ) : challenges.map(challenge => (
             <button
               key={challenge._id || challenge.title}
               onClick={() => {

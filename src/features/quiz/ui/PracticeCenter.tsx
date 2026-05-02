@@ -20,13 +20,18 @@ export const PracticeCenter = () => {
   const [answers, setAnswers] = useState<number[]>([]);
   const [result, setResult] = useState<{ score: number; total: number } | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (user?.semester) academicApi.getSubjects(user.semester).then(setSubjects).catch(console.error);
   }, [user?.semester]);
 
   useEffect(() => {
-    if (!subjectId) return;
+    if (!subjectId) {
+      setUnits([]);
+      setUnitId('');
+      return;
+    }
     academicApi.getUnits(subjectId).then(setUnits).catch(console.error);
   }, [subjectId]);
 
@@ -34,10 +39,14 @@ export const PracticeCenter = () => {
     if (!token || !subjectId) return;
     setLoading(true);
     setResult(null);
+    setError('');
     try {
       const data = await quizApi.generate({ subjectId, unitId: unitId || undefined, mode, count: 8 }, token);
       setQuiz(data);
       setAnswers(Array(data.questions.length).fill(-1));
+    } catch (error) {
+      console.error('Failed to generate quiz', error);
+      setError('Quiz generation failed. Please try again in a moment.');
     } finally {
       setLoading(false);
     }
@@ -45,8 +54,14 @@ export const PracticeCenter = () => {
 
   const submit = async () => {
     if (!token || !quiz) return;
-    const data = await quizApi.attempt(quiz._id, answers, token);
-    setResult({ score: data.attempt.score, total: data.attempt.total });
+    setError('');
+    try {
+      const data = await quizApi.attempt(quiz._id, answers, token);
+      setResult({ score: data.attempt.score, total: data.attempt.total });
+    } catch (error) {
+      console.error('Failed to submit quiz', error);
+      setError('Your quiz could not be submitted. Please try again.');
+    }
   };
 
   return (
@@ -57,7 +72,7 @@ export const PracticeCenter = () => {
           <p className="text-gray-500 font-medium mt-2">Generate AI quizzes for unit tests, PYQ prep, mixed revision, and viva practice.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 w-full lg:w-[760px]">
-          <select value={subjectId} onChange={e => setSubjectId(e.target.value)} className="h-12 bg-white border border-gray-100 rounded-xl px-3 text-sm font-bold">
+          <select value={subjectId} onChange={e => { setSubjectId(e.target.value); setUnitId(''); }} className="h-12 bg-white border border-gray-100 rounded-xl px-3 text-sm font-bold">
             <option value="">Subject</option>
             {subjects.map(subject => <option key={subject._id} value={subject._id}>{subject.code} - {subject.name}</option>)}
           </select>
@@ -77,6 +92,8 @@ export const PracticeCenter = () => {
           </button>
         </div>
       </section>
+
+      {error && <div className="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">{error}</div>}
 
       {quiz ? (
         <section className="bg-white border border-gray-100 rounded-3xl shadow-sm p-6 space-y-6">

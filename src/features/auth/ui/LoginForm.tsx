@@ -68,7 +68,7 @@ export const LoginForm = () => {
           <Input
             label="Password"
             type="password"
-            placeholder="••••••••"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

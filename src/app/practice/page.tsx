@@ -1,21 +1,20 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { AppTopNav } from '@/shared/ui/AppTopNav';
 import { PracticeCenter } from '@/features/quiz/ui/PracticeCenter';
+import { Loader } from '@/shared/ui/Loader';
+import { useRequireAuth } from '@/shared/lib/useRequireAuth';
+import { StudentAppShell } from '@/shared/ui/StudentAppShell';
 
 export default function PracticePage() {
-  const router = useRouter();
+  const { isAuthenticated } = useRequireAuth();
 
-  useEffect(() => {
-    if (!localStorage.getItem('token')) router.push('/login');
-  }, [router]);
+  if (!isAuthenticated) {
+    return <Loader fullPage text="Preparing your practice center..." />;
+  }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
-      <AppTopNav />
+    <StudentAppShell>
       <PracticeCenter />
-    </div>
+    </StudentAppShell>
   );
 }

@@ -3,16 +3,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { resourceApi } from '../api/resource.api';
-import { Resource, ResourceSubject, ResourceUnit } from '../model/resource.types';
-import { Edit2, Trash2, Loader2, X, ExternalLink } from 'lucide-react';
-
-const getSubject = (resource: Resource): ResourceSubject | null => (
-  typeof resource.subjectId === 'object' && resource.subjectId !== null ? resource.subjectId : null
-);
-
-const getUnit = (resource: Resource): ResourceUnit | null => (
-  typeof resource.unitId === 'object' && resource.unitId !== null ? resource.unitId : null
-);
+import { Resource } from '../model/resource.types';
+import { getResourceOpenUrl, getResourceSubject, getResourceUnit } from '../lib/resource-utils';
+import { Edit2, ExternalLink, Loader2, Save, Trash2, X } from 'lucide-react';
 
 export const AdminResourceList = () => {
   const { token } = useAuthStore();
@@ -20,16 +13,7 @@ export const AdminResourceList = () => {
   const [loading, setLoading] = useState(true);
   const [editingResource, setEditingResource] = useState<Resource | null>(null);
   const [saving, setSaving] = useState(false);
-
-  const [editForm, setEditForm] = useState({
-    title: '',
-    url: '',
-    category: 'notes' as 'notes' | 'pyq',
-    type: 'pdf' as 'pdf' | 'youtube' | 'link',
-    description: '',
-    tags: '',
-    difficulty: 'intermediate' as 'beginner' | 'intermediate' | 'exam',
-  });
+  const [editForm, setEditForm] = useState({ url: '', year: '' });
 
   const fetchResources = useCallback(async () => {
     if (!token) return;
@@ -49,28 +33,22 @@ export const AdminResourceList = () => {
   }, [fetchResources]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this resource?')) return;
     if (!token) return;
+    if (!confirm('Delete this resource?')) return;
 
     try {
       await resourceApi.deleteResource(id, token);
-      setResources(prev => prev.filter(r => r._id !== id));
+      setResources((prev) => prev.filter((resource) => resource._id !== id));
     } catch (error) {
       console.error('Failed to delete resource', error);
-      alert('Failed to delete resource');
     }
   };
 
   const handleEditClick = (resource: Resource) => {
     setEditingResource(resource);
     setEditForm({
-      title: resource.title,
-      url: resource.url,
-      category: resource.category,
-      type: resource.type,
-      description: resource.description || '',
-      tags: resource.tags?.join(', ') || '',
-      difficulty: resource.difficulty || 'intermediate',
+      url: resource.type === 'pdf' ? '' : resource.url,
+      year: resource.year || '',
     });
   };
 
@@ -80,17 +58,21 @@ export const AdminResourceList = () => {
 
     setSaving(true);
     try {
-      const tags = editForm.tags.split(',').map(tag => tag.trim()).filter(Boolean);
-      await resourceApi.updateResource(editingResource._id, { ...editForm, tags }, token);
-      setResources(prev => prev.map(r => (
-        r._id === editingResource._id
-          ? { ...r, ...editForm, tags }
-          : r
+      const updateData: Partial<Resource> = {
+        year: editingResource.category === 'pyq' ? editForm.year.trim() : undefined,
+      };
+
+      if (editingResource.type !== 'pdf') {
+        updateData.url = editForm.url.trim();
+      }
+
+      const updated = await resourceApi.updateResource(editingResource._id, updateData, token);
+      setResources((prev) => prev.map((resource) => (
+        resource._id === editingResource._id ? updated : resource
       )));
       setEditingResource(null);
     } catch (error) {
       console.error('Failed to update resource', error);
-      alert('Failed to update resource');
     } finally {
       setSaving(false);
     }
@@ -98,193 +80,140 @@ export const AdminResourceList = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-20">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-      <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-        <h3 className="text-lg font-bold text-gray-900">Manage Uploaded Resources</h3>
-        <span className="text-sm font-medium text-gray-500">{resources.length} total</span>
+    <div className="rounded-3xl border border-gray-200 bg-white shadow-sm">
+      <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+        <h2 className="text-xl font-black text-gray-900">Manage Resources</h2>
+        <span className="text-sm font-semibold text-gray-500">{resources.length} items</span>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm text-left">
-          <thead className="bg-gray-50 text-xs text-gray-500 uppercase font-bold tracking-wider">
-            <tr>
-              <th className="px-6 py-4">Title & Details</th>
-              <th className="px-6 py-4">Subject & Sem</th>
-              <th className="px-6 py-4">Type</th>
-              <th className="px-6 py-4 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {resources.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="px-6 py-10 text-center text-gray-400">
-                  No resources uploaded yet.
-                </td>
-              </tr>
-            ) : (
-              resources.map(resource => {
-                const subject = getSubject(resource);
-                const unit = getUnit(resource);
+      <div className="divide-y divide-gray-100">
+        {resources.length === 0 ? (
+          <div className="px-6 py-10 text-center text-sm font-medium text-gray-400">
+            No resources uploaded yet.
+          </div>
+        ) : (
+          resources.map((resource) => {
+            const subject = getResourceSubject(resource);
+            const unit = getResourceUnit(resource);
 
-                return (
-                  <tr key={resource._id} className="hover:bg-gray-50/50 transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="font-semibold text-gray-900 mb-1">{resource.title}</div>
-                      <div className="text-xs text-gray-500 flex flex-wrap items-center gap-2">
-                        <span className="uppercase tracking-widest bg-gray-100 px-2 py-0.5 rounded">{resource.category}</span>
-                        {resource.difficulty && <span className="uppercase tracking-widest bg-blue-50 text-blue-600 px-2 py-0.5 rounded">{resource.difficulty}</span>}
-                        {resource.year && <span className="uppercase tracking-widest bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded">{resource.year}</span>}
-                        {resource.url && (
-                          <a href={resource.url} target="_blank" rel="noreferrer" className="text-blue-500 hover:underline flex items-center gap-1">
-                            Link <ExternalLink className="w-3 h-3" />
-                          </a>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="font-medium text-gray-800">
-                        {subject?.name || 'Unknown Subject'}
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        Sem {subject?.semester || '?'} - {unit ? `Unit ${unit.unitNumber}` : 'Overall'}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold uppercase ${
-                        resource.type === 'pdf' ? 'bg-red-100 text-red-700' :
-                        resource.type === 'youtube' ? 'bg-rose-100 text-rose-700' :
-                        'bg-blue-100 text-blue-700'
-                      }`}>
-                        {resource.type}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => handleEditClick(resource)}
-                          className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                          title="Edit Resource"
-                        >
-                          <Edit2 className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(resource._id)}
-                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                          title="Delete Resource"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
+            return (
+              <div key={resource._id} className="flex flex-col gap-4 px-6 py-5 md:flex-row md:items-center md:justify-between">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-black text-gray-900">{resource.title}</p>
+                  <div className="mt-1 flex flex-wrap items-center gap-2 text-xs font-semibold text-gray-500">
+                    <span>{subject?.name || 'Unknown Subject'}</span>
+                    <span>Sem {subject?.semester || '?'}</span>
+                    <span>{resource.category === 'notes' ? `Unit ${unit?.unitNumber || '?'}` : resource.year || 'PYQ'}</span>
+                    <span className="rounded-lg bg-gray-100 px-2 py-1 uppercase">{resource.type}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <a
+                    href={getResourceOpenUrl(resource)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 rounded-xl border border-gray-200 px-3 py-2 text-sm font-bold text-gray-700 hover:border-blue-200 hover:text-blue-600"
+                  >
+                    Open
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                  <button
+                    onClick={() => handleEditClick(resource)}
+                    className="rounded-xl border border-gray-200 p-2 text-gray-500 hover:border-blue-200 hover:text-blue-600"
+                    title="Edit resource"
+                  >
+                    <Edit2 className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(resource._id)}
+                    className="rounded-xl border border-gray-200 p-2 text-gray-500 hover:border-red-200 hover:text-red-600"
+                    title="Delete resource"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
 
-      {editingResource && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900">Edit Resource</h3>
-              <button
-                onClick={() => setEditingResource(null)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <X className="w-5 h-5" />
+      {editingResource ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 p-4">
+          <div className="w-full max-w-md rounded-3xl bg-white shadow-xl">
+            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+              <h3 className="text-lg font-black text-gray-900">Edit Resource</h3>
+              <button onClick={() => setEditingResource(null)} className="text-gray-400 hover:text-gray-600">
+                <X className="h-5 w-5" />
               </button>
             </div>
-            <form onSubmit={handleUpdate} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+            <form onSubmit={handleUpdate} className="space-y-4 p-6">
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Title</label>
+                <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Title</label>
                 <input
-                  type="text"
-                  value={editForm.title}
-                  onChange={e => setEditForm(prev => ({ ...prev, title: e.target.value }))}
-                  required
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value={editingResource.title}
+                  readOnly
+                  className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-100 px-4 text-sm font-semibold text-gray-700 outline-none"
                 />
               </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Resource Type</label>
-                <select
-                  value={editForm.type}
-                  onChange={e => setEditForm(prev => ({ ...prev, type: e.target.value as typeof editForm.type }))}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="pdf">PDF Document</option>
-                  <option value="youtube">YouTube Video</option>
-                  <option value="link">Web Link</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase mb-2">URL / Link</label>
-                <input
-                  type="text"
-                  value={editForm.url}
-                  onChange={e => setEditForm(prev => ({ ...prev, url: e.target.value }))}
-                  required
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Description</label>
-                <textarea
-                  value={editForm.description}
-                  onChange={e => setEditForm(prev => ({ ...prev, description: e.target.value }))}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-24 resize-none"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Difficulty</label>
-                <select
-                  value={editForm.difficulty}
-                  onChange={e => setEditForm(prev => ({ ...prev, difficulty: e.target.value as typeof editForm.difficulty }))}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option value="beginner">Beginner</option>
-                  <option value="intermediate">Intermediate</option>
-                  <option value="exam">Exam Focused</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Tags</label>
-                <input
-                  type="text"
-                  value={editForm.tags}
-                  onChange={e => setEditForm(prev => ({ ...prev, tags: e.target.value }))}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-              <div className="pt-4 flex gap-3">
+
+              {editingResource.category === 'pyq' ? (
+                <div>
+                  <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">PYQ Year</label>
+                  <input
+                    type="text"
+                    value={editForm.year}
+                    onChange={(e) => setEditForm((prev) => ({ ...prev, year: e.target.value }))}
+                    className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+                  />
+                </div>
+              ) : null}
+
+              {editingResource.type !== 'pdf' ? (
+                <div>
+                  <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Link</label>
+                  <input
+                    type="url"
+                    value={editForm.url}
+                    onChange={(e) => setEditForm((prev) => ({ ...prev, url: e.target.value }))}
+                    className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+                  />
+                </div>
+              ) : (
+                <div className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600">
+                  PDF link is managed by upload. Use <span className="font-bold">Open</span> to view it.
+                </div>
+              )}
+
+              <div className="flex gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setEditingResource(null)}
-                  className="flex-1 px-4 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-colors"
+                  className="flex-1 rounded-2xl bg-gray-100 px-4 py-3 text-sm font-bold text-gray-600 hover:bg-gray-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="flex-1 px-4 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-sm font-bold text-white hover:bg-blue-700 disabled:bg-blue-300"
                 >
-                  {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Save Changes'}
+                  {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                  Save
                 </button>
               </div>
             </form>
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

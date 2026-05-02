@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { resourceApi } from '../api/resource.api';
 import { Resource } from '../model/resource.types';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
+import { getResourceOpenUrl } from '../lib/resource-utils';
 import { FileText, Video, Link as LinkIcon, ExternalLink } from 'lucide-react';
 
 export const ResourceList = ({ subjectId, unitId }: { subjectId: string; unitId: string }) => {
@@ -36,7 +37,7 @@ export const ResourceList = ({ subjectId, unitId }: { subjectId: string; unitId:
         {resources.map((res) => (
           <a
             key={res._id}
-            href={res.url}
+            href={getResourceOpenUrl(res)}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center p-3 bg-white border border-gray-100 rounded-lg hover:border-blue-200 hover:shadow-sm transition-all group"

@@ -113,7 +113,7 @@ export const RegisterForm = () => {
               label="Password"
               name="password"
               type="password"
-              placeholder="••••••••"
+              placeholder="Create a password"
               value={formData.password}
               onChange={handleChange}
               required
