@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import {
   BookOpen,
   Brain,
+  Calculator,
   ChevronLeft,
   ChevronRight,
   Code2,
@@ -41,6 +42,7 @@ export const StudentAppShell = ({ children }: StudentAppShellProps) => {
       { href: '/ai-tutor', label: 'AI Tutor', icon: Sparkles, match: (path: string) => path === '/ai-tutor' },
       { href: '/flashcards', label: 'Flashcards', icon: Brain, match: (path: string) => path === '/flashcards' },
       { href: '/coding-lab', label: 'Coding Lab', icon: Code2, match: (path: string) => path === '/coding-lab' },
+      { href: '/utilities', label: 'Utilities', icon: Calculator, match: (path: string) => path === '/utilities' },
     ],
     []
   );

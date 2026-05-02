@@ -53,6 +53,18 @@ export const StudyCommandCenter = () => {
 
   const totalMinutes = plan.dailyPlan.reduce((sum, item) => sum + item.effortMinutes, 0);
   const weakestPyq = plan.pyqInsights[0];
+  const openPlanItem = (item: StudyPlan['dailyPlan'][number]) => {
+    if (!item.subjectId) return;
+    if (item.type === 'assignment') {
+      router.push('/assignments');
+      return;
+    }
+    if (item.type === 'pyq-gap') {
+      router.push(`/resources?category=pyq&subjectId=${item.subjectId}`);
+      return;
+    }
+    router.push(`/dashboard/subject/${item.subjectId}`);
+  };
 
   return (
     <section className="space-y-6">
@@ -84,6 +96,19 @@ export const StudyCommandCenter = () => {
                     ? `Next: Unit ${plan.focusSubject.nextUnit.unitNumber} - ${plan.focusSubject.nextUnit.title}`
                     : 'You are caught up on tracked units.'}
                 </p>
+                {plan.focusSubject ? (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <span className="rounded-full bg-white/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white">
+                      {plan.focusSubject.completedUnits}/{plan.focusSubject.totalUnits} units done
+                    </span>
+                    <span className="rounded-full bg-white/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white">
+                      {plan.focusSubject.notesCount} notes
+                    </span>
+                    <span className="rounded-full bg-white/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white">
+                      {plan.focusSubject.pyqCount} pyqs
+                    </span>
+                  </div>
+                ) : null}
               </div>
               <div className="text-right shrink-0">
                 <p className="text-3xl font-black">{plan.focusSubject?.progressPercentage || 0}%</p>
@@ -100,7 +125,7 @@ export const StudyCommandCenter = () => {
                 plan.dailyPlan.map((item, index) => (
                   <button
                     key={`${item.title}-${index}`}
-                    onClick={() => item.subjectId && router.push(`/dashboard/subject/${item.subjectId}`)}
+                    onClick={() => openPlanItem(item)}
                     className="w-full p-5 text-left hover:bg-blue-50/30 transition-all flex items-center justify-between gap-4 group"
                   >
                     <div className="flex items-center gap-4 min-w-0">
@@ -116,6 +141,9 @@ export const StudyCommandCenter = () => {
                       <div className="min-w-0">
                         <p className="font-black text-gray-900 group-hover:text-blue-600 transition-colors truncate">{item.title}</p>
                         <p className="text-xs text-gray-500 font-medium mt-1 line-clamp-2">{item.detail}</p>
+                        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-gray-400 mt-2">
+                          {item.type === 'assignment' ? 'Open assignment tracker' : item.type === 'pyq-gap' ? 'Open PYQ library' : 'Open subject workspace'}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 shrink-0">
@@ -145,7 +173,12 @@ export const StudyCommandCenter = () => {
               {weakestPyq ? (
                 <div className="space-y-3">
                   {plan.pyqInsights.slice(0, 4).map((item) => (
-                    <div key={item.subjectId} className="flex items-center justify-between gap-3">
+                    <button
+                      key={item.subjectId}
+                      type="button"
+                      onClick={() => router.push(`/resources?category=pyq&subjectId=${item.subjectId}`)}
+                      className="w-full flex items-center justify-between gap-3 rounded-xl p-2 text-left hover:bg-amber-50/60 transition-colors"
+                    >
                       <div className="min-w-0">
                         <p className="text-xs font-black text-gray-700 truncate">{item.code}: {item.name}</p>
                         <p className="text-[10px] text-gray-400 font-bold uppercase">{item.pyqCount} PYQs</p>
@@ -159,7 +192,7 @@ export const StudyCommandCenter = () => {
                       }`}>
                         {readinessLabel[item.readiness]}
                       </span>
-                    </div>
+                    </button>
                   ))}
                 </div>
               ) : (

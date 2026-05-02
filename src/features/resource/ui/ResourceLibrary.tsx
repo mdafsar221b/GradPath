@@ -134,6 +134,18 @@ export const ResourceLibrary = () => {
     fetchResources();
   }, [token, filters.category, filters.semester, filters.subjectId, filters.search, filters.type, filters.difficulty, filters.year, requestedCategory]);
 
+  const resetFilters = () => {
+    setFilters({
+      category: requestedCategory || 'notes',
+      semester: user?.semester || 1,
+      subjectId: searchParams.get('subjectId') || '',
+      search: '',
+      type: '',
+      difficulty: '',
+      year: '',
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -223,6 +235,31 @@ export const ResourceLibrary = () => {
             {autoCategoryHint}
           </div>
         ) : null}
+
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-white px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-slate-500 shadow-sm">
+              {resources.length} result{resources.length === 1 ? '' : 's'}
+            </span>
+            {filters.subjectId ? (
+              <span className="rounded-full bg-white px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-slate-500 shadow-sm">
+                Subject filtered
+              </span>
+            ) : null}
+            {filters.year ? (
+              <span className="rounded-full bg-white px-3 py-2 text-xs font-black uppercase tracking-[0.18em] text-slate-500 shadow-sm">
+                Year {filters.year}
+              </span>
+            ) : null}
+          </div>
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50"
+          >
+            Reset filters
+          </button>
+        </div>
 
         {filters.category === 'pyq' && (
           <div className="mb-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between bg-amber-50 border border-amber-100 p-4 rounded-2xl">

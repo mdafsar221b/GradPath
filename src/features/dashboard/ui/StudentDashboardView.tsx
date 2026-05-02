@@ -5,7 +5,7 @@ import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/shared/ui/Button';
 import { SubjectList } from '@/features/academic/ui/SubjectList';
-import { BookOpen, CheckSquare, ChevronRight, Code2, FileQuestion, Layers3, Sparkles } from 'lucide-react';
+import { BookOpen, Calculator, CheckSquare, ChevronRight, Code2, FileQuestion, Layers3, Sparkles } from 'lucide-react';
 import { DashboardData } from '@/features/dashboard/api/dashboard.api';
 import { StatsOverview } from '@/features/dashboard/ui/StatsOverview';
 import { UpcomingDeadlines } from '@/features/dashboard/ui/UpcomingDeadlines';
@@ -57,6 +57,12 @@ export const StudentDashboardView = ({ dashboardData, overallProgress }: Student
       description: 'Practice with previous-year exam patterns.',
       icon: FileQuestion,
       onClick: () => router.push('/resources?category=pyq'),
+    },
+    {
+      title: 'Utilities',
+      description: 'Plan marks, estimate targets, and use quick converters.',
+      icon: Calculator,
+      onClick: () => router.push('/utilities'),
     },
   ];
 

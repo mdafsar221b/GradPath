@@ -41,6 +41,12 @@ export const PracticeCenter = () => {
     () => mode === 'pyq' || quiz?.questions.some((question) => question.questionType !== 'mcq'),
     [mode, quiz]
   );
+  const modeDescriptions = {
+    unit: 'Quick objective questions from the selected unit or subject.',
+    pyq: 'Written university-style practice with 3, 7, and 14 mark questions.',
+    mixed: 'Objective revision across multiple topics for fast recap.',
+    viva: 'Oral-style quick questions for interview and viva prep.',
+  } as const;
 
   const generate = async () => {
     if (!token || !subjectId) return;
@@ -116,6 +122,27 @@ export const PracticeCenter = () => {
           </button>
         </div>
       </section>
+
+      <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">Current mode</p>
+          <p className="mt-1 text-sm font-semibold text-slate-700">{modeDescriptions[mode as keyof typeof modeDescriptions]}</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {mode === 'pyq' ? (
+            <>
+              <span className="rounded-full bg-amber-50 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-amber-700">3 marks</span>
+              <span className="rounded-full bg-amber-50 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-amber-700">7 marks</span>
+              <span className="rounded-full bg-amber-50 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-amber-700">14 marks</span>
+            </>
+          ) : (
+            <>
+              <span className="rounded-full bg-blue-50 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-blue-700">Objective</span>
+              <span className="rounded-full bg-blue-50 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-blue-700">Instant scoring</span>
+            </>
+          )}
+        </div>
+      </div>
 
       {mode === 'pyq' ? (
         <div className="rounded-2xl border border-amber-100 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">

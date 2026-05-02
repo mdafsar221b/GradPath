@@ -25,6 +25,7 @@ app.use('/api/quizzes', require('./routes/quiz.routes'));
 app.use('/api/flashcards', require('./routes/flashcard.routes'));
 app.use('/api/topics', require('./routes/topic.routes'));
 app.use('/api/coding', require('./routes/coding.routes'));
+app.use('/api/results', require('./routes/results.routes'));
 
 app.get('/', (req, res) => {
   res.send('API is running...');

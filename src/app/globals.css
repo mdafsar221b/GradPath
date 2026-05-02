@@ -24,3 +24,25 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+select,
+input,
+textarea {
+  color: #0f172a;
+}
+
+select {
+  background-color: #ffffff;
+}
+
+select option {
+  color: #0f172a;
+  background-color: #ffffff;
+}
+
+select:disabled,
+input:disabled,
+textarea:disabled {
+  color: #64748b;
+  background-color: #f8fafc;
+}

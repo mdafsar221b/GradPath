@@ -32,11 +32,19 @@ export const AssignmentList = () => {
     );
   }
 
+  const sortedAssignments = [...assignments].sort((first, second) => {
+    if (first.status !== second.status) {
+      return first.status === 'pending' ? -1 : 1;
+    }
+    return new Date(first.dueDate).getTime() - new Date(second.dueDate).getTime();
+  });
+
   return (
     <div className="space-y-4">
-      {assignments.map((a) => {
+      {sortedAssignments.map((a) => {
         const dueDate = new Date(a.dueDate);
         const isOverdue = isPast(dueDate) && !isToday(dueDate) && a.status === 'pending';
+        const isDueToday = isToday(dueDate) && a.status === 'pending';
         
         return (
           <div 
@@ -62,6 +70,17 @@ export const AssignmentList = () => {
                 <span className="text-[10px] font-medium text-gray-400">
                   Unit {a.unitId.unitNumber}
                 </span>
+                <span className={`px-2 py-0.5 text-[10px] font-bold rounded uppercase tracking-wider ${
+                  a.status === 'completed'
+                    ? 'bg-green-50 text-green-600'
+                    : isOverdue
+                      ? 'bg-red-50 text-red-600'
+                      : isDueToday
+                        ? 'bg-amber-50 text-amber-700'
+                        : 'bg-slate-100 text-slate-500'
+                }`}>
+                  {a.status === 'completed' ? 'Done' : isOverdue ? 'Overdue' : isDueToday ? 'Due today' : 'Pending'}
+                </span>
               </div>
               <h4 className={`font-semibold truncate ${
                 a.status === 'completed' ? 'line-through text-gray-400' : 'text-gray-900'
@@ -78,7 +97,8 @@ export const AssignmentList = () => {
                   <Calendar className="w-3 h-3" />
                   {format(dueDate, 'dd MMM yyyy')}
                 </div>
-                {isOverdue && <p className="text-[10px] text-red-400 font-bold uppercase mt-0.5">Overdue</p>}
+                {isOverdue ? <p className="text-[10px] text-red-400 font-bold uppercase mt-0.5">Overdue</p> : null}
+                {isDueToday ? <p className="text-[10px] text-amber-500 font-bold uppercase mt-0.5">Due today</p> : null}
               </div>
 
               <button 
