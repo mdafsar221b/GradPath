@@ -19,7 +19,7 @@ import { Loader } from '@/shared/ui/Loader';
 
 const readinessLabel = {
   strong: 'Strong',
-  building: 'Building',
+  building: 'Available',
   'needs-pyqs': 'Needs PYQs',
 };
 

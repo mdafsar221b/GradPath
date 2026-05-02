@@ -3,9 +3,16 @@ const mongoose = require('mongoose');
 const quizQuestionSchema = new mongoose.Schema(
   {
     prompt: { type: String, required: true },
-    options: [{ type: String, required: true }],
-    answerIndex: { type: Number, required: true, min: 0, max: 5 },
+    questionType: {
+      type: String,
+      enum: ['mcq', 'short', 'medium', 'long'],
+      default: 'mcq',
+    },
+    options: [{ type: String }],
+    answerIndex: { type: Number, min: 0, max: 5 },
     explanation: { type: String, default: '' },
+    answerGuide: { type: String, default: '' },
+    marks: { type: Number, default: 0 },
     topic: { type: String, default: '' },
     difficulty: {
       type: String,

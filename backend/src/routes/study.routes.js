@@ -117,7 +117,7 @@ router.get('/plan', protect, async (req, res) => {
         code: subject.code,
         name: subject.name,
         pyqCount: subject.pyqCount,
-        readiness: subject.pyqCount >= 5 ? 'strong' : subject.pyqCount >= 2 ? 'building' : 'needs-pyqs',
+        readiness: subject.pyqCount >= 3 ? 'strong' : subject.pyqCount >= 1 ? 'building' : 'needs-pyqs',
       }))
       .sort((a, b) => a.pyqCount - b.pyqCount);
 

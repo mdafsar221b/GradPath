@@ -5,9 +5,12 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 export interface QuizQuestion {
   _id: string;
   prompt: string;
+  questionType: 'mcq' | 'short' | 'medium' | 'long';
   options: string[];
-  answerIndex: number;
+  answerIndex?: number;
   explanation: string;
+  answerGuide?: string;
+  marks?: number;
   topic?: string;
   difficulty: 'easy' | 'medium' | 'hard';
 }

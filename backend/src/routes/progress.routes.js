@@ -40,6 +40,45 @@ router.post('/toggle', protect, async (req, res) => {
   }
 });
 
+// @desc    Set unit completion explicitly
+// @route   PUT /api/progress/unit
+// @access  Private
+router.put('/unit', protect, async (req, res) => {
+  try {
+    const { subjectId, unitNumber, completed } = req.body;
+
+    if (!subjectId || !unitNumber || typeof completed !== 'boolean') {
+      return res.status(400).json({ message: 'subjectId, unitNumber, and completed are required' });
+    }
+
+    let progress = await Progress.findOne({ userId: req.user._id, subjectId });
+
+    if (!progress) {
+      progress = await Progress.create({
+        userId: req.user._id,
+        subjectId,
+        completedUnits: completed ? [unitNumber] : [],
+      });
+      return res.json(progress);
+    }
+
+    const hasUnit = progress.completedUnits.includes(unitNumber);
+
+    if (completed && !hasUnit) {
+      progress.completedUnits.push(unitNumber);
+    }
+
+    if (!completed && hasUnit) {
+      progress.completedUnits = progress.completedUnits.filter((item) => item !== unitNumber);
+    }
+
+    await progress.save();
+    res.json(progress);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // @desc    Get progress for a subject
 // @route   GET /api/progress/:subjectId
 // @access  Private

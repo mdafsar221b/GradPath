@@ -6,6 +6,7 @@ interface ProgressState {
   loading: boolean;
   fetchProgress: (token: string) => Promise<void>;
   toggleUnit: (subjectId: string, unitNumber: number, token: string) => Promise<void>;
+  setUnitCompletion: (subjectId: string, unitNumber: number, completed: boolean, token: string) => Promise<void>;
   getProgressForSubject: (subjectId: string) => ProgressData | undefined;
 }
 
@@ -35,6 +36,19 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
       }));
     } catch (error) {
       console.error('Failed to toggle unit', error);
+    }
+  },
+
+  setUnitCompletion: async (subjectId: string, unitNumber: number, completed: boolean, token: string) => {
+    try {
+      const updated = await progressApi.setUnitCompletion(subjectId, unitNumber, completed, token);
+      set((state) => ({
+        progressList: state.progressList.find((p) => p.subjectId === subjectId)
+          ? state.progressList.map((p) => (p.subjectId === subjectId ? updated : p))
+          : [...state.progressList, updated]
+      }));
+    } catch (error) {
+      console.error('Failed to set unit completion', error);
     }
   },
 

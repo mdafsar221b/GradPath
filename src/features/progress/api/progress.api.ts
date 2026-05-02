@@ -29,5 +29,19 @@ export const progressApi = {
       headers: { Authorization: `Bearer ${token}` }
     });
     return data;
+  },
+
+  setUnitCompletion: async (
+    subjectId: string,
+    unitNumber: number,
+    completed: boolean,
+    token: string
+  ): Promise<ProgressData> => {
+    const { data } = await axios.put(
+      `${API_URL}/progress/unit`,
+      { subjectId, unitNumber, completed },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return data;
   }
 };
