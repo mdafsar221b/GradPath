@@ -8,7 +8,7 @@
     "dev-backend": "cd backend && npm run dev",
     "dev-frontend": "next dev",
     "seed": "cd backend && node src/seed/seedAcademicData.js",
-    "build": "next build",
+    "build": "node scripts/build.mjs",
     "start": "next start",
     "lint": "eslint"
   },
