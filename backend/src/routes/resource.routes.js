@@ -22,28 +22,35 @@ const buildResourceTitle = ({ subject, unit, category, year }) => {
 // @access  Admin
 router.get('/stats', protect, admin, async (req, res) => {
   try {
-    const totalResources = await Resource.countDocuments();
-    const notesCount = await Resource.countDocuments({ category: 'notes' });
-    const pyqsCount = await Resource.countDocuments({ category: 'pyq' });
-    
-    const byType = await Resource.aggregate([
-      { $group: { _id: '$type', count: { $sum: 1 } } }
-    ]);
-    const byCategory = await Resource.aggregate([
-      { $group: { _id: '$category', count: { $sum: 1 } } }
-    ]);
-    const byDifficulty = await Resource.aggregate([
-      { $group: { _id: '$difficulty', count: { $sum: 1 } } }
+    const [
+      totalResources,
+      notesCount,
+      pyqsCount,
+      byType,
+      byCategory,
+      byDifficulty,
+      byQualityStatus,
+      allSubjects,
+      subjectsWithResources,
+      recentResources,
+    ] = await Promise.all([
+      Resource.countDocuments(),
+      Resource.countDocuments({ category: 'notes' }),
+      Resource.countDocuments({ category: 'pyq' }),
+      Resource.aggregate([{ $group: { _id: '$type', count: { $sum: 1 } } }]),
+      Resource.aggregate([{ $group: { _id: '$category', count: { $sum: 1 } } }]),
+      Resource.aggregate([{ $group: { _id: '$difficulty', count: { $sum: 1 } } }]),
+      Resource.aggregate([{ $group: { _id: '$qualityStatus', count: { $sum: 1 } } }]),
+      Subject.find(),
+      Resource.distinct('subjectId'),
+      Resource.find()
+        .populate('subjectId', 'name code semester')
+        .populate('unitId', 'unitNumber title')
+        .sort({ createdAt: -1 })
+        .limit(8),
     ]);
 
-    const allSubjects = await Subject.find();
-    const subjectsWithResources = await Resource.distinct('subjectId');
     const pendingSubjectsCount = allSubjects.length - subjectsWithResources.length;
-    const recentResources = await Resource.find()
-      .populate('subjectId', 'name code semester')
-      .populate('unitId', 'unitNumber title')
-      .sort({ createdAt: -1 })
-      .limit(5);
 
     res.json({
       totalResources,
@@ -52,8 +59,9 @@ router.get('/stats', protect, admin, async (req, res) => {
       byType,
       byCategory,
       byDifficulty,
+      byQualityStatus,
       pendingSubjectsCount,
-      recentResources
+      recentResources,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -75,6 +83,7 @@ router.post('/', protect, admin, upload.single('file'), async (req, res) => {
       description,
       difficulty,
       year,
+      examSession,
       source,
       estimatedMinutes
     } = req.body;
@@ -112,6 +121,7 @@ router.post('/', protect, admin, upload.single('file'), async (req, res) => {
       description,
       difficulty,
       year: normalizedYear || undefined,
+      examSession: normalizedCategory === 'pyq' ? (examSession || '').trim() : '',
       source,
       estimatedMinutes: estimatedMinutes ? Number(estimatedMinutes) : undefined,
       tags: req.body.tags
@@ -131,7 +141,7 @@ router.post('/', protect, admin, upload.single('file'), async (req, res) => {
 // @access  Protected (Student/Admin)
 router.get('/', protect, async (req, res) => {
   try {
-    const { subjectId, unitId, category, semester, type, difficulty, year, search, tag } = req.query;
+    const { subjectId, unitId, category, semester, type, difficulty, year, search, tag, qualityStatus } = req.query;
     
     let query = {};
     if (subjectId) query.subjectId = subjectId;
@@ -139,6 +149,7 @@ router.get('/', protect, async (req, res) => {
     if (category) query.category = category;
     if (type) query.type = type;
     if (difficulty) query.difficulty = difficulty;
+    if (qualityStatus) query.qualityStatus = qualityStatus;
     if (year) query.year = year.toString();
     if (tag) query.tags = tag.toString().toLowerCase();
     if (search) {
@@ -179,6 +190,7 @@ router.put('/:id', protect, admin, async (req, res) => {
       description,
       difficulty,
       year,
+      examSession,
       source,
       estimatedMinutes,
       tags,
@@ -197,6 +209,7 @@ router.put('/:id', protect, admin, async (req, res) => {
     if (description !== undefined) resource.description = description;
     if (difficulty) resource.difficulty = difficulty;
     if (year !== undefined) resource.year = year ? year.toString().trim() : undefined;
+    if (examSession !== undefined) resource.examSession = examSession ? examSession.toString().trim() : '';
     if (source !== undefined) resource.source = source;
     if (estimatedMinutes !== undefined) resource.estimatedMinutes = Number(estimatedMinutes);
     if (qualityStatus) resource.qualityStatus = qualityStatus;

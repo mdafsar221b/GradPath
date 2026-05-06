@@ -1,5 +1,99 @@
 const mongoose = require('mongoose');
 
+const pyqPaperPartSchema = new mongoose.Schema(
+  {
+    label: { type: String, default: '', trim: true },
+    prompt: { type: String, default: '', trim: true },
+    marks: { type: Number, default: 0 },
+    questionType: {
+      type: String,
+      enum: ['short', 'medium', 'long'],
+      default: 'short',
+    },
+    topic: { type: String, default: '', trim: true },
+    answerGuide: { type: String, default: '', trim: true },
+  },
+  { _id: false }
+);
+
+const pyqPaperQuestionSchema = new mongoose.Schema(
+  {
+    number: { type: Number, required: true },
+    prompt: { type: String, default: '', trim: true },
+    marks: { type: Number, default: 0 },
+    questionType: {
+      type: String,
+      enum: ['short', 'medium', 'long'],
+      default: 'long',
+    },
+    style: {
+      type: String,
+      enum: ['single', 'split', 'short-notes', 'compulsory'],
+      default: 'single',
+    },
+    choiceRule: { type: String, default: '', trim: true },
+    topic: { type: String, default: '', trim: true },
+    answerGuide: { type: String, default: '', trim: true },
+    parts: {
+      type: [pyqPaperPartSchema],
+      default: [],
+    },
+  },
+  { _id: false }
+);
+
+const pyqPaperSectionSchema = new mongoose.Schema(
+  {
+    title: { type: String, default: '', trim: true },
+    answerRule: { type: String, default: '', trim: true },
+    questions: {
+      type: [pyqPaperQuestionSchema],
+      default: [],
+    },
+  },
+  { _id: false }
+);
+
+const pyqPaperSchema = new mongoose.Schema(
+  {
+    rawText: { type: String, default: '', trim: true },
+    paperCode: { type: String, default: '', trim: true },
+    examTitle: { type: String, default: '', trim: true },
+    semesterLabel: { type: String, default: '', trim: true },
+    paperLabel: { type: String, default: '', trim: true },
+    subjectCode: { type: String, default: '', trim: true },
+    subjectTitle: { type: String, default: '', trim: true },
+    timeAllowed: { type: String, default: 'Three Hours', trim: true },
+    maximumMarks: { type: Number, default: 70 },
+    instructions: {
+      type: [String],
+      default: [],
+    },
+    questionOne: {
+      type: pyqPaperQuestionSchema,
+      default: null,
+    },
+    sectionA: {
+      type: pyqPaperSectionSchema,
+      default: () => ({ title: 'SECTION-A', answerRule: '', questions: [] }),
+    },
+    sectionB: {
+      type: pyqPaperSectionSchema,
+      default: () => ({ title: 'SECTION-B', answerRule: '', questions: [] }),
+    },
+    parseStatus: {
+      type: String,
+      enum: ['empty', 'parsed'],
+      default: 'empty',
+    },
+    parsedAt: {
+      type: Date,
+      default: null,
+    },
+  },
+  { _id: false }
+);
+
 const resourceSchema = new mongoose.Schema(
   {
     subjectId: {
@@ -49,6 +143,10 @@ const resourceSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    examSession: {
+      type: String,
+      default: '',
+    },
     source: {
       type: String,
       default: '',
@@ -67,6 +165,10 @@ const resourceSchema = new mongoose.Schema(
     viewCount: {
       type: Number,
       default: 0,
+    },
+    pyqPaper: {
+      type: pyqPaperSchema,
+      default: () => ({ parseStatus: 'empty' }),
     },
   },
   {

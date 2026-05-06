@@ -5,11 +5,10 @@ import { useMemo, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   BookOpen,
-  Brain,
   Calculator,
   ChevronLeft,
   ChevronRight,
-  Code2,
+  FileText,
   FolderOpen,
   LayoutDashboard,
   LogOut,
@@ -36,16 +35,18 @@ export const StudentAppShell = ({ children }: StudentAppShellProps) => {
   const navItems = useMemo(
     () => [
       { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, match: (path: string) => path === '/dashboard' || path.startsWith('/dashboard/subject/') },
+      { href: '/model-paper', label: 'Model Paper', icon: FileText, match: (path: string) => path === '/model-paper' },
       { href: '/assignments', label: 'Assignments', icon: SquareCheckBig, match: (path: string) => path === '/assignments' },
       { href: '/resources', label: 'Library', icon: FolderOpen, match: (path: string) => path === '/resources' },
       { href: '/practice', label: 'Practice', icon: BookOpen, match: (path: string) => path === '/practice' },
       { href: '/ai-tutor', label: 'AI Tutor', icon: Sparkles, match: (path: string) => path === '/ai-tutor' },
-      { href: '/flashcards', label: 'Flashcards', icon: Brain, match: (path: string) => path === '/flashcards' },
-      { href: '/coding-lab', label: 'Coding Lab', icon: Code2, match: (path: string) => path === '/coding-lab' },
       { href: '/utilities', label: 'Utilities', icon: Calculator, match: (path: string) => path === '/utilities' },
     ],
     []
   );
+
+  const primaryNavItems = navItems.slice(0, 5);
+  const supportNavItems = navItems.slice(5);
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -109,8 +110,14 @@ export const StudentAppShell = ({ children }: StudentAppShellProps) => {
           </div>
         </div>
 
-        <nav className="flex-1 space-y-2 overflow-y-auto px-3 py-4">
-          {navItems.map((item) => {
+        <nav className="flex-1 overflow-y-auto px-3 py-4">
+          {!collapsed ? (
+            <p className="px-4 pb-2 text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">
+              Workspace
+            </p>
+          ) : null}
+          <div className="space-y-2">
+          {primaryNavItems.map((item) => {
             const Icon = item.icon;
             const active = item.match(pathname);
 
@@ -130,6 +137,35 @@ export const StudentAppShell = ({ children }: StudentAppShellProps) => {
               </Link>
             );
           })}
+          </div>
+
+          {!collapsed ? (
+            <p className="px-4 pb-2 pt-5 text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">
+              Support
+            </p>
+          ) : null}
+          <div className="space-y-2">
+          {supportNavItems.map((item) => {
+            const Icon = item.icon;
+            const active = item.match(pathname);
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors ${
+                  active
+                    ? 'bg-slate-900 text-white'
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                }`}
+              >
+                <Icon className="h-5 w-5 shrink-0" />
+                {!collapsed ? <span className="truncate">{item.label}</span> : null}
+              </Link>
+            );
+          })}
+          </div>
         </nav>
 
         <div className="border-t border-slate-100 px-3 py-4">

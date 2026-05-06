@@ -12,6 +12,7 @@ export const resourceApi = {
       semester?: number;
       type?: ResourceType | '';
       difficulty?: ResourceDifficulty | '';
+      qualityStatus?: '' | 'draft' | 'review' | 'published' | 'archived';
       year?: string;
       search?: string;
       tag?: string;

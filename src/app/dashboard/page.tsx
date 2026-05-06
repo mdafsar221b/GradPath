@@ -7,7 +7,6 @@ import { dashboardApi, DashboardData } from '@/features/dashboard/api/dashboard.
 import { Loader } from '@/shared/ui/Loader';
 
 import { StudentDashboardView } from '@/features/dashboard/ui/StudentDashboardView';
-import { AdminDashboardView } from '@/features/dashboard/ui/AdminDashboardView';
 import { StudentAppShell } from '@/shared/ui/StudentAppShell';
 
 export default function DashboardPage() {
@@ -21,6 +20,12 @@ export default function DashboardPage() {
       router.push('/login');
     }
   }, [router]);
+
+  useEffect(() => {
+    if (user?.role === 'admin') {
+      router.replace('/admin');
+    }
+  }, [router, user?.role]);
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -54,7 +59,7 @@ export default function DashboardPage() {
   }
 
   if (user.role === 'admin') {
-    return <AdminDashboardView />;
+    return <Loader fullPage text="Opening admin dashboard..." />;
   }
 
   return (

@@ -54,12 +54,14 @@ export const AdminResourceUpload = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const [lastSubmittedCategory, setLastSubmittedCategory] = useState<ResourceCategory>('notes');
 
   const [formData, setFormData] = useState({
     category: 'notes' as ResourceCategory,
     subjectId: '',
     unitId: '',
     year: '',
+    examSession: '',
     type: 'pdf' as ResourceType,
     url: '',
   });
@@ -75,7 +77,7 @@ export const AdminResourceUpload = () => {
       try {
         const data = await academicApi.getSubjects(semester);
         setSubjects(data);
-        setFormData((prev) => ({ ...prev, subjectId: '', unitId: '', year: '' }));
+        setFormData((prev) => ({ ...prev, subjectId: '', unitId: '', year: '', examSession: '' }));
       } catch (fetchError) {
         console.error('Error fetching subjects', fetchError);
       }
@@ -129,6 +131,7 @@ export const AdminResourceUpload = () => {
       subjectId: '',
       unitId: '',
       year: '',
+      examSession: '',
       type: 'pdf',
       url: '',
     });
@@ -144,6 +147,7 @@ export const AdminResourceUpload = () => {
     setError('');
 
     try {
+      setLastSubmittedCategory(formData.category);
       const data = new FormData();
       data.append('subjectId', formData.subjectId);
       data.append('category', formData.category);
@@ -154,6 +158,7 @@ export const AdminResourceUpload = () => {
         data.append('unitId', formData.unitId);
       } else {
         data.append('year', formData.year.trim());
+        data.append('examSession', formData.examSession.trim());
       }
 
       if (formData.type === 'pdf' && file) {
@@ -194,7 +199,7 @@ export const AdminResourceUpload = () => {
             <button
               key={category}
               type="button"
-              onClick={() => setFormData((prev) => ({ ...prev, category, unitId: '', year: '' }))}
+              onClick={() => setFormData((prev) => ({ ...prev, category, unitId: '', year: '', examSession: '' }))}
               className={`rounded-xl px-4 py-2 text-sm font-bold transition-colors ${
                 formData.category === category
                   ? 'bg-blue-600 text-white'
@@ -259,16 +264,28 @@ export const AdminResourceUpload = () => {
             </select>
           </div>
         ) : (
-          <div>
-            <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">PYQ Year</label>
-            <input
-              type="text"
-              placeholder="2020-21"
-              value={formData.year}
-              onChange={(e) => setFormData((prev) => ({ ...prev, year: e.target.value }))}
-              className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
-              required
-            />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">PYQ Year</label>
+              <input
+                type="text"
+                placeholder="2020-21"
+                value={formData.year}
+                onChange={(e) => setFormData((prev) => ({ ...prev, year: e.target.value }))}
+                className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Exam Session</label>
+              <input
+                type="text"
+                placeholder="Winter, Mid Sem, Final"
+                value={formData.examSession}
+                onChange={(e) => setFormData((prev) => ({ ...prev, examSession: e.target.value }))}
+                className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+              />
+            </div>
           </div>
         )}
 
@@ -336,7 +353,9 @@ export const AdminResourceUpload = () => {
         {success ? (
           <div className="flex items-center gap-2 rounded-2xl border border-green-100 bg-green-50 px-4 py-3 text-sm font-bold text-green-700">
             <CheckCircle2 className="h-4 w-4" />
-            {success}
+            {lastSubmittedCategory === 'pyq'
+              ? 'PYQ resource uploaded. Open it in the library to curate question text.'
+              : success}
           </div>
         ) : null}
 

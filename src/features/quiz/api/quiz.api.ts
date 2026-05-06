@@ -18,10 +18,11 @@ export interface QuizQuestion {
 export interface Quiz {
   _id: string;
   title: string;
-  mode: 'unit' | 'pyq' | 'mixed' | 'viva';
+  mode: 'unit' | 'pyq' | 'mixed' | 'viva' | 'model-paper';
   subjectId: { _id: string; name: string; code?: string } | string;
   unitId?: { _id: string; unitNumber: number; title: string } | string;
   questions: QuizQuestion[];
+  paperLayout?: unknown;
   createdAt: string;
 }
 

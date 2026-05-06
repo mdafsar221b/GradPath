@@ -27,6 +27,7 @@ export interface Resource {
   tags?: string[];
   difficulty?: ResourceDifficulty;
   year?: string;
+  examSession?: string;
   source?: string;
   estimatedMinutes?: number;
   qualityStatus?: 'draft' | 'review' | 'published' | 'archived';
@@ -45,6 +46,7 @@ export interface CreateResourceDTO {
   tags?: string[];
   difficulty?: ResourceDifficulty;
   year?: string;
+  examSession?: string;
   source?: string;
   estimatedMinutes?: number;
 }
@@ -56,6 +58,7 @@ export interface ResourceStats {
   byType: { _id: string; count: number }[];
   byCategory?: { _id: string; count: number }[];
   byDifficulty?: { _id: string; count: number }[];
+  byQualityStatus?: { _id: string; count: number }[];
   recentResources?: Resource[];
   pendingSubjectsCount: number;
   pendingUnitNotesCount?: number;

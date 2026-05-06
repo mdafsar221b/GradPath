@@ -1,163 +1,173 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { LucideIcon, LogOut } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import {
+  ChevronLeft,
+  ChevronRight,
+  FolderOpen,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Users,
+} from 'lucide-react';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
-
-interface AdminNavItem {
-  href?: string;
-  id?: string;
-  label: string;
-  icon: LucideIcon;
-}
 
 interface AdminWorkspaceShellProps {
   title: string;
   description: string;
-  primaryItems: AdminNavItem[];
-  activePrimary: string;
-  sections: AdminNavItem[];
-  activeSection: string;
-  onSectionChange: (sectionId: string) => void;
   children: React.ReactNode;
 }
 
-const baseItemClass =
-  'flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors';
+const expandedWidth = 'lg:w-72';
+const collapsedWidth = 'lg:w-20';
 
 export const AdminWorkspaceShell = ({
   title,
   description,
-  primaryItems,
-  activePrimary,
-  sections,
-  activeSection,
-  onSectionChange,
   children,
 }: AdminWorkspaceShellProps) => {
+  const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuthStore();
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navItems = useMemo(
+    () => [
+      { href: '/admin', label: 'Overview', icon: LayoutDashboard, match: (path: string) => path === '/admin' },
+      { href: '/admin/resources', label: 'Resources', icon: FolderOpen, match: (path: string) => path.startsWith('/admin/resources') },
+      { href: '/admin/users', label: 'Users', icon: Users, match: (path: string) => path.startsWith('/admin/users') },
+    ],
+    []
+  );
 
   return (
     <div className="min-h-screen bg-slate-100">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-6 lg:flex-row lg:px-6">
-        <aside className="w-full shrink-0 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm lg:w-72">
-          <div className="border-b border-slate-100 px-2 pb-4">
+      <button
+        type="button"
+        onClick={() => setMobileOpen(true)}
+        className="fixed left-4 top-4 z-40 flex h-11 w-11 items-center justify-center rounded-xl bg-slate-900 text-white shadow-lg lg:hidden"
+        aria-label="Open navigation"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+
+      {mobileOpen ? (
+        <button
+          type="button"
+          onClick={() => setMobileOpen(false)}
+          className="fixed inset-0 z-40 bg-slate-950/40 lg:hidden"
+          aria-label="Close navigation overlay"
+        />
+      ) : null}
+
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-slate-200 bg-white transition-transform duration-200 lg:translate-x-0 ${
+          collapsed ? collapsedWidth : expandedWidth
+        } ${mobileOpen ? 'translate-x-0' : '-translate-x-full'} lg:flex`}
+      >
+        <div className="flex items-center justify-between border-b border-slate-100 px-4 py-4">
+          <button
+            type="button"
+            onClick={() => router.push('/admin')}
+            className="flex min-w-0 items-center gap-3"
+          >
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-600 text-lg font-black text-white">
+              G
+            </div>
+            {!collapsed ? (
+              <div className="min-w-0 text-left">
+                <p className="truncate text-lg font-black text-slate-900">GradPath</p>
+                <p className="text-xs font-medium text-slate-500">Admin Console</p>
+              </div>
+            ) : null}
+          </button>
+
+          <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => router.push('/dashboard')}
-              className="flex items-center gap-3 text-left"
+              onClick={() => setCollapsed((prev) => !prev)}
+              className="hidden h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 lg:flex"
+              aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-600 text-lg font-black text-white">
-                G
-              </div>
-              <div>
-                <p className="text-lg font-black text-slate-900">GradPath</p>
-                <p className="text-xs font-medium text-slate-500">Admin</p>
-              </div>
+              {collapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
+            </button>
+            <button
+              type="button"
+              onClick={() => setMobileOpen(false)}
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-600 lg:hidden"
+              aria-label="Close navigation"
+            >
+              <ChevronLeft className="h-5 w-5" />
             </button>
           </div>
+        </div>
 
-          <div className="space-y-2 px-2 py-4">
-            {primaryItems.map((item) => {
+        <nav className="flex-1 overflow-y-auto px-3 py-4">
+          {!collapsed ? (
+            <p className="px-4 pb-2 text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+              Workspace
+            </p>
+          ) : null}
+          <div className="space-y-2">
+            {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = activePrimary === item.label;
-
-              if (!item.href) return null;
+              const active = item.match(pathname);
 
               return (
                 <Link
-                  key={item.label}
+                  key={item.href}
                   href={item.href}
-                  className={`${baseItemClass} ${
-                    isActive
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors ${
+                    active
                       ? 'bg-slate-900 text-white'
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                   }`}
                 >
-                  <Icon className="h-4 w-4" />
-                  {item.label}
+                  <Icon className="h-5 w-5 shrink-0" />
+                  {!collapsed ? <span className="truncate">{item.label}</span> : null}
                 </Link>
               );
             })}
           </div>
+        </nav>
 
-          <div className="border-t border-slate-100 px-2 pt-4">
-            <p className="px-4 text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Sections</p>
-            <div className="mt-3 space-y-2">
-              {sections.map((section) => {
-                const Icon = section.icon;
-                const isActive = activeSection === section.id;
+        <div className="border-t border-slate-100 px-3 py-4">
+          <div className="rounded-2xl bg-slate-50 px-4 py-3">
+            <p className={`text-sm font-bold text-slate-900 ${collapsed ? 'hidden' : 'block'}`}>{user?.name || 'Admin'}</p>
+            <p className={`text-xs font-medium uppercase tracking-[0.12em] text-slate-500 ${collapsed ? 'hidden' : 'block'}`}>
+              {user?.role || 'admin'}
+            </p>
+            {collapsed ? <p className="text-center text-xs font-bold text-slate-900">{user?.name?.charAt(0) || 'A'}</p> : null}
+          </div>
 
-                return (
-                  <button
-                    key={section.id}
-                    type="button"
-                    onClick={() => section.id && onSectionChange(section.id)}
-                    className={`${baseItemClass} ${
-                      isActive
-                        ? 'border border-blue-200 bg-blue-50 text-blue-700'
-                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                    }`}
-                  >
-                    <Icon className="h-4 w-4" />
-                    {section.label}
-                  </button>
-                );
-              })}
+          <button
+            type="button"
+            onClick={() => {
+              logout();
+              router.push('/login');
+            }}
+            className="mt-3 flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50"
+          >
+            <LogOut className="h-5 w-5 shrink-0" />
+            {!collapsed ? <span>Logout</span> : null}
+          </button>
+        </div>
+      </aside>
+
+      <div className={`transition-[padding] duration-200 ${collapsed ? 'lg:pl-20' : 'lg:pl-72'}`}>
+        <main className="min-h-screen px-4 py-6 pt-20 lg:px-8 lg:pt-8">
+          <section className="rounded-3xl border border-slate-200 bg-white shadow-sm">
+            <div className="border-b border-slate-100 px-6 py-5">
+              <h1 className="text-2xl font-black text-slate-900">{title}</h1>
+              <p className="mt-1 text-sm text-slate-500">{description}</p>
             </div>
-          </div>
-
-          <div className="border-t border-slate-100 px-2 pt-4">
-            <div className="rounded-2xl bg-slate-50 px-4 py-3">
-              <p className="text-sm font-bold text-slate-900">{user?.name || 'Admin'}</p>
-              <p className="text-xs font-medium uppercase tracking-[0.12em] text-slate-500">
-                {user?.role || 'admin'}
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                logout();
-                router.push('/login');
-              }}
-              className="mt-3 flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50"
-            >
-              <LogOut className="h-4 w-4" />
-              Logout
-            </button>
-          </div>
-        </aside>
-
-        <section className="min-w-0 flex-1 rounded-3xl border border-slate-200 bg-white shadow-sm">
-          <div className="border-b border-slate-100 px-6 py-5">
-            <h1 className="text-2xl font-black text-slate-900">{title}</h1>
-            <p className="mt-1 text-sm text-slate-500">{description}</p>
-          </div>
-
-          <div className="border-b border-slate-100 px-4 py-3 lg:hidden">
-            <div className="flex gap-2 overflow-x-auto">
-              {sections.map((section) => {
-                const isActive = activeSection === section.id;
-                return (
-                  <button
-                    key={section.id}
-                    type="button"
-                    onClick={() => section.id && onSectionChange(section.id)}
-                    className={`shrink-0 rounded-xl px-4 py-2 text-sm font-semibold ${
-                      isActive ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600'
-                    }`}
-                  >
-                    {section.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="p-6">{children}</div>
-        </section>
+            <div className="p-6">{children}</div>
+          </section>
+        </main>
       </div>
     </div>
   );

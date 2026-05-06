@@ -45,10 +45,14 @@ const quizSchema = new mongoose.Schema(
     },
     mode: {
       type: String,
-      enum: ['unit', 'pyq', 'mixed', 'viva'],
+      enum: ['unit', 'pyq', 'mixed', 'viva', 'model-paper'],
       default: 'unit',
     },
     questions: [quizQuestionSchema],
+    paperLayout: {
+      type: mongoose.Schema.Types.Mixed,
+      default: null,
+    },
   },
   { timestamps: true }
 );

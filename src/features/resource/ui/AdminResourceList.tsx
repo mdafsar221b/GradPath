@@ -6,31 +6,72 @@ import { resourceApi } from '../api/resource.api';
 import { Resource } from '../model/resource.types';
 import { getResourceOpenUrl, getResourceSubject, getResourceUnit } from '../lib/resource-utils';
 import { Edit2, ExternalLink, Loader2, Save, Trash2, X } from 'lucide-react';
+import { AdminPyqQuestionManager } from '@/features/pyq/ui/AdminPyqQuestionManager';
+import { pyqApi } from '@/features/pyq/api/pyq.api';
 
-export const AdminResourceList = () => {
+export interface AdminResourceFilters {
+  subjectId?: string;
+  semester?: number;
+  category?: string;
+  type?: '' | 'pdf' | 'youtube' | 'link';
+  difficulty?: '' | 'beginner' | 'intermediate' | 'exam';
+  qualityStatus?: '' | 'draft' | 'review' | 'published' | 'archived';
+  year?: string;
+  search?: string;
+  tag?: string;
+}
+
+interface AdminResourceListProps {
+  filters?: AdminResourceFilters;
+  title?: string;
+  description?: string;
+  emptyMessage?: string;
+}
+
+export const AdminResourceList = ({
+  filters = {},
+  title = 'Resource Library',
+  description = 'All filtered resources are listed here.',
+  emptyMessage = 'No resources match the current filters.',
+}: AdminResourceListProps) => {
   const { token } = useAuthStore();
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingResource, setEditingResource] = useState<Resource | null>(null);
+  const [curatingResource, setCuratingResource] = useState<Resource | null>(null);
   const [saving, setSaving] = useState(false);
-  const [editForm, setEditForm] = useState({ url: '', year: '' });
+  const [editForm, setEditForm] = useState({ url: '', year: '', qualityStatus: 'published', tags: '' });
+  const [pyqCounts, setPyqCounts] = useState<Record<string, number>>({});
 
   const fetchResources = useCallback(async () => {
     if (!token) return;
     setLoading(true);
     try {
-      const data = await resourceApi.getResources({}, token);
+      const data = await resourceApi.getResources(filters, token);
       setResources(data);
     } catch (error) {
       console.error('Failed to fetch resources', error);
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, [filters, token]);
 
   useEffect(() => {
     fetchResources();
   }, [fetchResources]);
+
+  useEffect(() => {
+    const fetchPyqCounts = async () => {
+      try {
+        const statuses = await pyqApi.getResourceStatuses(filters.subjectId);
+        setPyqCounts(Object.fromEntries(statuses.map((status) => [status.resourceId, status.questionCount])));
+      } catch (error) {
+        console.error('Failed to fetch PYQ curation status', error);
+      }
+    };
+
+    fetchPyqCounts();
+  }, [filters.subjectId]);
 
   const handleDelete = async (id: string) => {
     if (!token) return;
@@ -49,6 +90,8 @@ export const AdminResourceList = () => {
     setEditForm({
       url: resource.type === 'pdf' ? '' : resource.url,
       year: resource.year || '',
+      qualityStatus: resource.qualityStatus || 'published',
+      tags: (resource.tags || []).join(', '),
     });
   };
 
@@ -60,6 +103,11 @@ export const AdminResourceList = () => {
     try {
       const updateData: Partial<Resource> = {
         year: editingResource.category === 'pyq' ? editForm.year.trim() : undefined,
+        qualityStatus: editForm.qualityStatus as Resource['qualityStatus'],
+        tags: editForm.tags
+          .split(',')
+          .map((tag) => tag.trim())
+          .filter(Boolean),
       };
 
       if (editingResource.type !== 'pdf') {
@@ -88,15 +136,20 @@ export const AdminResourceList = () => {
 
   return (
     <div className="rounded-3xl border border-gray-200 bg-white shadow-sm">
-      <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
-        <h2 className="text-xl font-black text-gray-900">Manage Resources</h2>
-        <span className="text-sm font-semibold text-gray-500">{resources.length} items</span>
+      <div className="border-b border-gray-100 px-6 py-5">
+        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 className="text-xl font-black text-gray-900">{title}</h2>
+            <p className="mt-1 text-sm text-gray-500">{description}</p>
+          </div>
+          <span className="text-sm font-semibold text-gray-500">{resources.length} results</span>
+        </div>
       </div>
 
       <div className="divide-y divide-gray-100">
         {resources.length === 0 ? (
           <div className="px-6 py-10 text-center text-sm font-medium text-gray-400">
-            No resources uploaded yet.
+            {emptyMessage}
           </div>
         ) : (
           resources.map((resource) => {
@@ -112,6 +165,17 @@ export const AdminResourceList = () => {
                     <span>Sem {subject?.semester || '?'}</span>
                     <span>{resource.category === 'notes' ? `Unit ${unit?.unitNumber || '?'}` : resource.year || 'PYQ'}</span>
                     <span className="rounded-lg bg-gray-100 px-2 py-1 uppercase">{resource.type}</span>
+                    <span className="rounded-lg bg-blue-50 px-2 py-1 capitalize text-blue-700">{resource.qualityStatus || 'published'}</span>
+                    {resource.category === 'pyq' ? (
+                      <span className="rounded-lg bg-amber-50 px-2 py-1 text-amber-700">
+                        {pyqCounts[resource._id] || 0} curated questions
+                      </span>
+                    ) : null}
+                    {(resource.tags || []).slice(0, 2).map((tag) => (
+                      <span key={tag} className="rounded-lg bg-slate-100 px-2 py-1 lowercase text-slate-600">
+                        #{tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
@@ -132,6 +196,15 @@ export const AdminResourceList = () => {
                   >
                     <Edit2 className="h-4 w-4" />
                   </button>
+                  {resource.category === 'pyq' ? (
+                    <button
+                      onClick={() => setCuratingResource(resource)}
+                      className="rounded-xl border border-amber-200 px-3 py-2 text-sm font-bold text-amber-700 hover:bg-amber-50"
+                      title="Curate PYQ questions"
+                    >
+                      Curate PYQ
+                    </button>
+                  ) : null}
                   <button
                     onClick={() => handleDelete(resource._id)}
                     className="rounded-xl border border-gray-200 p-2 text-gray-500 hover:border-red-200 hover:text-red-600"
@@ -193,6 +266,32 @@ export const AdminResourceList = () => {
                 </div>
               )}
 
+              <div>
+                <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Quality Status</label>
+                <select
+                  value={editForm.qualityStatus}
+                  onChange={(e) => setEditForm((prev) => ({ ...prev, qualityStatus: e.target.value }))}
+                  className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+                >
+                  {['draft', 'review', 'published', 'archived'].map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Tags</label>
+                <input
+                  type="text"
+                  value={editForm.tags}
+                  onChange={(e) => setEditForm((prev) => ({ ...prev, tags: e.target.value }))}
+                  placeholder="notes, important, pyq"
+                  className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+                />
+              </div>
+
               <div className="flex gap-3 pt-2">
                 <button
                   type="button"
@@ -213,6 +312,18 @@ export const AdminResourceList = () => {
             </form>
           </div>
         </div>
+      ) : null}
+
+      {curatingResource ? (
+        <AdminPyqQuestionManager
+          resource={curatingResource}
+          onClose={() => {
+            setCuratingResource(null);
+            pyqApi.getResourceStatuses(filters.subjectId)
+              .then((statuses) => setPyqCounts(Object.fromEntries(statuses.map((status) => [status.resourceId, status.questionCount]))))
+              .catch((error) => console.error('Failed to refresh PYQ curation status', error));
+          }}
+        />
       ) : null}
     </div>
   );

@@ -2,10 +2,7 @@
 
 export type StudentDashboardSection =
   | 'overview'
-  | 'planner'
-  | 'progress'
-  | 'deadlines'
-  | 'tools';
+  | 'progress';
 
 interface StudentDashboardTabsProps {
   activeSection: StudentDashboardSection;
@@ -14,10 +11,7 @@ interface StudentDashboardTabsProps {
 
 const sectionItems: { id: StudentDashboardSection; label: string }[] = [
   { id: 'overview', label: 'Overview' },
-  { id: 'planner', label: 'Study Plan' },
   { id: 'progress', label: 'Progress' },
-  { id: 'deadlines', label: 'Deadlines' },
-  { id: 'tools', label: 'Tools' },
 ];
 
 export const StudentDashboardSidebar = ({

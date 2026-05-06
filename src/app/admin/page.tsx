@@ -1,9 +1,9 @@
 'use client';
 
-import { AdminOverviewSection } from './AdminDashboardSections';
-import { AdminWorkspaceShell } from './AdminWorkspaceShell';
+import { AdminOverviewSection } from '@/features/dashboard/ui/AdminDashboardSections';
+import { AdminWorkspaceShell } from '@/features/dashboard/ui/AdminWorkspaceShell';
 
-export const AdminDashboardView = () => {
+export default function AdminPage() {
   return (
     <AdminWorkspaceShell
       title="Overview"
@@ -12,4 +12,4 @@ export const AdminDashboardView = () => {
       <AdminOverviewSection />
     </AdminWorkspaceShell>
   );
-};
+}
