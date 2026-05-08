@@ -55,14 +55,19 @@ export const StudentAppShell = ({ children }: StudentAppShellProps) => {
 
   return (
     <div className="min-h-screen bg-slate-100">
-      <button
-        type="button"
-        onClick={() => setMobileOpen(true)}
-        className="fixed left-4 top-4 z-40 flex h-11 w-11 items-center justify-center rounded-xl bg-slate-900 text-white shadow-lg lg:hidden"
-        aria-label="Open navigation"
-      >
-        <Menu className="h-5 w-5" />
-      </button>
+      <header className="fixed inset-x-0 top-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 bg-white/80 px-4 backdrop-blur-md lg:hidden">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setMobileOpen(true)}
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors hover:bg-slate-200"
+            aria-label="Open navigation"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+          <span className="text-sm font-black tracking-tight text-slate-900">GradPath</span>
+        </div>
+      </header>
 
       {mobileOpen ? (
         <button
@@ -136,68 +141,66 @@ export const StudentAppShell = ({ children }: StudentAppShellProps) => {
                     ? 'bg-slate-900 text-white'
                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                 }`}
+                title={collapsed ? item.label : undefined}
               >
-                <Icon className="h-5 w-5 shrink-0" />
+                <Icon className={`h-5 w-5 shrink-0 ${active ? 'text-white' : 'text-slate-400'}`} />
                 {!collapsed ? <span className="truncate">{item.label}</span> : null}
               </Link>
             );
           })}
           </div>
 
-          {!collapsed ? (
-            <p className="px-4 pb-2 pt-5 text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">
-              Support Tools
-            </p>
-          ) : null}
-          <div className="space-y-2">
-          {supportNavItems.map((item) => {
-            const Icon = item.icon;
-            const active = item.match(pathname);
+          <div className="mt-8 space-y-2">
+            {!collapsed ? (
+              <p className="px-4 pb-2 text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">
+                Tools
+              </p>
+            ) : null}
+            {supportNavItems.map((item) => {
+              const Icon = item.icon;
+              const active = item.match(pathname);
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors ${
-                  active
-                    ? 'bg-slate-900 text-white'
-                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                }`}
-              >
-                <Icon className="h-5 w-5 shrink-0" />
-                {!collapsed ? <span className="truncate">{item.label}</span> : null}
-              </Link>
-            );
-          })}
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors ${
+                    active
+                      ? 'bg-slate-900 text-white'
+                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                  }`}
+                  title={collapsed ? item.label : undefined}
+                >
+                  <Icon className={`h-5 w-5 shrink-0 ${active ? 'text-white' : 'text-slate-400'}`} />
+                  {!collapsed ? <span className="truncate">{item.label}</span> : null}
+                </Link>
+              );
+            })}
           </div>
         </nav>
 
-        <div className="border-t border-slate-100 px-3 py-4">
-          <div className="rounded-2xl bg-slate-50 px-4 py-3">
-            <p className={`text-sm font-bold text-slate-900 ${collapsed ? 'hidden' : 'block'}`}>{user?.name || 'Student'}</p>
-            <p className={`text-xs font-medium uppercase tracking-[0.12em] text-slate-500 ${collapsed ? 'hidden' : 'block'}`}>
-              Semester {user?.semester || '-'}
-            </p>
-            {collapsed ? <p className="text-center text-xs font-bold text-slate-900">{user?.name?.charAt(0) || 'S'}</p> : null}
+        {user ? (
+          <div className="border-t border-slate-100 p-4">
+            <button
+              onClick={() => {
+                logout();
+                router.push('/login');
+              }}
+              className="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-red-600 transition-colors hover:bg-red-50"
+              title={collapsed ? 'Sign out' : undefined}
+            >
+              <LogOut className="h-5 w-5 shrink-0 text-red-500" />
+              {!collapsed ? 'Sign out' : null}
+            </button>
           </div>
-
-          <button
-            type="button"
-            onClick={() => {
-              logout();
-              router.push('/login');
-            }}
-            className="mt-3 flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50"
-          >
-            <LogOut className="h-5 w-5 shrink-0" />
-            {!collapsed ? <span>Logout</span> : null}
-          </button>
-        </div>
+        ) : null}
       </aside>
 
       <div className={`transition-[padding] duration-200 ${collapsed ? 'lg:pl-20' : 'lg:pl-72'}`}>
-        <main className="min-h-screen px-4 py-6 pt-20 lg:px-8 lg:pt-8">{children}</main>
+        <main className="min-h-screen pb-16 pt-20 lg:pt-0">
+          {children}
+        </main>
       </div>
     </div>
   );

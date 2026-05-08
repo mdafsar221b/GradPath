@@ -193,7 +193,7 @@ export const AdminResourceUpload = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4 p-5">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {(['notes', 'pyq'] as ResourceCategory[]).map((category) => (
             <button
               key={category}
@@ -300,7 +300,7 @@ export const AdminResourceUpload = () => {
 
         <div>
           <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-500">Type</label>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {[
               { id: 'pdf', label: 'PDF', icon: UploadCloud },
               { id: 'youtube', label: 'YouTube', icon: Video },

@@ -125,7 +125,7 @@ export const AdminOverviewSection = () => {
   return (
     <div className="space-y-6">
       {/* Tab Navigation */}
-      <div className="flex space-x-1 rounded-2xl bg-slate-100/50 p-1 backdrop-blur-md max-w-fit">
+      <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide space-x-1 rounded-2xl bg-slate-100/50 p-1 backdrop-blur-md max-w-full lg:max-w-fit">
         {[
           { id: 'stats', label: 'Key Statistics' },
           { id: 'resources', label: 'Recent Resources' },

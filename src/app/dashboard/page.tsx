@@ -30,10 +30,14 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const fetchDashboard = async () => {
-      if (!token || user?.role !== 'student') {
-        if (user?.role === 'admin') setLoading(false);
+      if (!token) return;
+
+      const role = user?.role?.toLowerCase();
+      if (role !== 'student') {
+        setLoading(false);
         return;
       }
+      
       try {
         const data = await dashboardApi.getDashboardSummary(token);
         setDashboardData(data);
@@ -52,7 +56,7 @@ export default function DashboardPage() {
   }, [logout, router, token, user?.role]);
 
   const calculateOverallProgress = () => {
-    if (!dashboardData || dashboardData.subjectProgress.length === 0) return 0;
+    if (!dashboardData || !dashboardData.subjectProgress || dashboardData.subjectProgress.length === 0) return 0;
     const totalUnits = dashboardData.subjectProgress.length * 5;
     const completedUnits = dashboardData.subjectProgress.reduce((acc, curr) => acc + curr.completedUnits, 0);
     return Math.round((completedUnits / totalUnits) * 100);

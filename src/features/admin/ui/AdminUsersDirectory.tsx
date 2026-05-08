@@ -30,8 +30,8 @@ export const AdminUsersDirectory = () => {
           adminApi.getUsers(filters),
         ]);
         setStats(userStats);
-        setUsers(userDirectory.users);
-        setTotal(userDirectory.total);
+        setUsers(userDirectory?.users || []);
+        setTotal(userDirectory?.total || 0);
       } catch (error) {
         console.error('Failed to fetch admin users directory', error);
       } finally {
@@ -90,7 +90,7 @@ export const AdminUsersDirectory = () => {
           </span>
         </div>
         <CardContent className="p-0">
-          {users.length === 0 ? (
+          {!users || users.length === 0 ? (
             <div className="px-6 py-10 text-center text-sm font-medium text-slate-500">
               No users match the current filters.
             </div>

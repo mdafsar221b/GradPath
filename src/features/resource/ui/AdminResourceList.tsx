@@ -167,7 +167,7 @@ export const AdminResourceList = ({
                     <span className="rounded-lg bg-gray-100 px-2 py-1 uppercase">{resource.type}</span>
                     <span className="rounded-lg bg-blue-50 px-2 py-1 capitalize text-blue-700">{resource.qualityStatus || 'published'}</span>
                     {resource.category === 'pyq' ? (
-                      <span className="rounded-lg bg-amber-50 px-2 py-1 text-amber-700">
+                      <span className="whitespace-nowrap rounded-lg bg-amber-50 px-2 py-1 text-amber-700">
                         {pyqCounts[resource._id] || 0} curated questions
                       </span>
                     ) : null}
@@ -179,7 +179,7 @@ export const AdminResourceList = ({
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2 pt-2">
                   <a
                     href={getResourceOpenUrl(resource)}
                     target="_blank"
@@ -199,7 +199,7 @@ export const AdminResourceList = ({
                   {resource.category === 'pyq' ? (
                     <button
                       onClick={() => setCuratingResource(resource)}
-                      className="rounded-xl border border-amber-200 px-3 py-2 text-sm font-bold text-amber-700 hover:bg-amber-50"
+                      className="whitespace-nowrap rounded-xl border border-amber-200 px-3 py-2 text-sm font-bold text-amber-700 hover:bg-amber-50"
                       title="Curate PYQ questions"
                     >
                       Curate PYQ
