@@ -20,7 +20,7 @@ export const AppTopNav = () => {
           <div className="flex items-center gap-4">
             <button onClick={() => router.push('/resources')} className="text-xs font-black uppercase text-gray-400 hover:text-blue-600">Library</button>
             <button onClick={() => router.push('/practice')} className="text-xs font-black uppercase text-gray-400 hover:text-blue-600">Practice</button>
-            <button onClick={() => router.push('/ai-tutor')} className="text-xs font-black uppercase text-gray-400 hover:text-blue-600">AI Tutor</button>
+
             <div className="hidden sm:block text-right pl-4 border-l border-gray-100">
               <p className="text-xs font-bold text-gray-900 leading-none">{user?.name || 'Student'}</p>
               <p className="text-[10px] font-bold text-gray-400 uppercase mt-1">{user?.role || 'student'}</p>

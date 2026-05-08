@@ -3,6 +3,7 @@ const router = express.Router();
 const Assignment = require('../models/assignment.model');
 const Progress = require('../models/progress.model');
 const Subject = require('../models/subject.model');
+const Unit = require('../models/unit.model');
 const { protect } = require('../middleware/auth.middleware');
 
 // @desc    Get dashboard summary
@@ -31,16 +32,26 @@ router.get('/', protect, async (req, res) => {
     // 2. Progress and Subjects
     const subjects = await Subject.find({ semester });
     const progressRecords = await Progress.find({ userId });
+    const units = await Unit.find({ subjectId: { $in: subjects.map((subject) => subject._id) } })
+      .select('subjectId')
+      .lean();
+    const unitCountBySubject = units.reduce((map, unit) => {
+      const key = unit.subjectId.toString();
+      map.set(key, (map.get(key) || 0) + 1);
+      return map;
+    }, new Map());
 
     const subjectProgress = subjects.map(subject => {
       const record = progressRecords.find(p => p.subjectId.toString() === subject._id.toString());
       const completedCount = record ? record.completedUnits.length : 0;
+      const totalUnits = unitCountBySubject.get(subject._id.toString()) || 0;
       return {
         _id: subject._id,
         name: subject.name,
         code: subject.code,
         completedUnits: completedCount,
-        progressPercentage: (completedCount / 5) * 100
+        totalUnits,
+        progressPercentage: totalUnits ? Math.round((completedCount / totalUnits) * 100) : 0,
       };
     });
 

@@ -18,11 +18,22 @@ const normalizeOrigins = (value) => (
     : []
 );
 
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const toOriginMatcher = (originPattern) => {
+  if (!originPattern.includes('*')) {
+    return { type: 'exact', value: originPattern };
+  }
+
+  const wildcardPattern = `^${originPattern.split('*').map(escapeRegex).join('.*')}$`;
+  return { type: 'regex', value: new RegExp(wildcardPattern) };
+};
+
 const allowedOrigins = Array.from(new Set([
   ...normalizeOrigins(process.env.CORS_ORIGIN),
   ...normalizeOrigins(process.env.FRONTEND_URL),
   ...normalizeOrigins(process.env.APP_URL),
 ]));
+const allowedOriginMatchers = allowedOrigins.map(toOriginMatcher);
 
 const corsOptions = {
   origin(origin, callback) {
@@ -31,7 +42,13 @@ const corsOptions = {
       return;
     }
 
-    if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+    const originAllowed = allowedOriginMatchers.length === 0 || allowedOriginMatchers.some((matcher) => (
+      matcher.type === 'exact'
+        ? matcher.value === origin
+        : matcher.value.test(origin)
+    ));
+
+    if (originAllowed) {
       callback(null, true);
       return;
     }

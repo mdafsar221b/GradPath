@@ -15,7 +15,6 @@ import {
 import { academicApi } from '@/features/academic/api/academic-api';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { practiceApi } from '@/features/practice/api/practice.api';
-import { ContextDiscussionPanel } from '@/features/discussion/ui/ContextDiscussionPanel';
 import {
   PracticePyqPaper,
   PracticePyqQuestion,
@@ -130,7 +129,7 @@ const renderFormattedText = (text: string) => {
 };
 
 const emptyState = (message: string) => (
-  <div className="rounded-[2rem] border border-dashed border-gray-200 bg-white py-20 text-center shadow-sm">
+  <div className="rounded-2xl border border-dashed border-gray-200 bg-white py-20 text-center shadow-sm">
     <p className="font-bold text-gray-400">{message}</p>
   </div>
 );
@@ -489,110 +488,138 @@ export const PracticeCenter = () => {
     }
   };
 
+
   return (
     <main className="mx-auto max-w-7xl space-y-8">
-      {path === null ? (
+      {path === null && (
         <>
-          <section className="space-y-3">
-            <h1 className="text-4xl font-black tracking-tight text-gray-900">Practice Workspace</h1>
-            <p className="max-w-3xl font-medium text-gray-500">
+          <section className="space-y-3 mb-8">
+            <h1 className="text-3xl font-black tracking-tight text-gray-900">Practice Workspace</h1>
+            <p className="max-w-3xl text-sm font-medium text-gray-500">
               Choose how to work with curated subject data. Start from a topic, open a past paper, generate a quiz, or use flashcards as the final revision layer.
             </p>
           </section>
 
-          <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <section className="grid gap-6 md:grid-cols-2">
             <button
               type="button"
               onClick={() => setPath('topic')}
-              className="rounded-[2rem] border border-gray-100 bg-white p-6 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-blue-100"
+              className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-8 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-blue-100 hover:shadow-xl hover:shadow-blue-500/10"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-700">
-                <BookOpen className="h-5 w-5" />
+              <div className="flex items-start gap-6">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white">
+                  <BookOpen className="h-8 w-8" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-black text-gray-900">Topic-wise Practice</h2>
+                  <p className="mt-2 text-[13px] font-medium leading-relaxed text-gray-500">
+                    Select a subject, unit, and topic. Study the concept, see matched PYQs, and move through the syllabus in order.
+                  </p>
+                </div>
               </div>
-              <h2 className="mt-4 text-2xl font-black text-gray-900">Topic-wise Practice</h2>
-              <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
-                Select a subject, unit, and topic. Study the concept, see matched PYQs, and move through the syllabus in order.
-              </p>
+              <div className="absolute right-6 top-8 text-blue-100 transition-transform group-hover:translate-x-2 group-hover:text-blue-500">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
             </button>
 
             <button
               type="button"
               onClick={() => setPath('pyq')}
-              className="rounded-[2rem] border border-gray-100 bg-white p-6 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-emerald-100"
+              className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-8 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-emerald-100 hover:shadow-xl hover:shadow-emerald-500/10"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
-                <FileText className="h-5 w-5" />
+              <div className="flex items-start gap-6">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-600 group-hover:text-white">
+                  <FileText className="h-8 w-8" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-black text-gray-900">PYQ-wise Practice</h2>
+                  <p className="mt-2 text-[13px] font-medium leading-relaxed text-gray-500">
+                    Open curated paper questions, filter by marks, and read exam-style answers question by question.
+                  </p>
+                </div>
               </div>
-              <h2 className="mt-4 text-2xl font-black text-gray-900">PYQ-wise Practice</h2>
-              <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
-                Open curated paper questions, filter by marks, and read exam-style answers question by question.
-              </p>
+              <div className="absolute right-6 top-8 text-emerald-100 transition-transform group-hover:translate-x-2 group-hover:text-emerald-500">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
             </button>
 
             <button
               type="button"
               onClick={() => setPath('quiz')}
-              className="rounded-[2rem] border border-gray-100 bg-white p-6 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-violet-100"
+              className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-8 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-violet-100 hover:shadow-xl hover:shadow-violet-500/10"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-100 text-violet-700">
-                <CheckCircle2 className="h-5 w-5" />
+              <div className="flex items-start gap-6">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-violet-50 text-violet-600 transition-colors group-hover:bg-violet-600 group-hover:text-white">
+                  <CheckCircle2 className="h-8 w-8" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-black text-gray-900">Quiz Practice</h2>
+                  <p className="mt-2 text-[13px] font-medium leading-relaxed text-gray-500">
+                    Generate a focused objective quiz from the selected subject and unit structure for fast, interactive revision.
+                  </p>
+                </div>
               </div>
-              <h2 className="mt-4 text-2xl font-black text-gray-900">Quiz Practice</h2>
-              <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
-                Generate a focused quiz from the selected subject and unit structure for fast revision.
-              </p>
+              <div className="absolute right-6 top-8 text-violet-100 transition-transform group-hover:translate-x-2 group-hover:text-violet-500">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
             </button>
 
             <button
               type="button"
               onClick={() => router.push('/flashcards')}
-              className="rounded-[2rem] border border-gray-100 bg-white p-6 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-amber-100"
+              className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-8 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-amber-100 hover:shadow-xl hover:shadow-amber-500/10"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-700">
-                <Brain className="h-5 w-5" />
+              <div className="flex items-start gap-6">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 transition-colors group-hover:bg-amber-600 group-hover:text-white">
+                  <Brain className="h-8 w-8" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-black text-gray-900">Flashcards</h2>
+                  <p className="mt-2 text-[13px] font-medium leading-relaxed text-gray-500">
+                    Use AI-generated flashcards as the final revision step to memorize concepts after topic study and PYQ practice.
+                  </p>
+                </div>
               </div>
-              <h2 className="mt-4 text-2xl font-black text-gray-900">Flashcards</h2>
-              <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
-                Use flashcards as the final revision step after topic study and PYQ practice.
-              </p>
+              <div className="absolute right-6 top-8 text-amber-100 transition-transform group-hover:translate-x-2 group-hover:text-amber-500">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </div>
             </button>
           </section>
         </>
-      ) : null}
+      )}
 
-      {error ? (
-        <div className="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">
+      {error && (
+        <div className="rounded-2xl border border-red-100 bg-red-50 px-4 py-2 text-sm font-bold text-red-700">
           {error}
         </div>
-      ) : null}
+      )}
 
-      {path === 'topic' ? (
+      {path === 'topic' && (
         <section className="space-y-6">
-          <div className="rounded-[2rem] border border-gray-100 bg-white p-5 shadow-sm">
-            <div className="mb-4 flex flex-col gap-1">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-blue-600">
-                Topic-wise Practice
-              </p>
-              <p className="text-sm font-medium text-slate-500">
+          <div className="border-b border-gray-100 pb-6">
+            <div className="mb-4">
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={resetPracticeChoice}
+                  className="text-gray-400 hover:text-gray-900 transition-colors"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </button>
+                <h2 className="text-lg font-black text-gray-900">Topic-wise Practice</h2>
+              </div>
+              <p className="mt-1 ml-8 text-[13px] text-gray-500">
                 Pick a subject, unit, and topic. Then read the concept clearly, check matched PYQs, and move topic by topic through the syllabus.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 xl:flex-row">
-              <button
-                type="button"
-                onClick={resetPracticeChoice}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back
-              </button>
+            <div className="flex flex-col gap-3 sm:flex-row ml-8">
               <select
                 value={topicSubjectId}
                 onChange={(event) => setTopicSubjectId(event.target.value)}
-                className="h-12 rounded-xl border border-gray-100 bg-white px-3 text-sm font-bold xl:min-w-[280px]"
+                className="h-10 rounded-xl border border-gray-200 bg-gray-50 px-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 sm:min-w-[240px]"
               >
-                <option value="">Select subject</option>
+                <option value="">Select subject...</option>
                 {subjects.map((subject) => (
                   <option key={subject._id} value={subject._id}>
                     {subject.code} - {subject.name}
@@ -607,9 +634,9 @@ export const PracticeCenter = () => {
                   setSelectedTopic(nextUnit?.topics[0]?.name || '');
                 }}
                 disabled={!topicMap}
-                className="h-12 rounded-xl border border-gray-100 bg-white px-3 text-sm font-bold disabled:opacity-50 xl:min-w-[240px]"
+                className="h-10 rounded-xl border border-gray-200 bg-gray-50 px-3 text-sm font-bold text-gray-900 outline-none disabled:opacity-50 sm:min-w-[200px]"
               >
-                <option value="">Select unit</option>
+                <option value="">Select unit...</option>
                 {topicMap?.units.map((unit) => (
                   <option key={unit._id} value={unit._id}>
                     Unit {unit.unitNumber} - {unit.title}
@@ -620,29 +647,29 @@ export const PracticeCenter = () => {
                 value={selectedTopic}
                 onChange={(event) => setSelectedTopic(event.target.value)}
                 disabled={!selectedUnit}
-                className="h-12 rounded-xl border border-gray-100 bg-white px-3 text-sm font-bold disabled:opacity-50 xl:min-w-[260px]"
+                className="h-10 rounded-xl border border-gray-200 bg-gray-50 px-3 text-sm font-bold text-gray-900 outline-none disabled:opacity-50 sm:min-w-[240px]"
               >
-                <option value="">Select topic</option>
+                <option value="">Select topic...</option>
                 {selectedUnit?.topics.map((topic) => (
                   <option key={topic.name} value={topic.name}>
                     {topic.name}
                   </option>
                 ))}
               </select>
-              <div className="inline-flex h-12 items-center justify-center rounded-xl bg-blue-50 px-4 text-sm font-black text-blue-700 xl:ml-auto">
+              <div className="inline-flex h-10 items-center justify-center rounded-xl bg-blue-50 px-4 text-[13px] font-bold text-blue-700 sm:ml-auto">
                 {topicProgressLabel}
               </div>
             </div>
           </div>
 
           {topicLoading ? (
-            <div className="rounded-[2rem] border border-gray-100 bg-white p-10 text-center shadow-sm">
+            <div className="rounded-2xl border border-gray-100 bg-white p-10 text-center shadow-sm">
               <Loader2 className="mx-auto h-6 w-6 animate-spin text-blue-600" />
             </div>
           ) : topicMap ? (
             selectedUnit && selectedTopicMeta ? (
               <div className="space-y-6">
-                <div className="rounded-[2rem] border border-gray-100 bg-white p-6 shadow-sm">
+                <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
                   <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                     <div className="max-w-2xl">
                       <p className="text-xs font-black uppercase tracking-[0.18em] text-blue-600">
@@ -662,7 +689,7 @@ export const PracticeCenter = () => {
                         type="button"
                         onClick={toggleTopicCovered}
                         disabled={topicSaving}
-                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-black text-white disabled:opacity-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-2 text-sm font-black text-white disabled:opacity-50"
                       >
                         {topicSaving ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
@@ -675,7 +702,7 @@ export const PracticeCenter = () => {
                         type="button"
                         onClick={goToNextTopic}
                         disabled={!nextTopicTarget}
-                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-3 text-sm font-black text-slate-700 disabled:opacity-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-2 text-sm font-black text-slate-700 disabled:opacity-50"
                       >
                         Next Topic
                       </button>
@@ -684,17 +711,17 @@ export const PracticeCenter = () => {
                 </div>
 
                 {guideLoading ? (
-                  <div className="rounded-[2rem] border border-gray-100 bg-white p-10 text-center shadow-sm">
+                  <div className="rounded-2xl border border-gray-100 bg-white p-10 text-center shadow-sm">
                     <Loader2 className="mx-auto h-6 w-6 animate-spin text-blue-600" />
                   </div>
                 ) : topicGuide ? (
                   <>
-                    <div className="rounded-[2rem] border border-gray-100 bg-white p-6 shadow-sm">
+                    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
                       <h3 className="text-xl font-black text-gray-900">Concept Guide</h3>
                       <div className="mt-4 space-y-3">{renderFormattedText(topicGuide.overview)}</div>
                     </div>
 
-                    <div className="rounded-[2rem] border border-gray-100 bg-white p-6 shadow-sm">
+                    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
                       <h3 className="text-lg font-black text-gray-900">Important Points</h3>
                       <div className="mt-4 space-y-3">
                         {topicGuide.importantPoints.map((point) => (
@@ -703,7 +730,7 @@ export const PracticeCenter = () => {
                       </div>
                     </div>
 
-                    <div className="rounded-[2rem] border border-gray-100 bg-white p-6 shadow-sm">
+                    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
                       <h3 className="text-lg font-black text-gray-900">Practice Questions</h3>
                       <div className="mt-4 space-y-3">
                         {topicGuide.relatedQuestions.map((question) => (
@@ -712,7 +739,7 @@ export const PracticeCenter = () => {
                       </div>
                     </div>
 
-                    <div className="rounded-[2rem] border border-gray-100 bg-white p-6 shadow-sm">
+                    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
                       <h3 className="text-lg font-black text-gray-900">Asked in PYQ</h3>
                       {topicGuide.pyqQuestions.length ? (
                         <div className="mt-4 space-y-3">
@@ -752,35 +779,34 @@ export const PracticeCenter = () => {
             emptyState('Select a subject to open topic-wise practice.')
           )}
         </section>
-      ) : null}
+      )}
 
-      {path === 'pyq' ? (
+      {path === 'pyq' && (
         <section className="space-y-6">
-          <div className="rounded-[2rem] border border-gray-100 bg-white p-5 shadow-sm">
-            <div className="mb-4 flex flex-col gap-1">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-600">
-                PYQ-wise Practice
-              </p>
-              <p className="text-sm font-medium text-slate-500">
+          <div className="border-b border-gray-100 pb-6">
+            <div className="mb-4">
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={resetPracticeChoice}
+                  className="text-gray-400 hover:text-gray-900 transition-colors"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </button>
+                <h2 className="text-lg font-black text-gray-900">PYQ-wise Practice</h2>
+              </div>
+              <p className="mt-1 ml-8 text-[13px] text-gray-500">
                 Open a real uploaded paper, filter by marks, and read one detailed exam-ready answer at a time.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 xl:flex-row">
-              <button
-                type="button"
-                onClick={resetPracticeChoice}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back
-              </button>
+            <div className="flex flex-col gap-3 sm:flex-row ml-8">
               <select
                 value={pyqSubjectId}
                 onChange={(event) => setPyqSubjectId(event.target.value)}
-                className="h-12 rounded-xl border border-gray-100 bg-white px-3 text-sm font-bold xl:min-w-[280px]"
+                className="h-10 rounded-xl border border-gray-200 bg-gray-50 px-3 text-sm font-bold text-gray-900 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 sm:min-w-[240px]"
               >
-                <option value="">Select subject</option>
+                <option value="">Select subject...</option>
                 {subjects.map((subject) => (
                   <option key={subject._id} value={subject._id}>
                     {subject.code} - {subject.name}
@@ -790,9 +816,9 @@ export const PracticeCenter = () => {
               <select
                 value={selectedPaperId}
                 onChange={(event) => setSelectedPaperId(event.target.value)}
-                className="h-12 rounded-xl border border-gray-100 bg-white px-3 text-sm font-bold xl:min-w-[240px]"
+                className="h-10 rounded-xl border border-gray-200 bg-gray-50 px-3 text-sm font-bold text-gray-900 outline-none sm:min-w-[200px]"
               >
-                <option value="">Select PYQ</option>
+                <option value="">Select PYQ...</option>
                 {pyqPapers.map((paper) => (
                   <option key={paper._id} value={paper._id}>
                     {paper.year || 'Year'} {paper.examSession ? `- ${paper.examSession}` : ''}
@@ -802,7 +828,7 @@ export const PracticeCenter = () => {
               <select
                 value={marksFilter}
                 onChange={(event) => setMarksFilter(event.target.value)}
-                className="h-12 rounded-xl border border-gray-100 bg-white px-3 text-sm font-bold xl:min-w-[180px]"
+                className="h-10 rounded-xl border border-gray-200 bg-gray-50 px-3 text-sm font-bold text-gray-900 outline-none sm:min-w-[140px]"
               >
                 <option value="">All marks</option>
                 <option value="3">3 marks</option>
@@ -812,17 +838,20 @@ export const PracticeCenter = () => {
             </div>
           </div>
 
+
           {pyqLoading ? (
-            <div className="rounded-[2rem] border border-gray-100 bg-white p-10 text-center shadow-sm">
+            <div className="rounded-2xl border border-gray-100 bg-white p-10 text-center shadow-sm">
               <Loader2 className="mx-auto h-6 w-6 animate-spin text-emerald-600" />
             </div>
           ) : selectedPaperId && pyqQuestions.length ? (
-            <div className="grid gap-6 xl:grid-cols-[360px_minmax(0,1fr)]">
-              <aside className="rounded-[2rem] border border-gray-100 bg-white p-5 shadow-sm">
-                <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">Questions</p>
-                <h3 className="mt-2 text-xl font-black text-gray-900">{pyqQuestions.length} loaded</h3>
+            <div className="grid gap-6 xl:grid-cols-[340px_minmax(0,1fr)]">
+              <aside className="rounded-[2rem] border border-gray-200 bg-white shadow-sm overflow-hidden flex flex-col max-h-[800px]">
+                <div className="p-5 border-b border-gray-100 bg-gray-50/50">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-gray-500">Curated Questions</p>
+                  <h3 className="mt-1 text-lg font-black text-gray-900">{pyqQuestions.length} loaded</h3>
+                </div>
 
-                <div className="mt-5 space-y-3">
+                <div className="flex-1 overflow-y-auto divide-y divide-gray-100">
                   {pyqQuestions.map((question) => {
                     const active = question._id === selectedQuestionId;
 
@@ -834,23 +863,17 @@ export const PracticeCenter = () => {
                           setSelectedQuestionId(question._id);
                           setGeneratedAnswer('');
                         }}
-                        className={`w-full rounded-2xl border px-4 py-4 text-left transition-colors ${
+                        className={`w-full px-5 py-4 text-left transition-colors ${
                           active
-                            ? 'border-emerald-200 bg-emerald-50'
-                            : 'border-gray-100 bg-slate-50 hover:border-emerald-100'
+                            ? 'bg-blue-50/50 relative before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-blue-600'
+                            : 'hover:bg-gray-50'
                         }`}
                       >
-                        <div className="mb-2 flex flex-wrap gap-2">
-                          <span className="rounded-full bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-violet-700">
-                            {question.marks} marks
-                          </span>
-                          {question.year ? (
-                            <span className="rounded-full bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-slate-600">
-                              {question.year}
-                            </span>
-                          ) : null}
+                        <div className="mb-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[10px] font-bold uppercase text-gray-500">
+                          <span className={active ? 'text-blue-600' : ''}>{question.marks} marks</span>
+                          {question.year ? <span>{question.year}</span> : null}
                         </div>
-                        <p className="line-clamp-3 text-sm font-semibold leading-6 text-slate-800">
+                        <p className={`line-clamp-3 text-[13px] leading-5 ${active ? 'font-bold text-blue-900' : 'font-medium text-gray-700'}`}>
                           {question.questionNumber ? `${question.questionNumber}. ` : ''}
                           {question.subpartLabel ? `${question.subpartLabel}) ` : ''}
                           {question.prompt}
@@ -861,30 +884,22 @@ export const PracticeCenter = () => {
                 </div>
               </aside>
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {selectedQuestion ? (
                   <>
-                    <div className="rounded-[2rem] border border-gray-100 bg-white p-6 shadow-sm">
-                      <div className="flex flex-wrap gap-2">
-                        <span className="rounded-full bg-violet-50 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-violet-700">
-                          {selectedQuestion.marks} marks
-                        </span>
-                        <span className="rounded-full bg-amber-50 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-amber-700">
-                          {selectedQuestion.questionType}
-                        </span>
+                    <div className="rounded-[2rem] border border-gray-200 bg-white p-6 md:p-8 shadow-sm">
+                      <div className="mb-4 flex flex-wrap gap-x-4 gap-y-2 text-[11px] font-bold uppercase tracking-wide text-gray-500 border-b border-gray-100 pb-4">
+                        <span>{selectedQuestion.marks} marks</span>
+                        <span>{selectedQuestion.questionType}</span>
                         {typeof selectedQuestion.unitId === 'object' && selectedQuestion.unitId ? (
-                          <span className="rounded-full bg-emerald-50 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-700">
-                            Unit {selectedQuestion.unitId.unitNumber} - {selectedQuestion.unitId.title}
-                          </span>
+                          <span>Unit {selectedQuestion.unitId.unitNumber} - {selectedQuestion.unitId.title}</span>
                         ) : null}
                         {selectedQuestion.topic ? (
-                          <span className="rounded-full bg-blue-50 px-3 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-blue-700">
-                            {selectedQuestion.topic}
-                          </span>
+                          <span>{selectedQuestion.topic}</span>
                         ) : null}
                       </div>
 
-                      <h2 className="mt-4 whitespace-pre-wrap text-2xl font-black leading-10 text-gray-900">
+                      <h2 className="whitespace-pre-wrap text-lg md:text-xl font-black leading-relaxed text-gray-900">
                         {selectedQuestion.questionNumber ? `${selectedQuestion.questionNumber}. ` : ''}
                         {selectedQuestion.subpartLabel ? `${selectedQuestion.subpartLabel}) ` : ''}
                         {selectedQuestion.prompt}
@@ -894,40 +909,34 @@ export const PracticeCenter = () => {
                         type="button"
                         onClick={generateExamAnswer}
                         disabled={answerLoading}
-                        className="mt-6 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-black text-white disabled:opacity-50"
+                        className="mt-6 inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 text-[13px] font-bold text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
                       >
                         {answerLoading ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
                         ) : (
                           <Sparkles className="h-4 w-4" />
                         )}
-                        Generate Exam-style Answer
+                        Generate Answer
                       </button>
                     </div>
 
-                    <div className="rounded-[2rem] border border-gray-100 bg-white p-6 shadow-sm">
-                      <h3 className="text-xl font-black text-gray-900">Exam-ready Answer</h3>
-                      {generatedAnswer ? (
-                        <div className="mt-4 space-y-3">{renderFormattedText(generatedAnswer)}</div>
-                      ) : (
-                        <p className="mt-4 text-sm font-medium text-slate-500">
-                          Generate the answer to see a detailed exam-oriented response for this question.
+                    {generatedAnswer ? (
+                      <div className="rounded-[2rem] border border-gray-200 bg-white p-6 md:p-8 shadow-sm">
+                        <h3 className="mb-4 text-sm font-black uppercase tracking-wide text-gray-900 border-b border-gray-100 pb-2">Exam-ready Answer</h3>
+                        <div className="space-y-3">{renderFormattedText(generatedAnswer)}</div>
+                      </div>
+                    ) : (
+                      <div className="rounded-[2rem] border border-dashed border-gray-200 bg-gray-50 p-6 text-center">
+                        <p className="text-sm font-medium text-gray-500">
+                          Click "Generate Answer" above to see a detailed, exam-oriented response.
                         </p>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </>
                 ) : (
                   emptyState('Select a question from the left to continue.')
                 )}
 
-                {selectedPaperId ? (
-                  <ContextDiscussionPanel
-                    contextType="pyq-resource"
-                    resourceId={selectedPaperId}
-                    title="PYQ Paper Discussion"
-                    description="Discuss this previous-year paper, ask doubts about repeated questions, and connect with seniors on exam patterns."
-                  />
-                ) : null}
               </div>
             </div>
           ) : (
@@ -938,11 +947,11 @@ export const PracticeCenter = () => {
             )
           )}
         </section>
-      ) : null}
+      )}
 
-      {path === 'quiz' ? (
+      {path === 'quiz' && (
         <section className="space-y-6">
-          <div className="rounded-[2rem] border border-gray-100 bg-white p-5 shadow-sm">
+          <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
             <div className="mb-4 flex flex-col gap-1">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-violet-600">
                 Quiz Practice
@@ -956,7 +965,7 @@ export const PracticeCenter = () => {
               <button
                 type="button"
                 onClick={resetPracticeChoice}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 text-sm font-semibold text-gray-700"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Back
@@ -964,7 +973,7 @@ export const PracticeCenter = () => {
               <select
                 value={quizSubjectId}
                 onChange={(event) => setQuizSubjectId(event.target.value)}
-                className="h-12 rounded-xl border border-gray-100 bg-white px-3 text-sm font-bold xl:min-w-[280px]"
+                className="h-10 rounded-xl border border-gray-100 bg-white px-3 text-sm font-bold xl:min-w-[280px]"
               >
                 <option value="">Select subject</option>
                 {subjects.map((subject) => (
@@ -977,7 +986,7 @@ export const PracticeCenter = () => {
                 value={quizUnitId}
                 onChange={(event) => setQuizUnitId(event.target.value)}
                 disabled={!quizUnits.length}
-                className="h-12 rounded-xl border border-gray-100 bg-white px-3 text-sm font-bold disabled:opacity-50 xl:min-w-[260px]"
+                className="h-10 rounded-xl border border-gray-100 bg-white px-3 text-sm font-bold disabled:opacity-50 xl:min-w-[260px]"
               >
                 <option value="">All units</option>
                 {quizUnits.map((unit) => (
@@ -990,7 +999,7 @@ export const PracticeCenter = () => {
                 type="button"
                 onClick={generateQuiz}
                 disabled={!quizSubjectId || quizLoading}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 text-sm font-black text-white disabled:opacity-50"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 text-sm font-black text-white disabled:opacity-50"
               >
                 {quizLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
                 Generate Quiz
@@ -1000,7 +1009,7 @@ export const PracticeCenter = () => {
 
           {quiz ? (
             <div className="space-y-6">
-              <div className="rounded-[2rem] border border-gray-100 bg-white p-6 shadow-sm">
+              <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <h3 className="text-2xl font-black text-gray-900">{quiz.title}</h3>
@@ -1009,7 +1018,7 @@ export const PracticeCenter = () => {
                     </p>
                   </div>
                   {quizResult ? (
-                    <div className="rounded-2xl bg-emerald-50 px-4 py-3 text-lg font-black text-emerald-700">
+                    <div className="rounded-2xl bg-emerald-50 px-4 py-2 text-lg font-black text-emerald-700">
                       {quizResult.score}/{quizResult.total}
                     </div>
                   ) : null}
@@ -1020,7 +1029,7 @@ export const PracticeCenter = () => {
                 {quiz.questions.map((question, questionIndex) => (
                   <div
                     key={question._id || questionIndex}
-                    className="rounded-[2rem] border border-gray-100 bg-white p-6 shadow-sm"
+                    className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm"
                   >
                     <div className="mb-4 flex flex-wrap gap-2">
                       <span className="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-slate-600">
@@ -1079,7 +1088,7 @@ export const PracticeCenter = () => {
                   type="button"
                   onClick={submitQuiz}
                   disabled={quizAnswers.includes(-1) || !!quizResult}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-black text-white disabled:opacity-50"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-2 text-sm font-black text-white disabled:opacity-50"
                 >
                   <CheckCircle2 className="h-4 w-4" />
                   Submit Quiz
@@ -1091,7 +1100,7 @@ export const PracticeCenter = () => {
                     setQuizAnswers([]);
                     setQuizResult(null);
                   }}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-3 text-sm font-black text-slate-700"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-5 py-2 text-sm font-black text-slate-700"
                 >
                   Reset Quiz
                 </button>
@@ -1101,7 +1110,7 @@ export const PracticeCenter = () => {
             emptyState('Select a subject and optional unit to generate a quiz.')
           )}
         </section>
-      ) : null}
+      )}
     </main>
   );
 };

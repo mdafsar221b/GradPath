@@ -57,7 +57,7 @@ router.put('/profile', protect, async (req, res) => {
         userId: req.user._id,
         semesters: normalizedSemesters,
       },
-      { new: true, upsert: true, setDefaultsOnInsert: true }
+      { returnDocument: 'after', upsert: true, setDefaultsOnInsert: true }
     ).lean();
 
     const summary = buildResultsSummary(profile.semesters);

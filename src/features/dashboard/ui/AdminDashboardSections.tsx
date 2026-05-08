@@ -68,6 +68,7 @@ export const useAdminUserStats = () => {
 export const AdminOverviewSection = () => {
   const { stats: resourceStats, loading: resourcesLoading } = useAdminResourceStats();
   const { stats: userStats, loading: usersLoading } = useAdminUserStats();
+  const [activeTab, setActiveTab] = useState<'stats' | 'resources' | 'users'>('stats');
 
   const statCards = useMemo(
     () => [
@@ -123,63 +124,89 @@ export const AdminOverviewSection = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {statCards.map((card) => (
-          <Card key={card.title} className="border border-slate-200 shadow-none">
-            <CardContent className="p-5">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm font-semibold text-slate-500">{card.title}</p>
-                  <p className="mt-2 text-3xl font-black text-slate-900">{card.value}</p>
-                </div>
-                <div className={`rounded-2xl p-3 ${card.tone}`}>
-                  <card.icon className="h-5 w-5" />
-                </div>
-              </div>
-              <p className="mt-3 text-sm text-slate-500">{card.detail}</p>
-            </CardContent>
-          </Card>
+      {/* Tab Navigation */}
+      <div className="flex space-x-1 rounded-2xl bg-slate-100/50 p-1 backdrop-blur-md max-w-fit">
+        {[
+          { id: 'stats', label: 'Key Statistics' },
+          { id: 'resources', label: 'Recent Resources' },
+          { id: 'users', label: 'User Distribution' },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id as any)}
+            className={`px-6 py-2.5 text-sm font-bold rounded-xl transition-all ${
+              activeTab === tab.id
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
+            }`}
+          >
+            {tab.label}
+          </button>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.5fr_1fr]">
-        <Card className="border border-slate-200 shadow-none">
-          <CardContent className="p-6">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <h2 className="text-lg font-black text-slate-900">Latest uploaded resources</h2>
-                <p className="mt-1 text-sm text-slate-500">Recent notes and PYQ intake with quality status visibility.</p>
-              </div>
-              <Link
-                href="/admin/resources?tab=review"
-                className="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-              >
-                Open review
-              </Link>
-            </div>
-            <div className="mt-5 divide-y divide-slate-100">
-              {(resourceStats?.recentResources || []).length > 0 ? (
-                resourceStats?.recentResources?.map((resource) => (
-                  <div key={resource._id} className="flex flex-col gap-3 py-4 md:flex-row md:items-center md:justify-between">
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-bold text-slate-900">{resource.title}</p>
-                      <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
-                        {resource.category} | {resource.type}
-                      </p>
+      {/* Tab Content */}
+      <div className="mt-6">
+        {activeTab === 'stats' && (
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {statCards.map((card) => (
+              <Card key={card.title} className="border border-slate-200 shadow-none">
+                <CardContent className="p-5">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-slate-500">{card.title}</p>
+                      <p className="mt-2 text-3xl font-black text-slate-900">{card.value}</p>
                     </div>
-                    <span className="inline-flex w-fit rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold capitalize text-slate-600">
-                      {resource.qualityStatus || 'published'}
-                    </span>
+                    <div className={`rounded-2xl p-3 ${card.tone}`}>
+                      <card.icon className="h-5 w-5" />
+                    </div>
                   </div>
-                ))
-              ) : (
-                <div className="py-8 text-sm font-medium text-slate-500">No recent resources yet.</div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+                  <p className="mt-3 text-sm text-slate-500">{card.detail}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
 
-        <div className="space-y-6">
+        {activeTab === 'resources' && (
+          <Card className="border border-slate-200 shadow-none">
+            <CardContent className="p-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h2 className="text-lg font-black text-slate-900">Latest uploaded resources</h2>
+                  <p className="mt-1 text-sm text-slate-500">Recent notes and PYQ intake with quality status visibility.</p>
+                </div>
+                <Link
+                  href="/admin/resources?tab=review"
+                  className="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                >
+                  Open review
+                </Link>
+              </div>
+              <div className="mt-5 divide-y divide-slate-100">
+                {(resourceStats?.recentResources || []).length > 0 ? (
+                  resourceStats?.recentResources?.map((resource) => (
+                    <div key={resource._id} className="flex flex-col gap-3 py-4 md:flex-row md:items-center md:justify-between">
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-bold text-slate-900">{resource.title}</p>
+                        <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+                          {resource.category} | {resource.type}
+                        </p>
+                      </div>
+                      <span className="inline-flex w-fit rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-bold capitalize text-slate-600">
+                        {resource.qualityStatus || 'published'}
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="py-8 text-sm font-medium text-slate-500">No recent resources yet.</div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {activeTab === 'users' && (
           <Card className="border border-slate-200 shadow-none">
             <CardContent className="p-6">
               <div className="flex items-start justify-between gap-4">
@@ -189,43 +216,23 @@ export const AdminOverviewSection = () => {
                 </div>
                 <Link
                   href="/admin/users"
-                  className="rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white"
+                  className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
                 >
                   Open users
                 </Link>
               </div>
-              <div className="mt-5 grid grid-cols-2 gap-3">
+              <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
                 {(userStats?.bySemester || []).map((item) => (
-                  <div key={item._id} className="rounded-2xl bg-slate-50 px-4 py-3">
-                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">Semester {item._id}</p>
-                    <p className="mt-2 text-2xl font-black text-slate-900">{item.count}</p>
+                  <div key={item._id} className="rounded-2xl border border-slate-100 bg-slate-50/50 p-5 text-center">
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Semester {item._id}</p>
+                    <p className="mt-2 text-3xl font-black text-slate-900">{item.count}</p>
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
+        )}
 
-          <Card className="border border-slate-200 shadow-none">
-            <CardContent className="p-6">
-              <h2 className="text-lg font-black text-slate-900">Curation workflow</h2>
-              <p className="mt-1 text-sm text-slate-500">Manage uploads and resolve quality-state bottlenecks before data reaches students.</p>
-              <div className="mt-5 flex flex-wrap gap-3">
-                <Link
-                  href="/admin/resources?tab=upload"
-                  className="rounded-2xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white"
-                >
-                  Upload new resource
-                </Link>
-                <Link
-                  href="/admin/resources?tab=library"
-                  className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                >
-                  Open library
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </div>
   );

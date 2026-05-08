@@ -46,7 +46,7 @@ router.put('/', protect, async (req, res) => {
         status,
         lastPracticedAt: new Date(),
       },
-      { new: true, upsert: true, setDefaultsOnInsert: true }
+      { returnDocument: 'after', upsert: true, setDefaultsOnInsert: true }
     );
 
     res.json(record);

@@ -1,12 +1,23 @@
 const User = require('../models/user.model');
 const generateToken = require('../utils/jwt');
 
+const normalizeEmail = (email = '') => String(email).trim().toLowerCase();
+const escapeRegex = (value = '') => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const buildEmailMatcher = (email = '') => new RegExp(`^${escapeRegex(normalizeEmail(email))}$`, 'i');
+
 // Register a new user
 const registerUser = async (req, res, next) => {
   try {
     const { name, email, password, semester } = req.body;
+    const normalizedName = typeof name === 'string' ? name.trim() : '';
+    const normalizedEmail = normalizeEmail(email);
 
-    const userExists = await User.findOne({ email });
+    if (!normalizedName || !normalizedEmail || typeof password !== 'string' || !password) {
+      res.status(400);
+      throw new Error('Name, email, and password are required');
+    }
+
+    const userExists = await User.findOne({ email: buildEmailMatcher(normalizedEmail) });
 
     if (userExists) {
       res.status(400);
@@ -14,8 +25,8 @@ const registerUser = async (req, res, next) => {
     }
 
     const user = await User.create({
-      name,
-      email,
+      name: normalizedName,
+      email: normalizedEmail,
       password,
       semester,
     });
@@ -42,8 +53,14 @@ const registerUser = async (req, res, next) => {
 const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    const normalizedEmail = normalizeEmail(email);
 
-    const user = await User.findOne({ email });
+    if (!normalizedEmail || typeof password !== 'string' || !password) {
+      res.status(401);
+      throw new Error('Invalid email or password');
+    }
+
+    const user = await User.findOne({ email: buildEmailMatcher(normalizedEmail) });
 
     if (user && (await user.matchPassword(password))) {
       res.json({

@@ -22,9 +22,17 @@ export const LoginForm = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (!normalizedEmail || !password) {
+      setError('Enter a valid email and password');
+      setLoading(false);
+      return;
+    }
     
     try {
-      const data = await authApi.login({ email, password });
+      const data = await authApi.login({ email: normalizedEmail, password });
       setAuth(data, data.token);
       router.push('/dashboard');
     } catch (err: unknown) {
@@ -58,6 +66,10 @@ export const LoginForm = () => {
             placeholder="afsar@college.edu"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            inputMode="email"
             required
             className="pl-11"
           />

@@ -1,10 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/shared/ui/Button';
-import { SubjectList } from '@/features/academic/ui/SubjectList';
 import {
   BookOpen,
   CheckSquare,
@@ -18,10 +16,6 @@ import { DashboardData } from '@/features/dashboard/api/dashboard.api';
 import { StatsOverview } from '@/features/dashboard/ui/StatsOverview';
 import { UpcomingDeadlines } from '@/features/dashboard/ui/UpcomingDeadlines';
 import { Card, CardContent } from '@/shared/ui/Card';
-import {
-  StudentDashboardSection,
-  StudentDashboardSidebar,
-} from '@/features/dashboard/ui/StudentDashboardSidebar';
 
 interface StudentDashboardViewProps {
   dashboardData: DashboardData | null;
@@ -34,8 +28,6 @@ export const StudentDashboardView = ({
 }: StudentDashboardViewProps) => {
   const { user } = useAuthStore();
   const router = useRouter();
-  const [activeSection, setActiveSection] =
-    useState<StudentDashboardSection>('overview');
 
   if (!user) return null;
 
@@ -72,16 +64,8 @@ export const StudentDashboardView = ({
     },
   ];
 
-  const overviewBadge =
-    activeSection === 'progress' ? 'Progress' : 'Overview';
-
   return (
     <main className="mx-auto max-w-7xl space-y-8">
-      <StudentDashboardSidebar
-        activeSection={activeSection}
-        onSectionChange={setActiveSection}
-      />
-
       <div className="min-w-0 space-y-8">
         <section className="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-white via-blue-50 to-cyan-50 p-5 shadow-md shadow-blue-100/40 md:p-6">
           <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-[radial-gradient(circle_at_top_right,_rgba(37,99,235,0.16),_transparent_58%)] md:block" />
@@ -92,18 +76,14 @@ export const StudentDashboardView = ({
                   Semester {user.semester || '-'}
                 </span>
                 <span className="rounded-full bg-blue-600 px-2 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-sm">
-                  {overviewBadge}
+                  Overview
                 </span>
               </div>
               <h1 className="text-2xl font-black tracking-tight text-gray-900 md:text-3xl">
-                {activeSection === 'progress'
-                  ? 'Track every subject clearly.'
-                  : `Welcome back, ${user.name.split(' ')[0]}.`}
+                Welcome back, {user.name.split(' ')[0]}.
               </h1>
               <p className="mt-2 max-w-xl text-sm font-medium text-gray-600">
-                {activeSection === 'progress'
-                  ? 'Move subject by subject, check coverage, and open the exact unit, resource, or PYQ path you need next.'
-                  : 'Start from coverage, move into library and practice, then finish with PYQ analysis and model papers.'}
+                Start from coverage, move into library and practice, then finish with PYQ analysis and model papers.
               </p>
             </div>
 
@@ -125,127 +105,91 @@ export const StudentDashboardView = ({
           </div>
         </section>
 
-        {activeSection === 'overview' ? (
-          <section className="space-y-8">
-            <div className="space-y-4">
-              <h2 className="px-1 text-xs font-black uppercase tracking-[0.2em] text-gray-400">
-                Semester Snapshot
-              </h2>
-              {dashboardData ? <StatsOverview stats={dashboardData.stats} /> : null}
-            </div>
+        <section className="space-y-8">
+          <div className="space-y-4">
+            <h2 className="px-1 text-xs font-black uppercase tracking-[0.2em] text-gray-400">
+              Semester Snapshot
+            </h2>
+            {dashboardData ? <StatsOverview stats={dashboardData.stats} /> : null}
+          </div>
 
-            <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
-              <div className="space-y-6">
-                <Card className="border border-gray-100 shadow-sm rounded-2xl">
-                  <CardContent className="p-5">
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-blue-600">
-                            <TrendingUp className="h-3 w-3" />
-                            Semester Progress
-                          </div>
-                          <span className="text-sm font-black text-gray-900">{overallProgress}% completed</span>
+          <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
+            <div className="space-y-6">
+              <Card className="border border-gray-100 shadow-sm rounded-2xl">
+                <CardContent className="p-5">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-blue-600">
+                          <TrendingUp className="h-3 w-3" />
+                          Semester Progress
                         </div>
-                        <div className="h-2 overflow-hidden rounded-full bg-gray-100">
-                          <div
-                            className="h-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 transition-all"
-                            style={{ width: `${overallProgress}%` }}
-                          />
-                        </div>
+                        <span className="text-sm font-black text-gray-900">{overallProgress}% completed</span>
                       </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <Button
-                          onClick={() => setActiveSection('progress')}
-                          variant="secondary"
-                          className="h-9 rounded-xl px-4 text-xs font-bold"
-                        >
-                          View Subjects
-                        </Button>
+                      <div className="h-2 overflow-hidden rounded-full bg-gray-100">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 transition-all"
+                          style={{ width: `${overallProgress}%` }}
+                        />
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-
-                <div className="space-y-4">
-                  <h2 className="px-1 text-xs font-black uppercase tracking-[0.2em] text-gray-400">
-                    Core Flow
-                  </h2>
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                    {quickActions.map((action) => {
-                      const Icon = action.icon;
-
-                      return (
-                        <button
-                          key={action.title}
-                          type="button"
-                          onClick={action.onClick}
-                          className="flex items-center gap-3 rounded-2xl border border-gray-100 bg-white p-4 text-left shadow-sm transition-all hover:border-blue-100 hover:shadow-md hover:shadow-blue-50"
-                        >
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-                            <Icon className="h-5 w-5" />
-                          </div>
-                          <div className="min-w-0">
-                            <h3 className="text-sm font-bold text-gray-900 truncate">
-                              {action.title}
-                            </h3>
-                            <p className="text-[10px] font-medium text-gray-500 truncate">
-                              {action.description}
-                            </p>
-                          </div>
-                        </button>
-                      );
-                    })}
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Button
+                        onClick={() => router.push('/progress')}
+                        variant="secondary"
+                        className="h-9 rounded-xl px-4 text-xs font-bold"
+                      >
+                        View Subjects
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
 
-              <aside className="space-y-4">
-                <h2 className="flex items-center gap-2 px-1 text-xs font-black uppercase tracking-[0.2em] text-gray-400">
-                  <Sparkles className="h-3 w-3 text-amber-500" />
-                  Assignment Radar
+              <div className="space-y-4">
+                <h2 className="px-1 text-xs font-black uppercase tracking-[0.2em] text-gray-400">
+                  Core Flow
                 </h2>
-                {dashboardData ? (
-                  <UpcomingDeadlines assignments={dashboardData.upcomingDeadlines} />
-                ) : null}
-              </aside>
-            </div>
-          </section>
-        ) : null}
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {quickActions.map((action) => {
+                    const Icon = action.icon;
 
-        {activeSection === 'progress' ? (
-          <section className="space-y-8">
-            <div className="rounded-[2rem] border border-gray-100 bg-white p-6 shadow-sm">
-              <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-                <div className="max-w-2xl">
-                  <h2 className="text-2xl font-black text-gray-900">
-                    Subject Progress
-                  </h2>
-                  <p className="mt-2 text-sm leading-6 text-gray-500">
-                    Open a subject to see its units, study material, and next academic gaps without jumping across multiple pages.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <Button
-                    onClick={() => router.push('/resources')}
-                    variant="outline"
-                    className="rounded-2xl"
-                  >
-                    Open Library
-                  </Button>
-                  <Button
-                    onClick={() => router.push('/practice')}
-                    className="rounded-2xl"
-                  >
-                    Practice
-                  </Button>
+                    return (
+                      <button
+                        key={action.title}
+                        type="button"
+                        onClick={action.onClick}
+                        className="flex items-center gap-3 rounded-2xl border border-gray-100 bg-white p-4 text-left shadow-sm transition-all hover:border-blue-100 hover:shadow-md hover:shadow-blue-50"
+                      >
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="text-sm font-bold text-gray-900 truncate">
+                            {action.title}
+                          </h3>
+                          <p className="text-[10px] font-medium text-gray-500 truncate">
+                            {action.description}
+                          </p>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
 
-            <SubjectList semester={user.semester || 1} />
-          </section>
-        ) : null}
+            <aside className="space-y-4">
+              <h2 className="flex items-center gap-2 px-1 text-xs font-black uppercase tracking-[0.2em] text-gray-400">
+                <Sparkles className="h-3 w-3 text-amber-500" />
+                Assignment Radar
+              </h2>
+              {dashboardData ? (
+                <UpcomingDeadlines assignments={dashboardData.upcomingDeadlines} />
+              ) : null}
+            </aside>
+          </div>
+        </section>
       </div>
     </main>
   );

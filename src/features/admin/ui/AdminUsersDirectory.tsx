@@ -50,38 +50,11 @@ export const AdminUsersDirectory = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {[
-          { label: 'Total Users', value: stats?.totalUsers || 0 },
-          { label: 'Students', value: stats?.totalStudents || 0 },
-          { label: 'Admins', value: stats?.totalAdmins || 0 },
-          { label: 'Filtered Rows', value: total },
-        ].map((item) => (
-          <Card key={item.label} className="border border-slate-200 shadow-none">
-            <CardContent className="p-5">
-              <p className="text-sm font-semibold text-slate-500">{item.label}</p>
-              <p className="mt-2 text-3xl font-black text-slate-900">{item.value}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+
 
       <Card className="border border-slate-200 shadow-none">
         <CardContent className="p-6">
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
-            {semesterCards.map((item) => (
-              <div key={item._id} className="rounded-2xl bg-slate-50 px-4 py-3">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">Semester {item._id}</p>
-                <p className="mt-2 text-2xl font-black text-slate-900">{item.count}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border border-slate-200 shadow-none">
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <input
               value={filters.search}
               onChange={(e) => setFilters((prev) => ({ ...prev, search: e.target.value }))}
@@ -89,27 +62,12 @@ export const AdminUsersDirectory = () => {
               className="h-12 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
             />
             <select
-              value={filters.role}
-              onChange={(e) => setFilters((prev) => ({
-                ...prev,
-                role: e.target.value as AdminUserDirectoryFilters['role'],
-                semester: e.target.value === 'admin' ? '' : prev.semester,
-              }))}
-              className="h-12 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
-            >
-              <option value="">All roles</option>
-              <option value="student">Students</option>
-              <option value="admin">Admins</option>
-            </select>
-            <select
               value={filters.semester}
               onChange={(e) => setFilters((prev) => ({
                 ...prev,
                 semester: e.target.value ? Number(e.target.value) : '',
-                role: e.target.value ? 'student' : prev.role,
               }))}
-              disabled={filters.role === 'admin'}
-              className="h-12 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold outline-none focus:border-blue-500 disabled:cursor-not-allowed disabled:bg-slate-100"
+              className="h-12 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
             >
               <option value="">All semesters</option>
               {[1, 2, 3, 4, 5, 6].map((semester) => (
@@ -118,25 +76,6 @@ export const AdminUsersDirectory = () => {
                 </option>
               ))}
             </select>
-            <select
-              value={filters.sortBy}
-              onChange={(e) => setFilters((prev) => ({ ...prev, sortBy: e.target.value as AdminUserDirectoryFilters['sortBy'] }))}
-              className="h-12 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
-            >
-              <option value="createdAt">Newest</option>
-              <option value="name">Name</option>
-              <option value="email">Email</option>
-              <option value="role">Role</option>
-              <option value="semester">Semester</option>
-            </select>
-            <select
-              value={filters.sortOrder}
-              onChange={(e) => setFilters((prev) => ({ ...prev, sortOrder: e.target.value as AdminUserDirectoryFilters['sortOrder'] }))}
-              className="h-12 rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
-            >
-              <option value="desc">Descending</option>
-              <option value="asc">Ascending</option>
-            </select>
           </div>
         </CardContent>
       </Card>
@@ -144,6 +83,12 @@ export const AdminUsersDirectory = () => {
       {loading ? <Loader text="Refreshing user directory..." /> : null}
 
       <Card className="border border-slate-200 shadow-none">
+        <div className="border-b border-slate-100 px-6 py-4 flex items-center justify-between">
+          <p className="text-sm font-bold text-slate-900">User directory</p>
+          <span className="inline-flex items-center rounded-xl bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">
+            {total} users found
+          </span>
+        </div>
         <CardContent className="p-0">
           {users.length === 0 ? (
             <div className="px-6 py-10 text-center text-sm font-medium text-slate-500">

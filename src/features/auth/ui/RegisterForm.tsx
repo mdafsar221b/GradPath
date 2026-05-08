@@ -30,10 +30,21 @@ export const RegisterForm = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    const normalizedName = formData.name.trim();
+    const normalizedEmail = formData.email.trim().toLowerCase();
+
+    if (!normalizedName || !normalizedEmail || !formData.password) {
+      setError('Enter your name, email, and password');
+      setLoading(false);
+      return;
+    }
     
     try {
       const data = await authApi.register({
         ...formData,
+        name: normalizedName,
+        email: normalizedEmail,
         semester: parseInt(formData.semester),
       });
       setAuth(data, data.token);
@@ -83,6 +94,10 @@ export const RegisterForm = () => {
             placeholder="afsar@college.edu"
             value={formData.email}
             onChange={handleChange}
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            inputMode="email"
             required
             className="pl-11"
           />

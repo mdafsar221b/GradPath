@@ -183,27 +183,26 @@ export const AdminResourceUpload = () => {
     !formData.subjectId ||
     !generatedTitle ||
     (formData.category === 'notes' && !formData.unitId) ||
-    (formData.category === 'pyq' && !formData.year.trim()) ||
-    (formData.type === 'pdf' ? !file : !formData.url.trim());
+    (formData.category === 'pyq' && !(formData.year || '').trim()) ||
+    (formData.type === 'pdf' ? !file : !(formData.url || '').trim());
 
   return (
     <div className="rounded-3xl border border-gray-200 bg-white shadow-sm">
-      <div className="border-b border-gray-100 px-6 py-5">
-        <h2 className="text-xl font-black text-gray-900">Upload Resource</h2>
-        <p className="mt-1 text-sm text-gray-500">Only the required fields are kept here.</p>
+      <div className="border-b border-slate-100 px-5 py-4 flex items-center justify-between">
+        <h2 className="text-lg font-black text-slate-900">Upload Resource</h2>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 p-6">
-        <div className="flex flex-wrap gap-2">
+      <form onSubmit={handleSubmit} className="space-y-4 p-5">
+        <div className="flex gap-2">
           {(['notes', 'pyq'] as ResourceCategory[]).map((category) => (
             <button
               key={category}
               type="button"
               onClick={() => setFormData((prev) => ({ ...prev, category, unitId: '', year: '', examSession: '' }))}
-              className={`rounded-xl px-4 py-2 text-sm font-bold transition-colors ${
+              className={`rounded-xl px-4 py-1.5 text-xs font-bold transition-colors ${
                 formData.category === category
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-slate-900 text-white'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
               {category === 'notes' ? 'Notes' : 'PYQ'}
@@ -211,13 +210,13 @@ export const AdminResourceUpload = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <div>
-            <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Semester</label>
+            <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-500">Semester</label>
             <select
               value={semester}
               onChange={(e) => setSemester(Number(e.target.value))}
-              className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+              className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold outline-none focus:border-blue-500"
             >
               {[1, 2, 3, 4, 5, 6].map((item) => (
                 <option key={item} value={item}>
@@ -228,11 +227,11 @@ export const AdminResourceUpload = () => {
           </div>
 
           <div>
-            <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Subject</label>
+            <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-500">Subject</label>
             <select
               value={formData.subjectId}
               onChange={(e) => setFormData((prev) => ({ ...prev, subjectId: e.target.value }))}
-              className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+              className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold outline-none focus:border-blue-500"
               required
             >
               <option value="">Select Subject</option>
@@ -247,11 +246,11 @@ export const AdminResourceUpload = () => {
 
         {formData.category === 'notes' ? (
           <div>
-            <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Unit</label>
+            <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-500">Unit</label>
             <select
               value={formData.unitId}
               onChange={(e) => setFormData((prev) => ({ ...prev, unitId: e.target.value }))}
-              className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+              className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold outline-none focus:border-blue-500"
               required
               disabled={!formData.subjectId}
             >
@@ -264,44 +263,44 @@ export const AdminResourceUpload = () => {
             </select>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             <div>
-              <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">PYQ Year</label>
+              <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-500">PYQ Year</label>
               <input
                 type="text"
                 placeholder="2020-21"
-                value={formData.year}
+                value={formData.year || ''}
                 onChange={(e) => setFormData((prev) => ({ ...prev, year: e.target.value }))}
-                className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+                className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold outline-none focus:border-blue-500"
                 required
               />
             </div>
             <div>
-              <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Exam Session</label>
+              <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-500">Exam Session</label>
               <input
                 type="text"
                 placeholder="Winter, Mid Sem, Final"
-                value={formData.examSession}
+                value={formData.examSession || ''}
                 onChange={(e) => setFormData((prev) => ({ ...prev, examSession: e.target.value }))}
-                className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+                className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold outline-none focus:border-blue-500"
               />
             </div>
           </div>
         )}
 
         <div>
-          <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Title</label>
+          <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-500">Title</label>
           <input
             type="text"
-            value={generatedTitle}
+            value={generatedTitle || ''}
             readOnly
-            className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-100 px-4 text-sm font-semibold text-gray-700 outline-none"
+            className="h-10 w-full rounded-xl border border-slate-200 bg-slate-100 px-3 text-sm font-semibold text-slate-700 outline-none"
           />
         </div>
 
         <div>
-          <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Type</label>
-          <div className="grid grid-cols-3 gap-3">
+          <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-500">Type</label>
+          <div className="flex gap-2">
             {[
               { id: 'pdf', label: 'PDF', icon: UploadCloud },
               { id: 'youtube', label: 'YouTube', icon: Video },
@@ -311,10 +310,10 @@ export const AdminResourceUpload = () => {
                 key={item.id}
                 type="button"
                 onClick={() => setFormData((prev) => ({ ...prev, type: item.id as ResourceType, url: '' }))}
-                className={`flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-bold ${
+                className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold transition-colors ${
                   formData.type === item.id
-                    ? 'border-blue-600 bg-blue-50 text-blue-700'
-                    : 'border-gray-200 bg-white text-gray-600'
+                    ? 'border-slate-900 bg-slate-900 text-white'
+                    : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
                 }`}
               >
                 <item.icon className="h-4 w-4" />
@@ -325,8 +324,8 @@ export const AdminResourceUpload = () => {
         </div>
 
         {formData.type === 'pdf' ? (
-          <div className="rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-6">
-            <label className="mb-3 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">File</label>
+          <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4">
+            <label className="mb-2 block text-[10px] font-bold uppercase tracking-wider text-slate-500">PDF File</label>
             <input
               type="file"
               accept=".pdf"
@@ -334,17 +333,17 @@ export const AdminResourceUpload = () => {
               required
               className="block w-full text-sm font-medium text-gray-700"
             />
-            <p className="mt-3 text-sm text-gray-500">{file ? file.name : 'Select a PDF file.'}</p>
+            <p className="mt-2 text-xs text-slate-500">{file ? file.name : 'No file chosen'}</p>
           </div>
         ) : (
           <div>
-            <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Link</label>
+            <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-slate-500">URL Link</label>
             <input
               type="url"
               placeholder="https://..."
-              value={formData.url}
+              value={formData.url || ''}
               onChange={(e) => setFormData((prev) => ({ ...prev, url: e.target.value }))}
-              className="h-12 w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 text-sm font-semibold outline-none focus:border-blue-500"
+              className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm font-semibold outline-none focus:border-blue-500"
               required
             />
           </div>
@@ -368,7 +367,7 @@ export const AdminResourceUpload = () => {
         <button
           type="submit"
           disabled={isSubmitDisabled}
-          className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 text-sm font-bold text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-blue-300"
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 text-sm font-bold text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300"
         >
           {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileText className="h-4 w-4" />}
           Upload

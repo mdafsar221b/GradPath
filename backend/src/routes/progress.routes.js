@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Progress = require('../models/progress.model');
+const Unit = require('../models/unit.model');
 const { protect } = require('../middleware/auth.middleware');
 
 // @desc    Toggle unit completion
@@ -84,19 +85,23 @@ router.put('/unit', protect, async (req, res) => {
 // @access  Private
 router.get('/:subjectId', protect, async (req, res) => {
   try {
+    const totalUnits = await Unit.countDocuments({ subjectId: req.params.subjectId });
     const progress = await Progress.findOne({ 
       userId: req.user._id, 
       subjectId: req.params.subjectId 
     });
     
     if (!progress) {
-      return res.json({ completedUnits: [], progressPercentage: 0 });
+      return res.json({ completedUnits: [], progressPercentage: 0, totalUnits });
     }
 
-    const progressPercentage = (progress.completedUnits.length / 5) * 100;
+    const progressPercentage = totalUnits
+      ? Math.round((progress.completedUnits.length / totalUnits) * 100)
+      : 0;
     res.json({ 
       completedUnits: progress.completedUnits, 
-      progressPercentage 
+      progressPercentage,
+      totalUnits,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

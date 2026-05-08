@@ -7,7 +7,6 @@ import { useProgressStore } from '@/features/progress/model/progress.store';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { CheckCircle2, ChevronDown, Circle } from 'lucide-react';
 import { TopicConfidencePanel } from '@/features/topic/ui/TopicConfidencePanel';
-import { ContextDiscussionPanel } from '@/features/discussion/ui/ContextDiscussionPanel';
 
 interface Unit {
   _id: string;
@@ -124,14 +123,6 @@ export const UnitList = ({ subjectId }: { subjectId: string }) => {
                   }}
                 />
                 <ResourceList subjectId={subjectId} unitId={unit._id} />
-                <div className="mt-4">
-                  <ContextDiscussionPanel
-                    contextType="unit"
-                    unitId={unit._id}
-                    title={`Unit ${unit.unitNumber} Discussion`}
-                    description="Discuss this unit with classmates and seniors without leaving the subject workspace."
-                  />
-                </div>
               </div>
             ) : null}
           </div>

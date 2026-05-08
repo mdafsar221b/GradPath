@@ -15,7 +15,8 @@ import {
   MessageSquareText,
   Menu,
   SquareCheckBig,
-  Sparkles,
+  Sigma,
+  TrendingUp,
 } from 'lucide-react';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
 
@@ -36,19 +37,21 @@ export const StudentAppShell = ({ children }: StudentAppShellProps) => {
   const navItems = useMemo(
     () => [
       { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, match: (path: string) => path === '/dashboard' || path.startsWith('/dashboard/subject/') },
+      { href: '/progress', label: 'Progress', icon: TrendingUp, match: (path: string) => path === '/progress' },
       { href: '/resources', label: 'Library', icon: FolderOpen, match: (path: string) => path === '/resources' },
       { href: '/practice', label: 'Practice', icon: BookOpen, match: (path: string) => path === '/practice' },
       { href: '/model-paper', label: 'PYQ Analysis', icon: FileText, match: (path: string) => path === '/model-paper' },
       { href: '/discussions', label: 'Discussions', icon: MessageSquareText, match: (path: string) => path === '/discussions' },
       { href: '/assignments', label: 'Assignments', icon: SquareCheckBig, match: (path: string) => path === '/assignments' },
-      { href: '/ai-tutor', label: 'AI Tutor', icon: Sparkles, match: (path: string) => path === '/ai-tutor' },
-      { href: '/utilities', label: 'Utilities', icon: Calculator, match: (path: string) => path === '/utilities' },
+
+      { href: '/cgpa-converter', label: 'CGPA Converter', icon: Calculator, match: (path: string) => path === '/cgpa-converter' },
+      { href: '/number-converter', label: 'Number Converter', icon: Sigma, match: (path: string) => path === '/number-converter' },
     ],
     []
   );
 
-  const primaryNavItems = navItems.slice(0, 6);
-  const supportNavItems = navItems.slice(6);
+  const primaryNavItems = navItems.slice(0, 7);
+  const supportNavItems = navItems.slice(7);
 
   return (
     <div className="min-h-screen bg-slate-100">

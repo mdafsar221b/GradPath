@@ -173,7 +173,7 @@ const ensureThread = async (resolvedContext, userId) => (
         lastActivityAt: new Date(),
       },
     },
-    { new: true, upsert: true }
+    { returnDocument: 'after', upsert: true }
   )
 );
 

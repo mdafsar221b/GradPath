@@ -8,7 +8,6 @@ import { ChevronLeft } from 'lucide-react';
 import { Loader } from '@/shared/ui/Loader';
 import { useRequireAuth } from '@/shared/lib/useRequireAuth';
 import { StudentAppShell } from '@/shared/ui/StudentAppShell';
-import { ContextDiscussionPanel } from '@/features/discussion/ui/ContextDiscussionPanel';
 
 export default function SubjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -38,13 +37,6 @@ export default function SubjectDetailPage({ params }: { params: Promise<{ id: st
             </div>
           </div>
         </header>
-
-        <ContextDiscussionPanel
-          contextType="subject"
-          subjectId={id}
-          title="Subject Discussion"
-          description="Ask subject-level doubts, share explanations, and let seniors answer within this exact syllabus context."
-        />
 
         <main>
           <div className="mb-8">

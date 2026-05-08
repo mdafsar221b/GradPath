@@ -1,15 +1,15 @@
 'use client';
 
-import { AdminResourcesWorkspace } from '@/features/admin/ui/AdminResourcesWorkspace';
-import { AdminWorkspaceShell } from '@/features/dashboard/ui/AdminWorkspaceShell';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { Loader } from '@/shared/ui/Loader';
 
 export default function AdminResourcesPage() {
-  return (
-    <AdminWorkspaceShell
-      title="Academic Data Workflow"
-      description="Upload notes and PYQs, curate question entries, and review publication quality from one workspace."
-    >
-      <AdminResourcesWorkspace />
-    </AdminWorkspaceShell>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/admin/resources/library');
+  }, [router]);
+
+  return <Loader fullPage text="Opening library..." />;
 }
