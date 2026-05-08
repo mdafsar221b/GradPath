@@ -12,6 +12,7 @@ import {
   FolderOpen,
   LayoutDashboard,
   LogOut,
+  MessageSquareText,
   Menu,
   SquareCheckBig,
   Sparkles,
@@ -38,6 +39,7 @@ export const StudentAppShell = ({ children }: StudentAppShellProps) => {
       { href: '/resources', label: 'Library', icon: FolderOpen, match: (path: string) => path === '/resources' },
       { href: '/practice', label: 'Practice', icon: BookOpen, match: (path: string) => path === '/practice' },
       { href: '/model-paper', label: 'PYQ Analysis', icon: FileText, match: (path: string) => path === '/model-paper' },
+      { href: '/discussions', label: 'Discussions', icon: MessageSquareText, match: (path: string) => path === '/discussions' },
       { href: '/assignments', label: 'Assignments', icon: SquareCheckBig, match: (path: string) => path === '/assignments' },
       { href: '/ai-tutor', label: 'AI Tutor', icon: Sparkles, match: (path: string) => path === '/ai-tutor' },
       { href: '/utilities', label: 'Utilities', icon: Calculator, match: (path: string) => path === '/utilities' },
@@ -45,8 +47,8 @@ export const StudentAppShell = ({ children }: StudentAppShellProps) => {
     []
   );
 
-  const primaryNavItems = navItems.slice(0, 5);
-  const supportNavItems = navItems.slice(5);
+  const primaryNavItems = navItems.slice(0, 6);
+  const supportNavItems = navItems.slice(6);
 
   return (
     <div className="min-h-screen bg-slate-100">

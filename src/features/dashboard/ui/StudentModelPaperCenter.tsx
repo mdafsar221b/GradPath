@@ -7,6 +7,7 @@ import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { pyqApi } from '@/features/pyq/api/pyq.api';
 import { ModelPaperResponse, PyqSubjectSummary } from '@/features/pyq/model/pyq.types';
 import { ExamPaperPreview } from '@/features/pyq/ui/ExamPaperPreview';
+import { ContextDiscussionPanel } from '@/features/discussion/ui/ContextDiscussionPanel';
 import { Card, CardContent } from '@/shared/ui/Card';
 import { Button } from '@/shared/ui/Button';
 
@@ -205,6 +206,15 @@ export const StudentModelPaperCenter = () => {
             </CardContent>
           </Card>
         </div>
+      ) : null}
+
+      {subjectId ? (
+        <ContextDiscussionPanel
+          contextType="model-paper-subject"
+          subjectId={subjectId}
+          title="Model Paper Discussion"
+          description="Discuss the important topics, marks patterns, and generated model paper for this subject with classmates and seniors."
+        />
       ) : null}
     </section>
   );

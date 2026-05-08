@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+import { API_BASE_URL } from '@/shared/lib/api-base';
 
 export interface AiAskDTO {
   question: string;
@@ -24,7 +23,7 @@ export interface AiAskResponse {
 
 export const aiApi = {
   ask: async (dto: AiAskDTO, token: string): Promise<AiAskResponse> => {
-    const { data } = await axios.post(`${API_URL}/ai/ask`, dto, {
+    const { data } = await axios.post(`${API_BASE_URL}/ai/ask`, dto, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;

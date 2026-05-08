@@ -12,7 +12,39 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+const normalizeOrigins = (value) => (
+  typeof value === 'string'
+    ? value.split(',').map((entry) => entry.trim()).filter(Boolean)
+    : []
+);
+
+const allowedOrigins = Array.from(new Set([
+  ...normalizeOrigins(process.env.CORS_ORIGIN),
+  ...normalizeOrigins(process.env.FRONTEND_URL),
+  ...normalizeOrigins(process.env.APP_URL),
+]));
+
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin) {
+      callback(null, true);
+      return;
+    }
+
+    if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
@@ -30,6 +62,7 @@ app.use('/api/quizzes', require('./routes/quiz.routes'));
 app.use('/api/flashcards', require('./routes/flashcard.routes'));
 app.use('/api/topics', require('./routes/topic.routes'));
 app.use('/api/results', require('./routes/results.routes'));
+app.use('/api/discussions', require('./routes/discussion.routes'));
 
 app.get('/', (req, res) => {
   res.send('API is running...');

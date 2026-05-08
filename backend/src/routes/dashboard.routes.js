@@ -54,7 +54,8 @@ router.get('/', protect, async (req, res) => {
       subjectProgress
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: error.message, stack: error.stack });
   }
 });
 

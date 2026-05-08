@@ -16,7 +16,8 @@ BCA students usually receive notes and previous-year papers in scattered PDFs, d
 2. Resources are stored against semester, subject, and unit metadata.
 3. PYQ papers can be curated into structured question entries.
 4. Students open the same curated data through the resource library and practice workspace.
-5. The system analyzes historical PYQ patterns and generates model papers from curated local academic data.
+5. Students can use one universal discussion group for broad academic help, then continue inside subject, unit, or PYQ-specific discussion threads.
+6. The system analyzes historical PYQ patterns and generates model papers from curated local academic data.
 
 ## Main Capabilities
 
@@ -29,6 +30,8 @@ BCA students usually receive notes and previous-year papers in scattered PDFs, d
 - Topic-wise practice with matched PYQ signals.
 - PYQ subject summaries with important topics, marks distribution, and pattern signals.
 - Model paper generation from curated PYQ history.
+- Universal discussion group with visible student names and semester badges.
+- Contextual academic discussions attached to subjects, units, PYQ papers, and model-paper views.
 - Assignment tracking, quizzes, flashcards, and AI tutor as supporting study tools.
 
 ## Positioning
@@ -85,6 +88,19 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 GEMINI_API_KEY=your_gemini_api_key
 GEMINI_MODEL=gemini-2.5-flash
+```
+
+Deployment setup:
+
+```bash
+# Vercel project environment variables
+NEXT_PUBLIC_API_URL=/api
+API_PROXY_TARGET=https://your-backend-domain.com/api
+```
+
+```bash
+# backend/.env
+CORS_ORIGIN=https://your-vercel-app.vercel.app,https://your-custom-domain.com
 ```
 
 Seed academic data:

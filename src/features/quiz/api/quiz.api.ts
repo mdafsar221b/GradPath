@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+import { API_BASE_URL } from '@/shared/lib/api-base';
 
 export interface QuizQuestion {
   _id: string;
@@ -37,20 +36,20 @@ export interface QuizAttempt {
 
 export const quizApi = {
   generate: async (dto: { subjectId: string; unitId?: string; mode: string; count: number }, token: string): Promise<Quiz> => {
-    const { data } = await axios.post(`${API_URL}/quizzes/generate`, dto, {
+    const { data } = await axios.post(`${API_BASE_URL}/quizzes/generate`, dto, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;
   },
   list: async (params: { subjectId?: string; unitId?: string }, token: string): Promise<Quiz[]> => {
-    const { data } = await axios.get(`${API_URL}/quizzes`, {
+    const { data } = await axios.get(`${API_BASE_URL}/quizzes`, {
       params,
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;
   },
   attempt: async (quizId: string, answers: number[], token: string): Promise<{ attempt: QuizAttempt; quiz: Quiz }> => {
-    const { data } = await axios.post(`${API_URL}/quizzes/${quizId}/attempt`, { answers }, {
+    const { data } = await axios.post(`${API_BASE_URL}/quizzes/${quizId}/attempt`, { answers }, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;

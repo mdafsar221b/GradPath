@@ -149,26 +149,26 @@ export const ResourceLibrary = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="p-2 bg-blue-600 rounded-lg text-white">
-                <GraduationCap className="w-5 h-5" />
+            <div className="flex items-center gap-2 mb-2">
+              <div className="p-1.5 bg-blue-600 rounded-md text-white">
+                <GraduationCap className="w-4 h-4" />
               </div>
-              <span className="text-xs font-black text-blue-600 uppercase tracking-widest">Syllabus-Mapped Library</span>
+              <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">Syllabus-Mapped Library</span>
             </div>
-            <h1 className="text-4xl font-black text-gray-900 tracking-tight">Academic Resource Library</h1>
-            <p className="mt-2 text-gray-500 font-medium">Notes, PYQs, videos, and links organized by semester, subject, and unit.</p>
+            <h1 className="text-2xl font-black text-gray-900 tracking-tight md:text-3xl">Academic Resource Library</h1>
+            <p className="mt-1 text-sm text-gray-500 font-medium max-w-xl">Notes, PYQs, videos, and links organized by semester, subject, and unit.</p>
           </div>
 
-          <div className="flex gap-2 p-1.5 bg-white rounded-2xl shadow-sm border border-gray-100">
+          <div className="flex gap-1.5 p-1 bg-white rounded-xl shadow-sm border border-gray-100 w-fit">
             {(['notes', 'pyq'] as ResourceCategory[]).map(cat => (
               <button
                 key={cat}
                 onClick={() => setFilters({ ...filters, category: cat })}
-                className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
+                className={`px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${
                   filters.category === cat
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-100'
+                    ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-gray-400 hover:text-gray-600'
                 }`}
               >
@@ -178,22 +178,22 @@ export const ResourceLibrary = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-3 mb-6">
           <div className="md:col-span-2 relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type="text"
               placeholder="Search title, description, tags..."
               value={filters.search}
               onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-              className="w-full h-14 pl-12 pr-4 bg-white border border-gray-100 rounded-2xl font-bold text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
+              className="w-full h-10 pl-9 pr-3 bg-white border border-gray-100 rounded-xl font-semibold text-[13px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
             />
           </div>
 
           <select
             value={filters.semester}
             onChange={(e) => setFilters({ ...filters, semester: Number(e.target.value), subjectId: '' })}
-            className="h-14 bg-white border border-gray-100 rounded-2xl px-4 font-bold text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
+            className="h-10 bg-white border border-gray-100 rounded-xl px-3 font-semibold text-[13px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
           >
             {[1, 2, 3, 4, 5, 6].map(s => <option key={s} value={s}>Semester {s}</option>)}
           </select>
@@ -201,7 +201,7 @@ export const ResourceLibrary = () => {
           <select
             value={filters.subjectId}
             onChange={(e) => setFilters({ ...filters, subjectId: e.target.value })}
-            className="h-14 bg-white border border-gray-100 rounded-2xl px-4 font-bold text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
+            className="h-10 bg-white border border-gray-100 rounded-xl px-3 font-semibold text-[13px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
           >
             <option value="">All Subjects</option>
             {subjects.map(s => <option key={s._id} value={s._id}>{s.code ? `${s.code} - ` : ''}{s.name}</option>)}
@@ -210,7 +210,7 @@ export const ResourceLibrary = () => {
           <select
             value={filters.type}
             onChange={(e) => setFilters({ ...filters, type: e.target.value as ResourceType | '' })}
-            className="h-14 bg-white border border-gray-100 rounded-2xl px-4 font-bold text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
+            className="h-10 bg-white border border-gray-100 rounded-xl px-3 font-semibold text-[13px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
           >
             <option value="">All Types</option>
             <option value="pdf">PDF</option>
@@ -221,7 +221,7 @@ export const ResourceLibrary = () => {
           <select
             value={filters.difficulty}
             onChange={(e) => setFilters({ ...filters, difficulty: e.target.value as ResourceDifficulty | '' })}
-            className="h-14 bg-white border border-gray-100 rounded-2xl px-4 font-bold text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
+            className="h-10 bg-white border border-gray-100 rounded-xl px-3 font-semibold text-[13px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
           >
             <option value="">All Levels</option>
             <option value="beginner">Beginner</option>
@@ -262,12 +262,12 @@ export const ResourceLibrary = () => {
         </div>
 
         {filters.category === 'pyq' && (
-          <div className="mb-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between bg-amber-50 border border-amber-100 p-4 rounded-2xl">
+          <div className="mb-6 flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between bg-amber-50 border border-amber-100 p-3 rounded-xl">
             <div className="flex items-center gap-3">
-              <SlidersHorizontal className="w-5 h-5 text-amber-600" />
+              <SlidersHorizontal className="w-4 h-4 text-amber-600" />
               <div>
-                <p className="text-sm font-black text-amber-900">Exam mode active</p>
-                <p className="text-xs font-medium text-amber-700">Filter by year to inspect historical paper coverage and recent question trends.</p>
+                <p className="text-[13px] font-black text-amber-900">Exam mode active</p>
+                <p className="text-[11px] font-medium text-amber-700">Filter by year to inspect historical paper coverage and recent question trends.</p>
               </div>
             </div>
             <input
@@ -275,7 +275,7 @@ export const ResourceLibrary = () => {
               placeholder="2020-21"
               value={filters.year}
               onChange={(e) => setFilters({ ...filters, year: e.target.value })}
-              className="h-11 w-full sm:w-32 bg-white border border-amber-100 rounded-xl px-4 font-bold text-sm outline-none"
+              className="h-9 w-full sm:w-32 bg-white border border-amber-100 rounded-lg px-3 font-semibold text-[13px] outline-none"
             />
           </div>
         )}
@@ -285,7 +285,7 @@ export const ResourceLibrary = () => {
             <Loader text="Curating your library..." />
           </div>
         ) : resources.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className={filters.category === 'pyq' ? "flex flex-col gap-3" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"}>
             {resources.map((resource) => {
               const Icons = {
                 pdf: FileText,
@@ -297,55 +297,87 @@ export const ResourceLibrary = () => {
               const subject = isSubjectObject(resource.subjectId) ? resource.subjectId : null;
               const unit = isUnitObject(resource.unitId) ? resource.unitId : null;
 
+              if (filters.category === 'pyq') {
+                return (
+                  <div key={resource._id} className="group flex flex-col sm:flex-row sm:items-center justify-between bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all gap-4">
+                    <div className="flex items-center gap-4 min-w-0">
+                      <div className="w-12 h-12 shrink-0 rounded-xl flex items-center justify-center bg-emerald-50 text-emerald-600">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors truncate">
+                          {resource.title}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-gray-500 font-medium">
+                          {resource.year && <span className="text-emerald-600 font-black">{resource.year}</span>}
+                          {resource.year && <span className="w-1 h-1 bg-gray-300 rounded-full"></span>}
+                          <span className="truncate">{subject?.name || 'Subject Material'}</span>
+                          {resource.difficulty && (
+                            <>
+                              <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+                              <span className="uppercase tracking-widest text-[9px] font-black bg-gray-50 px-2 py-0.5 rounded-full">{resource.difficulty}</span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <a
+                      href={getResourceOpenUrl(resource)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2 bg-gray-50 text-gray-700 rounded-xl text-xs font-bold hover:bg-blue-600 hover:text-white transition-all whitespace-nowrap flex items-center justify-center gap-2"
+                    >
+                      {isExternal ? 'View' : 'Open'}
+                      {isExternal ? <ExternalLink className="w-3 h-3" /> : <Download className="w-3 h-3" />}
+                    </a>
+                  </div>
+                );
+              }
+
               return (
-                <div key={resource._id} className="group bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all">
-                  <div className="flex items-start justify-between mb-6">
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
+                <div key={resource._id} className="group bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-100 hover:-translate-y-0.5 transition-all flex flex-col">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
                       resource.category === 'notes' ? 'bg-indigo-50 text-indigo-600' : 'bg-emerald-50 text-emerald-600'
                     }`}>
-                      <Icon className="w-6 h-6" />
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <div className="flex flex-col gap-2 items-end">
-                      <span className="px-3 py-1 bg-gray-50 text-gray-400 text-[10px] font-black uppercase tracking-widest rounded-full">
+                    <div className="flex flex-col gap-1.5 items-end ml-2">
+                      <span className="px-2 py-0.5 bg-gray-50 text-gray-500 text-[9px] font-black uppercase tracking-widest rounded-md">
                         {resource.type}
                       </span>
                       {resource.difficulty && (
-                        <span className="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest rounded-full">
+                        <span className="px-2 py-0.5 bg-blue-50 text-blue-600 text-[9px] font-black uppercase tracking-widest rounded-md">
                           {resource.difficulty}
                         </span>
                       )}
                     </div>
                   </div>
 
-                  <h3 className="text-lg font-black text-gray-900 mb-2 line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-[15px] font-black text-gray-900 mb-1.5 line-clamp-2 leading-snug group-hover:text-blue-600 transition-colors">
                     {resource.title}
                   </h3>
 
                   {resource.description && (
-                    <p className="text-sm text-gray-500 font-medium line-clamp-2 mb-4">{resource.description}</p>
+                    <p className="text-xs text-gray-500 font-medium line-clamp-2 mb-3 leading-relaxed">{resource.description}</p>
                   )}
 
-                  <div className="space-y-3 mb-6">
-                    <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
+                  <div className="space-y-2 mb-4 flex-1">
+                    <div className="flex items-center gap-2 text-[11px] text-gray-500 font-medium">
                       <div className="w-1 h-1 bg-blue-400 rounded-full"></div>
-                      {subject?.name || 'Subject Material'}
+                      <span className="truncate">{subject?.name || 'Subject Material'}</span>
                     </div>
                     {resource.category === 'notes' && unit && (
-                      <div className="flex items-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-tighter">
+                      <div className="flex items-center gap-2 text-[10px] text-gray-400 font-bold uppercase tracking-tighter">
                         Unit {unit.unitNumber}: {unit.title}
-                      </div>
-                    )}
-                    {resource.category === 'pyq' && resource.year && (
-                      <div className="flex items-center gap-2 text-xs text-emerald-600 font-black uppercase tracking-tighter">
-                        {resource.year}
                       </div>
                     )}
                   </div>
 
                   {resource.tags && resource.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {resource.tags.slice(0, 4).map(tag => (
-                        <span key={tag} className="px-2 py-1 bg-gray-50 text-gray-400 rounded-lg text-[10px] font-black uppercase">
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {resource.tags.slice(0, 3).map(tag => (
+                        <span key={tag} className="px-1.5 py-0.5 bg-gray-50 text-gray-400 rounded-md text-[9px] font-black uppercase tracking-wider truncate max-w-[80px]">
                           {tag}
                         </span>
                       ))}
@@ -356,12 +388,12 @@ export const ResourceLibrary = () => {
                     href={getResourceOpenUrl(resource)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full h-12 bg-gray-50 text-gray-900 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-blue-600 hover:text-white transition-all"
+                    className="w-full h-10 mt-auto bg-gray-50 text-gray-700 rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-blue-600 hover:text-white transition-all"
                   >
                     {isExternal ? (
-                      <>View Content <ExternalLink className="w-4 h-4" /></>
+                      <>View Content <ExternalLink className="w-3.5 h-3.5" /></>
                     ) : (
-                      <>Open PDF <Download className="w-4 h-4" /></>
+                      <>Open PDF <Download className="w-3.5 h-3.5" /></>
                     )}
                   </a>
                 </div>

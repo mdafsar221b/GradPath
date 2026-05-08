@@ -19,6 +19,7 @@ const primaryRoutes = [
   { href: '/resources', label: 'Library' },
   { href: '/practice', label: 'Practice' },
   { href: '/model-paper', label: 'PYQ Analysis' },
+  { href: '/discussions', label: 'Discussions' },
 ];
 
 const coreAreas = [
@@ -61,6 +62,12 @@ const supportAreas = [
     text: 'Deadlines remain in the system without breaking the main exam-prep flow.',
     href: '/assignments',
     icon: ListChecks,
+  },
+  {
+    title: 'Discussion Group',
+    text: 'Use one open community room for general academic help, then move into subject and PYQ discussions when the topic becomes specific.',
+    href: '/discussions',
+    icon: GraduationCap,
   },
   {
     title: 'Revision Support',
@@ -309,7 +316,7 @@ export default function LandingPage() {
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-600">
               Dashboard for coverage, library for structured resources, practice for curated PYQs,
-              and PYQ analysis for subject trends and model paper generation.
+              discussions for peer help, and PYQ analysis for subject trends and model paper generation.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <button

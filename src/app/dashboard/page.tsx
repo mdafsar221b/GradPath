@@ -1,5 +1,6 @@
 'use client';
 
+import axios from 'axios';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -10,7 +11,7 @@ import { StudentDashboardView } from '@/features/dashboard/ui/StudentDashboardVi
 import { StudentAppShell } from '@/shared/ui/StudentAppShell';
 
 export default function DashboardPage() {
-  const { user, token } = useAuthStore();
+  const { user, token, logout } = useAuthStore();
   const router = useRouter();
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -38,12 +39,17 @@ export default function DashboardPage() {
         setDashboardData(data);
       } catch (error) {
         console.error('Failed to fetch dashboard summary', error);
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          logout();
+          router.replace('/login');
+          return;
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchDashboard();
-  }, [token, user?.role]);
+  }, [logout, router, token, user?.role]);
 
   const calculateOverallProgress = () => {
     if (!dashboardData || dashboardData.subjectProgress.length === 0) return 0;

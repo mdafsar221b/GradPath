@@ -15,6 +15,7 @@ import {
 import { academicApi } from '@/features/academic/api/academic-api';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { practiceApi } from '@/features/practice/api/practice.api';
+import { ContextDiscussionPanel } from '@/features/discussion/ui/ContextDiscussionPanel';
 import {
   PracticePyqPaper,
   PracticePyqQuestion,
@@ -918,6 +919,15 @@ export const PracticeCenter = () => {
                 ) : (
                   emptyState('Select a question from the left to continue.')
                 )}
+
+                {selectedPaperId ? (
+                  <ContextDiscussionPanel
+                    contextType="pyq-resource"
+                    resourceId={selectedPaperId}
+                    title="PYQ Paper Discussion"
+                    description="Discuss this previous-year paper, ask doubts about repeated questions, and connect with seniors on exam patterns."
+                  />
+                ) : null}
               </div>
             </div>
           ) : (

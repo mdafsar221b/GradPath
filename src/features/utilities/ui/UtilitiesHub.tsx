@@ -1,9 +1,11 @@
 'use client';
 
+import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
 import { Calculator, Copy, FileSpreadsheet, Goal, Loader2, Save, Sigma } from 'lucide-react';
 import { useAuthStore } from '@/features/auth/model/use-auth-store';
 import { Loader } from '@/shared/ui/Loader';
+import { useRouter } from 'next/navigation';
 import { resultsApi } from '../api/results.api';
 import { ResultProfileResponse, ResultSemester } from '../model/utilities.types';
 import {
@@ -85,7 +87,8 @@ const computeSemesterStatus = (semester: ResultSemester) => {
 const statCardClass = 'min-w-0 rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm';
 
 export const UtilitiesHub = () => {
-  const { token, user } = useAuthStore();
+  const { token, user, logout } = useAuthStore();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<UtilitiesTab>('results');
   const [profile, setProfile] = useState<ResultProfileResponse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -119,6 +122,11 @@ export const UtilitiesHub = () => {
         setExpandedSemester(firstIncompleteSemester);
       } catch (fetchError) {
         console.error('Failed to load results profile', fetchError);
+        if (axios.isAxiosError(fetchError) && fetchError.response?.status === 401) {
+          logout();
+          router.replace('/login');
+          return;
+        }
         setError('Could not load your marks profile right now.');
       } finally {
         setLoading(false);
@@ -126,7 +134,7 @@ export const UtilitiesHub = () => {
     };
 
     fetchProfile();
-  }, [token]);
+  }, [logout, router, token]);
 
   const summary = useMemo(() => (profile ? summarizeResults(profile.semesters) : null), [profile]);
 

@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+import { API_BASE_URL } from '@/shared/lib/api-base';
 
 export interface StudyPlanItem {
   type: 'assignment' | 'pyq-gap' | 'study';
@@ -60,7 +59,7 @@ export interface StudyPlan {
 
 export const studyApi = {
   getStudyPlan: async (token: string): Promise<StudyPlan> => {
-    const { data } = await axios.get(`${API_URL}/study/plan`, {
+    const { data } = await axios.get(`${API_BASE_URL}/study/plan`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;

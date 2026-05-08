@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+import { API_BASE_URL } from '@/shared/lib/api-base';
 
 export interface ProgressData {
   _id?: string;
@@ -10,7 +9,7 @@ export interface ProgressData {
 
 export const progressApi = {
   toggleUnit: async (subjectId: string, unitNumber: number, token: string): Promise<ProgressData> => {
-    const { data } = await axios.post(`${API_URL}/progress/toggle`, 
+    const { data } = await axios.post(`${API_BASE_URL}/progress/toggle`, 
       { subjectId, unitNumber },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -18,14 +17,14 @@ export const progressApi = {
   },
 
   getAllProgress: async (token: string): Promise<ProgressData[]> => {
-    const { data } = await axios.get(`${API_URL}/progress`, {
+    const { data } = await axios.get(`${API_BASE_URL}/progress`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return data;
   },
 
   getSubjectProgress: async (subjectId: string, token: string): Promise<ProgressData> => {
-    const { data } = await axios.get(`${API_URL}/progress/${subjectId}`, {
+    const { data } = await axios.get(`${API_BASE_URL}/progress/${subjectId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return data;
@@ -38,7 +37,7 @@ export const progressApi = {
     token: string
   ): Promise<ProgressData> => {
     const { data } = await axios.put(
-      `${API_URL}/progress/unit`,
+      `${API_BASE_URL}/progress/unit`,
       { subjectId, unitNumber, completed },
       { headers: { Authorization: `Bearer ${token}` } }
     );

@@ -109,65 +109,66 @@ export const AssignmentForm = () => {
         </div>
       )}
       
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
-        <div>
-          <label className="block text-xs font-bold text-gray-400 uppercase mb-1">Subject</label>
+      <form onSubmit={handleSubmit} className="flex flex-col lg:flex-row gap-3 items-start lg:items-end">
+        <div className="w-full lg:w-48 shrink-0">
+          <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Subject</label>
           <select 
             value={formData.subjectId}
             onChange={(e) => setFormData({ ...formData, subjectId: e.target.value, unitId: '' })}
             required
             disabled={fetchingSubjects}
-            className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            className="w-full h-11 px-3 bg-gray-50/50 border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 transition-all outline-none"
           >
             <option value="">Select Subject</option>
             {subjects.map(s => <option key={s._id} value={s._id}>{s.code ? `${s.code} - ` : ''}{s.name}</option>)}
           </select>
         </div>
 
-        <div>
-          <label className="block text-xs font-bold text-gray-400 uppercase mb-1">Unit</label>
+        <div className="w-full lg:w-40 shrink-0">
+          <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Unit</label>
           <select 
             value={formData.unitId}
             onChange={(e) => setFormData({ ...formData, unitId: e.target.value })}
             required
             disabled={fetchingUnits || !formData.subjectId}
-            className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            className="w-full h-11 px-3 bg-gray-50/50 border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 transition-all outline-none"
           >
             <option value="">Select Unit</option>
             {units.map(u => <option key={u._id} value={u._id}>Unit {u.unitNumber}: {u.title}</option>)}
           </select>
         </div>
 
-        <div>
-          <label className="block text-xs font-bold text-gray-400 uppercase mb-1">Assignment Title</label>
+        <div className="w-full flex-1">
+          <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Assignment Title</label>
           <input 
             type="text"
             placeholder="e.g. Write Tutorial 1"
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             required
-            className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500"
+            className="w-full h-11 px-4 bg-gray-50/50 border border-gray-200 rounded-xl text-sm font-semibold text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
           />
         </div>
 
-        <div className="flex gap-2">
+        <div className="w-full lg:w-[13rem] shrink-0 flex items-end gap-2">
           <div className="flex-1">
-            <label className="block text-xs font-bold text-gray-400 uppercase mb-1">Due Date</label>
+            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1.5 ml-1">Due Date</label>
             <input 
               type="date"
               value={formData.dueDate}
               onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
               required
               min={new Date().toISOString().split('T')[0]}
-              className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500"
+              className="w-full h-11 px-3 bg-gray-50/50 border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="px-6 h-[42px] bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all disabled:opacity-50 flex items-center justify-center"
+            className="w-11 h-11 shrink-0 bg-blue-600 text-white rounded-xl shadow-md shadow-blue-500/20 hover:bg-blue-700 hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center"
+            title="Add Assignment"
           >
-            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Add'}
+            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
           </button>
         </div>
       </form>

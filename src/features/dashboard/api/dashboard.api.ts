@@ -1,7 +1,6 @@
 import axios from 'axios';
+import { API_BASE_URL } from '@/shared/lib/api-base';
 import { Assignment } from '@/features/assignment/model/assignment.types';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 export interface DashboardData {
   stats: {
@@ -21,7 +20,7 @@ export interface DashboardData {
 
 export const dashboardApi = {
   getDashboardSummary: async (token: string): Promise<DashboardData> => {
-    const { data } = await axios.get(`${API_URL}/dashboard`, {
+    const { data } = await axios.get(`${API_BASE_URL}/dashboard`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     return data;

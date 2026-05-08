@@ -18,8 +18,10 @@ The project does not depend on generic AI alone. Its main contribution is conver
 2. The system stores them against semester, subject, and unit metadata.
 3. PYQ papers are curated into structured question entries.
 4. Students open the same curated data through the library and practice workspace.
-5. The system analyzes repeated topics, marks distribution, and historical question patterns.
-6. A model paper is generated from curated local PYQ history.
+5. Students can use one universal discussion group for general academic doubts and peer support.
+6. The same discussion system also works inside subject, unit, and PYQ-specific contexts.
+7. The system analyzes repeated topics, marks distribution, and historical question patterns.
+8. A model paper is generated from curated local PYQ history.
 
 ## Demo Flow
 
@@ -27,8 +29,10 @@ The project does not depend on generic AI alone. Its main contribution is conver
 2. Show that resources are tied to semester, subject, and unit.
 3. Open a curated PYQ paper and show the structured question data.
 4. Open the practice workspace and show topic-wise or PYQ-wise practice.
-5. Open the PYQ Analysis page and show important topics plus pattern signals.
-6. Generate the model paper and explain that it comes from curated historical data, not generic prompting alone.
+5. Open the universal discussion group and show that every message carries the user name and semester badge.
+6. Show one contextual discussion panel and explain that broad doubts start in the common room while subject-specific doubts stay attached to the exact academic context.
+7. Open the PYQ Analysis page and show important topics plus pattern signals.
+8. Generate the model paper and explain that it comes from curated historical data, not generic prompting alone.
 
 ## What To Say If Asked "What Problem Does It Solve?"
 
@@ -44,6 +48,8 @@ ChatGPT can answer generic questions, but it does not maintain a department-spec
 - PYQ curation
 - topic and marks pattern analysis
 - model paper generation from curated local data
+- universal peer discussion group with visible semester identity
+- contextual peer discussion with senior guidance inside the same subject/PYQ workflow
 
 ## What To Mention As Supporting Features Only
 
