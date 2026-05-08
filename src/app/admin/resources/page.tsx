@@ -6,8 +6,8 @@ import { AdminWorkspaceShell } from '@/features/dashboard/ui/AdminWorkspaceShell
 export default function AdminResourcesPage() {
   return (
     <AdminWorkspaceShell
-      title="Resources"
-      description="Single resource workspace for uploading, managing, filtering, and reviewing the library."
+      title="Academic Data Workflow"
+      description="Upload notes and PYQs, curate question entries, and review publication quality from one workspace."
     >
       <AdminResourcesWorkspace />
     </AdminWorkspaceShell>

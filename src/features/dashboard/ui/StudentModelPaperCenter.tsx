@@ -82,10 +82,10 @@ export const StudentModelPaperCenter = () => {
         <CardContent className="p-7">
           <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
             <div className="max-w-3xl">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-violet-500">Model Paper Lab</p>
-              <h2 className="mt-2 text-3xl font-black text-gray-900">Generate an exam-style paper from curated PYQ patterns</h2>
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-violet-500">PYQ Analysis Lab</p>
+              <h2 className="mt-2 text-3xl font-black text-gray-900">Analyze historical PYQ patterns and generate a subject model paper</h2>
               <p className="mt-3 text-sm font-medium text-gray-500">
-                This section turns past-paper analysis into a formatted written examination sheet and highlights the most important topics to cover.
+                Load a subject summary to inspect repeated topics and marks patterns, then generate a fresh paper from curated question history.
               </p>
             </div>
 
@@ -109,7 +109,7 @@ export const StudentModelPaperCenter = () => {
               </select>
               <Button onClick={loadSummary} disabled={!subjectId || loadingSummary} variant="outline" className="h-12 rounded-2xl">
                 {loadingSummary ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <BarChart3 className="mr-2 h-4 w-4" />}
-                Topics
+                Load Analysis
               </Button>
               <Button onClick={generatePaper} disabled={!subjectId || loadingPaper} className="h-12 rounded-2xl">
                 {loadingPaper ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <FileText className="mr-2 h-4 w-4" />}
@@ -136,7 +136,7 @@ export const StudentModelPaperCenter = () => {
               </h3>
             </div>
             <p className="text-sm font-medium text-slate-500">
-              Fresh paper first, analysis below.
+              Generated paper first, evidence below.
             </p>
           </div>
           <ExamPaperPreview
@@ -150,10 +150,10 @@ export const StudentModelPaperCenter = () => {
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.1fr_0.9fr]">
           <Card className="border-none shadow-sm">
             <CardContent className="p-7">
-              <div className="flex items-center gap-3">
-                <Sparkles className="h-5 w-5 text-violet-600" />
-                <h3 className="text-xl font-black text-gray-900">Important Topics</h3>
-              </div>
+                <div className="flex items-center gap-3">
+                  <Sparkles className="h-5 w-5 text-violet-600" />
+                  <h3 className="text-xl font-black text-gray-900">Repeated and Important Topics</h3>
+                </div>
               <div className="mt-5 space-y-4">
                 {summary.importantTopics.slice(0, 6).map((topic) => (
                   <div key={topic.topic} className="rounded-2xl bg-gray-50 p-4">

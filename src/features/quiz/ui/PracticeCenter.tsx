@@ -493,9 +493,9 @@ export const PracticeCenter = () => {
       {path === null ? (
         <>
           <section className="space-y-3">
-            <h1 className="text-4xl font-black tracking-tight text-gray-900">Practice Center</h1>
+            <h1 className="text-4xl font-black tracking-tight text-gray-900">Practice Workspace</h1>
             <p className="max-w-3xl font-medium text-gray-500">
-              Pick one practice path. Move topic by topic through the syllabus, open real PYQs, generate focused quizzes, or switch into flashcards for quick recall.
+              Choose how to work with curated subject data. Start from a topic, open a past paper, generate a quiz, or use flashcards as the final revision layer.
             </p>
           </section>
 
@@ -524,7 +524,7 @@ export const PracticeCenter = () => {
               </div>
               <h2 className="mt-4 text-2xl font-black text-gray-900">PYQ-wise Practice</h2>
               <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
-                Open one uploaded paper, filter by marks, and read long exam-style answers question by question.
+                Open curated paper questions, filter by marks, and read exam-style answers question by question.
               </p>
             </button>
 
@@ -538,7 +538,7 @@ export const PracticeCenter = () => {
               </div>
               <h2 className="mt-4 text-2xl font-black text-gray-900">Quiz Practice</h2>
               <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
-                Choose a subject and unit, generate a focused quiz, and get instant scoring for faster revision.
+                Generate a focused quiz from the selected subject and unit structure for fast revision.
               </p>
             </button>
 
@@ -552,7 +552,7 @@ export const PracticeCenter = () => {
               </div>
               <h2 className="mt-4 text-2xl font-black text-gray-900">Flashcards</h2>
               <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
-                Open the flashcard flow for quick recall, spaced review, and short revision bursts.
+                Use flashcards as the final revision step after topic study and PYQ practice.
               </p>
             </button>
           </section>

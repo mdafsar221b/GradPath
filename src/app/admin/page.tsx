@@ -7,7 +7,7 @@ export default function AdminPage() {
   return (
     <AdminWorkspaceShell
       title="Overview"
-      description="Operational view of resource health, user distribution, and recent admin activity."
+      description="Operational view of library coverage, PYQ intake, and current academic data health."
     >
       <AdminOverviewSection />
     </AdminWorkspaceShell>

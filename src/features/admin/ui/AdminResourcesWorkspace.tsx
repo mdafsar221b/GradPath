@@ -19,6 +19,11 @@ interface SubjectOption {
 }
 
 const tabs: ResourceTab[] = ['upload', 'library', 'review'];
+const tabLabels: Record<ResourceTab, string> = {
+  upload: 'Upload',
+  library: 'Curate',
+  review: 'Review',
+};
 
 export const AdminResourcesWorkspace = () => {
   const router = useRouter();
@@ -84,7 +89,7 @@ export const AdminResourcesWorkspace = () => {
                 : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
             }`}
           >
-            {tab}
+            {tabLabels[tab]}
           </button>
         ))}
       </div>
@@ -188,8 +193,8 @@ export const AdminResourcesWorkspace = () => {
 
           <AdminResourceList
             filters={filters}
-            title="Resource Library"
-            description="Filtered resource results across semesters, subjects, quality status, and tags."
+            title="Curated Academic Library"
+            description="Manage semester resources before they feed student search, PYQ analysis, and model paper generation."
           />
         </div>
       ) : null}
@@ -244,7 +249,7 @@ export const AdminResourcesWorkspace = () => {
           <AdminResourceList
             filters={{ qualityStatus: reviewStatus || undefined }}
             title="Review Queue"
-            description="Inspect resources by publication state and update them directly from the queue."
+            description="Inspect publication state before academic data becomes visible in student analysis and practice."
             emptyMessage="No resources are waiting in this quality state."
           />
         </div>

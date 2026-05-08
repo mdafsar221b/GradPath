@@ -155,10 +155,10 @@ export const ResourceLibrary = () => {
               <div className="p-2 bg-blue-600 rounded-lg text-white">
                 <GraduationCap className="w-5 h-5" />
               </div>
-              <span className="text-xs font-black text-blue-600 uppercase tracking-widest">BCA Resource Explorer</span>
+              <span className="text-xs font-black text-blue-600 uppercase tracking-widest">Syllabus-Mapped Library</span>
             </div>
-            <h1 className="text-4xl font-black text-gray-900 tracking-tight">Academic Library</h1>
-            <p className="mt-2 text-gray-500 font-medium">Notes, PYQs, videos, and links mapped to your semester.</p>
+            <h1 className="text-4xl font-black text-gray-900 tracking-tight">Academic Resource Library</h1>
+            <p className="mt-2 text-gray-500 font-medium">Notes, PYQs, videos, and links organized by semester, subject, and unit.</p>
           </div>
 
           <div className="flex gap-2 p-1.5 bg-white rounded-2xl shadow-sm border border-gray-100">
@@ -267,7 +267,7 @@ export const ResourceLibrary = () => {
               <SlidersHorizontal className="w-5 h-5 text-amber-600" />
               <div>
                 <p className="text-sm font-black text-amber-900">Exam mode active</p>
-                <p className="text-xs font-medium text-amber-700">Filter by year to focus on recent question-paper trends.</p>
+                <p className="text-xs font-medium text-amber-700">Filter by year to inspect historical paper coverage and recent question trends.</p>
               </div>
             </div>
             <input

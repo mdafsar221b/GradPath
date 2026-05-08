@@ -90,7 +90,7 @@ export const AdminOverviewSection = () => {
         value: resourceStats?.pyqsCount || 0,
         icon: FileText,
         tone: 'bg-amber-50 text-amber-700',
-        detail: 'Previous year papers',
+        detail: 'Previous year paper uploads',
       },
       {
         title: 'Missing subjects',
@@ -148,7 +148,7 @@ export const AdminOverviewSection = () => {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <h2 className="text-lg font-black text-slate-900">Latest uploaded resources</h2>
-                <p className="mt-1 text-sm text-slate-500">Recent library activity with quality status visibility.</p>
+                <p className="mt-1 text-sm text-slate-500">Recent notes and PYQ intake with quality status visibility.</p>
               </div>
               <Link
                 href="/admin/resources?tab=review"
@@ -207,8 +207,8 @@ export const AdminOverviewSection = () => {
 
           <Card className="border border-slate-200 shadow-none">
             <CardContent className="p-6">
-              <h2 className="text-lg font-black text-slate-900">Resource health</h2>
-              <p className="mt-1 text-sm text-slate-500">Manage uploads and resolve quality-state bottlenecks from one place.</p>
+              <h2 className="text-lg font-black text-slate-900">Curation workflow</h2>
+              <p className="mt-1 text-sm text-slate-500">Manage uploads and resolve quality-state bottlenecks before data reaches students.</p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <Link
                   href="/admin/resources?tab=upload"

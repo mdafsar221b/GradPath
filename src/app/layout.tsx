@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GradPath | BCA Study Command Center",
-  description: "A focused academic planner, resource library, and exam-prep workspace for BCA students.",
+  title: "GradPath | BCA PYQ Intelligence Workspace",
+  description: "A syllabus-mapped BCA resource library, PYQ analysis, and model paper generation system.",
 };
 
 export default function RootLayout({

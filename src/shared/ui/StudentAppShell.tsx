@@ -35,10 +35,10 @@ export const StudentAppShell = ({ children }: StudentAppShellProps) => {
   const navItems = useMemo(
     () => [
       { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, match: (path: string) => path === '/dashboard' || path.startsWith('/dashboard/subject/') },
-      { href: '/model-paper', label: 'Model Paper', icon: FileText, match: (path: string) => path === '/model-paper' },
-      { href: '/assignments', label: 'Assignments', icon: SquareCheckBig, match: (path: string) => path === '/assignments' },
       { href: '/resources', label: 'Library', icon: FolderOpen, match: (path: string) => path === '/resources' },
       { href: '/practice', label: 'Practice', icon: BookOpen, match: (path: string) => path === '/practice' },
+      { href: '/model-paper', label: 'PYQ Analysis', icon: FileText, match: (path: string) => path === '/model-paper' },
+      { href: '/assignments', label: 'Assignments', icon: SquareCheckBig, match: (path: string) => path === '/assignments' },
       { href: '/ai-tutor', label: 'AI Tutor', icon: Sparkles, match: (path: string) => path === '/ai-tutor' },
       { href: '/utilities', label: 'Utilities', icon: Calculator, match: (path: string) => path === '/utilities' },
     ],
@@ -141,7 +141,7 @@ export const StudentAppShell = ({ children }: StudentAppShellProps) => {
 
           {!collapsed ? (
             <p className="px-4 pb-2 pt-5 text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">
-              Support
+              Support Tools
             </p>
           ) : null}
           <div className="space-y-2">

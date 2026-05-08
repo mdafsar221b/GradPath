@@ -1,34 +1,50 @@
 # GradPath
 
-GradPath is a BCA-focused academic command center built with Next.js, Express, and MongoDB. It helps students track semester progress, assignments, study resources, PYQs, and daily priorities from one workspace.
+GradPath is a BCA-focused academic data and exam-preparation system built with Next.js, Express, and MongoDB. Its main purpose is to organize notes and previous-year question papers by semester, subject, and unit, then use that curated structure for PYQ analysis, topic-wise practice, and model paper generation.
 
-## Current Capabilities
+## Core Problem
+
+BCA students usually receive notes and previous-year papers in scattered PDFs, drives, and chats. Faculty and students do not have a structured way to:
+
+- keep academic material mapped to the syllabus
+- inspect repeated topics and marks patterns across PYQs
+- move from raw papers to subject-wise model paper generation
+
+## Core Workflow
+
+1. Admin uploads notes and PYQ resources into the academic library.
+2. Resources are stored against semester, subject, and unit metadata.
+3. PYQ papers can be curated into structured question entries.
+4. Students open the same curated data through the resource library and practice workspace.
+5. The system analyzes historical PYQ patterns and generates model papers from curated local academic data.
+
+## Main Capabilities
 
 - Student/admin authentication.
 - Semester-wise BCA subjects and units.
 - Unit completion tracking.
-- Assignment tracker with deadlines.
 - Resource library for notes, PYQs, PDFs, videos, and links.
-- Admin resource upload and management.
-- Smart study plan API that prioritizes deadlines, weak subjects, resource gaps, and revision candidates.
-- Admin analytics for resource coverage, content type, difficulty, and recent uploads.
-- Gemini-powered BCA AI tutor.
-- AI-generated quizzes with scoring and topic breakdowns.
-- Flashcards with spaced revision scheduling.
-- Topic-level confidence tracking.
-- Coding lab with AI review for BCA programming tracks.
+- Admin resource upload, filtering, review, and quality-state management.
+- PYQ question curation and structured paper parsing workflow.
+- Topic-wise practice with matched PYQ signals.
+- PYQ subject summaries with important topics, marks distribution, and pattern signals.
+- Model paper generation from curated PYQ history.
+- Assignment tracking, quizzes, flashcards, and AI tutor as supporting study tools.
 
-## Advanced BCA Direction
+## Positioning
 
-The implementation roadmap is tracked in [docs/ADVANCED_BCA_TASKS.md](docs/ADVANCED_BCA_TASKS.md).
+GradPath is not meant to be presented as a generic chatbot. The main contribution is the structured academic data pipeline:
 
-Next high-value milestones:
+- syllabus-linked resources
+- curated previous-year questions
+- subject-wise PYQ analysis
+- exam-style paper generation from local academic history
 
-- PYQ trend tagging by unit/topic/year/marks.
-- Full mock-test scheduling and exam reports.
-- Real sandbox execution through a judge service for compiled languages.
-- Final-year project workspace.
-- AI tutor retrieval expansion over PDF contents, not only metadata.
+The AI components are used after the academic data has already been organized.
+
+## Submission Notes
+
+For a concise viva/demo narrative, see [SUBMISSION_FLOW.md](SUBMISSION_FLOW.md).
 
 ## Tech Stack
 
@@ -80,7 +96,7 @@ npm run seed
 Run frontend and backend together:
 
 ```bash
-npm run dev-all
+npm run dev
 ```
 
 ## Verification

@@ -40,28 +40,28 @@ export const StudentDashboardView = ({
 
   const quickActions = [
     {
+      title: 'Library',
+      description: 'Open syllabus-linked notes, PYQs, and revision material from one library.',
+      icon: FolderOpen,
+      onClick: () => router.push('/resources'),
+    },
+    {
       title: 'Practice',
-      description: 'Topic study, quizzes, PYQs, and flashcards in one place.',
+      description: 'Move topic by topic, match PYQs, and open exam-focused practice paths.',
       icon: BookOpen,
       onClick: () => router.push('/practice'),
     },
     {
-      title: 'Model Paper',
-      description: 'Generate exam-style papers from curated PYQ patterns.',
+      title: 'PYQ Analysis',
+      description: 'Inspect important topics and generate exam-style papers from curated history.',
       icon: FileText,
       onClick: () => router.push('/model-paper'),
     },
     {
       title: 'Assignments',
-      description: 'See pending work, due dates, and submission targets.',
+      description: 'Keep deadlines visible without breaking the main academic workflow.',
       icon: CheckSquare,
       onClick: () => router.push('/assignments'),
-    },
-    {
-      title: 'Library',
-      description: 'Open subjects, notes, PYQs, and revision resources.',
-      icon: FolderOpen,
-      onClick: () => router.push('/resources'),
     },
   ];
 
@@ -95,24 +95,24 @@ export const StudentDashboardView = ({
               </h1>
               <p className="mt-3 max-w-2xl text-base font-medium text-gray-600 md:text-lg">
                 {activeSection === 'progress'
-                  ? 'Move subject by subject, check what is complete, and open the exact unit or resource you need next.'
-                  : 'Keep assignments, revision, and exam practice moving from one clean home.'}
+                  ? 'Move subject by subject, check coverage, and open the exact unit, resource, or PYQ path you need next.'
+                  : 'Start from coverage, move into library and practice, then finish with PYQ analysis and model papers.'}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-3">
               <Button
-                onClick={() => router.push('/practice')}
+                onClick={() => router.push('/resources')}
                 className="h-14 rounded-2xl px-7 shadow-xl shadow-blue-100"
               >
-                Practice
+                Open Library
               </Button>
               <Button
-                onClick={() => router.push('/assignments')}
+                onClick={() => router.push('/model-paper')}
                 variant="outline"
                 className="h-14 rounded-2xl px-7"
               >
-                Assignments
+                PYQ Analysis
               </Button>
             </div>
           </div>
@@ -141,7 +141,7 @@ export const StudentDashboardView = ({
                           {overallProgress}% completed
                         </h3>
                         <p className="mt-2 text-sm font-medium leading-6 text-gray-500">
-                          Track your overall semester momentum, then move straight into practice or subject-level progress when you need depth.
+                          Track semester coverage first, then move into subject resources, PYQ practice, and paper generation from the same academic structure.
                         </p>
                       </div>
                       <div className="rounded-2xl bg-slate-50 px-5 py-4 text-center">
@@ -174,7 +174,7 @@ export const StudentDashboardView = ({
                         variant="outline"
                         className="rounded-2xl"
                       >
-                        Model Paper
+                        PYQ Analysis
                       </Button>
                     </div>
                   </CardContent>
@@ -182,7 +182,7 @@ export const StudentDashboardView = ({
 
                 <div className="space-y-4">
                   <h2 className="px-1 text-xs font-black uppercase tracking-[0.2em] text-gray-400">
-                    Quick Access
+                    Core Flow
                   </h2>
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     {quickActions.map((action) => {
